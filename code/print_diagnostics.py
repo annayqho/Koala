@@ -12,7 +12,7 @@ from penquins import Kowalski
 import glob
 
 
-names = np.loadtxt("/Users/annaho/Dropbox/Projects/Research/Koala/code/keep_2.txt", dtype=str)
+names = np.loadtxt("/Users/annaho/Dropbox/Projects/Research/Koala/code/keep_field_791_792.txt", dtype=str)
 
 # Log onto Kowalski and ZTFquery
 username = 'ah'
@@ -163,6 +163,7 @@ def plot_ls(name,ra,dec):
         r = requests.get(url)
         with open(fname, 'wb') as f:
             f.write(r.content)   
+
 
 
 for ii,name in enumerate(names):
