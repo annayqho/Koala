@@ -8,5 +8,12 @@ Only keep sources that have,
 
 import numpy as np
 import glob
+from print_diagnostics import get_lc
 
+search = "field*nostars.txt"
+allf = glob.glob(search)
+f = allf[0]
+cands = np.loadtxt(f, dtype=str)
+name = cands[0]
 
+jd,dt,mag,emag,filt = get_lc(name)

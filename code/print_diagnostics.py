@@ -45,76 +45,80 @@ def get_dets(name):
     return query
 
 
+def get_lc(name):
+    query_result = s.query(
+            {'query_type': 'general_search', 'query': get_dets(name)})
+    out = query_result['result_data']['query_result']
+
+    jd = []
+    mag = []
+    emag = []
+    filt = []
+
+    for det in out:
+        cand = det['candidate']
+
+        current_jd = cand['jd']
+        current_mag = cand['magpsf']
+        current_emag = cand['sigmapsf']
+        current_filter = cand['fid']
+
+        jd.append(current_jd)
+        mag.append(current_mag)
+        emag.append(current_emag)
+        filt.append(current_filter)
+
+    jd = np.array(jd)
+    mag = np.array(mag)
+    emag = np.array(emag)
+    filt = np.array(filt)
+
+    # Sort in order of jd
+    order = np.argsort(jd)
+    jd = jd[order]
+    dt = jd-jd[0]
+    mag = mag[order]
+    emag = emag[order]
+    filt = filt[order] 
+    return jd,dt,mag,emag,filt
+
+
 def plot_lc(name, ra, dec):
+    jd,dt,mag,emag,filt = get_lc(name)
     fname = "%s_lc.png" %name
-    if len(glob.glob(fname))==0:
-        plt.figure()
-        query_result = s.query(
-                {'query_type': 'general_search', 'query': get_dets(name)})
-        out = query_result['result_data']['query_result']
+    plt.figure()
 
-        jd = []
-        mag = []
-        emag = []
-        filt = []
+    gband = filt == 1
+    plt.errorbar(dt[gband], mag[gband], emag[gband], c='green', fmt='o', label="g-band")
+    rband = filt == 2
+    plt.errorbar(dt[rband], mag[rband], emag[rband], c='red', fmt='s', label="r-band")
+    plt.legend(fontsize=14)
+    plt.xlabel("Days since first detection", fontsize=14)
+    plt.ylabel("App Mag", fontsize=14)
+    plt.gca().invert_yaxis()
+    plt.tick_params(axis='both', labelsize=14)
+    plt.xlim(dt[0]-10, dt[-1]+10) 
+    plt.title("%s, RA=%s, Dec=%s" %(name,ra,dec), fontsize=14)
 
-        for det in out:
-            cand = det['candidate']
+    # print("searching for non detections around %s, %s" %(ra,dec))
+    # zquery.load_metadata(
+    #         radec=[ra,dec],size=0.0005,
+    #         sql_query="(obsjd BETWEEN %s AND %s) OR (obsjd BETWEEN %s AND %s)" %(
+    #             jd[0]-10,jd[0]-0.001,jd[-1]+0.001,jd[-1]+10))
+    # obsjd = zquery.metatable['obsjd'].values
+    # obsfilt = zquery.metatable['filtercode'].values
+    # obslim = zquery.metatable['maglimit'].values
+    # obsdt = obsjd-jd[0]
 
-            current_jd = cand['jd']
-            current_mag = cand['magpsf']
-            current_emag = cand['sigmapsf']
-            current_filter = cand['fid']
+    # gband = obsfilt == 'zg'
+    # plt.scatter(obsdt[gband], obslim[gband], c='green', marker='v')
+    # rband = obsfilt == 'zr'
+    # plt.scatter(obsdt[rband], obslim[rband], c='red', marker='v')
 
-            jd.append(current_jd)
-            mag.append(current_mag)
-            emag.append(current_emag)
-            filt.append(current_filter)
-
-        jd = np.array(jd)
-        mag = np.array(mag)
-        emag = np.array(emag)
-        filt = np.array(filt)
-
-        # Sort in order of jd
-        order = np.argsort(jd)
-        jd = jd[order]
-        dt = jd-jd[0]
-        mag = mag[order]
-        emag = emag[order]
-        filt = filt[order] 
-
-        gband = filt == 1
-        plt.errorbar(dt[gband], mag[gband], emag[gband], c='green', fmt='o', label="g-band")
-        rband = filt == 2
-        plt.errorbar(dt[rband], mag[rband], emag[rband], c='red', fmt='s', label="r-band")
-        plt.legend(fontsize=14)
-        plt.xlabel("Days since first detection", fontsize=14)
-        plt.ylabel("App Mag", fontsize=14)
-        plt.gca().invert_yaxis()
-        plt.tick_params(axis='both', labelsize=14)
-        plt.xlim(dt[0]-10, dt[-1]+10) 
-        plt.title("%s, RA=%s, Dec=%s" %(name,ra,dec), fontsize=14)
-
-        # print("searching for non detections around %s, %s" %(ra,dec))
-        # zquery.load_metadata(
-        #         radec=[ra,dec],size=0.0005,
-        #         sql_query="(obsjd BETWEEN %s AND %s) OR (obsjd BETWEEN %s AND %s)" %(
-        #             jd[0]-10,jd[0]-0.001,jd[-1]+0.001,jd[-1]+10))
-        # obsjd = zquery.metatable['obsjd'].values
-        # obsfilt = zquery.metatable['filtercode'].values
-        # obslim = zquery.metatable['maglimit'].values
-        # obsdt = obsjd-jd[0]
-
-        # gband = obsfilt == 'zg'
-        # plt.scatter(obsdt[gband], obslim[gband], c='green', marker='v')
-        # rband = obsfilt == 'zr'
-        # plt.scatter(obsdt[rband], obslim[rband], c='red', marker='v')
-
-        plt.xlim(-5, 5)
-        plt.tight_layout()
-        plt.savefig("%s_lc.png" %name)
-        plt.close()
+    plt.xlim(-5, 5)
+    plt.tight_layout()
+    plt.savefig("%s_lc.png" %name)
+    plt.close()
 
 
 def plot_cutout(name):
@@ -165,15 +169,15 @@ def plot_ls(name,ra,dec):
             f.write(r.content)   
 
 
-
-for ii,name in enumerate(names):
-    print(ii,name)
-    ra, dec = get_pos(name)
-    print("plotting light curves")
-    plot_lc(name, ra, dec)
-    print("plotting cutouts")
-    plot_cutout(name)
-    print("plotting ps1 cutout")
-    plot_ps1(name,ra,dec)
-    print("plotting legacysurvey image")
-    plot_ls(name,ra,dec)
+def run():
+    for ii,name in enumerate(names):
+        print(ii,name)
+        ra, dec = get_pos(name)
+        print("plotting light curves")
+        plot_lc(name, ra, dec)
+        print("plotting cutouts")
+        plot_cutout(name)
+        print("plotting ps1 cutout")
+        plot_ps1(name,ra,dec)
+        print("plotting legacysurvey image")
+        plot_ls(name,ra,dec)
