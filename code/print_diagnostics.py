@@ -38,22 +38,36 @@ def get_pos(name):
 
 # Get the detections
 def get_dets(name):
-    query = """db['ZTF_alerts'].find(
-            {'objectId': {'$eq': '%s'}},
-            {'candidate.jd', 'candidate.magpsf', 'candidate.sigmapsf', 'candidate.fid'}
-        )""" %name
-    return query
+    q = {"query_type": "find",
+         "query": {
+             "catalog": "ZTF_alerts",
+             "filter": {
+                     'objectId': {'$eq': name},
+                     'candidate.rb': {'$gt': 0.3},
+                     'candidate.isdiffpos': {'$in': ['1', 't']},
+             },
+             "projection": {
+                     "_id": 0,
+                     "candidate.jd": 1,
+                     "candidate.magpsf": 1,
+                     "candidate.sigmapsf": 1,
+                     "candidate.fid": 1,
+                     "candidate.programid": 1,
+             }
+         }
+         }
+    query_result = s.query(query=q)
+    out = query_result['result_data']['query_result']
+    return out
 
 
 def get_lc(name):
-    query_result = s.query(
-            {'query_type': 'general_search', 'query': get_dets(name)})
-    out = query_result['result_data']['query_result']
-
+    out = get_dets(name)
     jd = []
     mag = []
     emag = []
     filt = []
+    pid = []
 
     for det in out:
         cand = det['candidate']
@@ -62,16 +76,19 @@ def get_lc(name):
         current_mag = cand['magpsf']
         current_emag = cand['sigmapsf']
         current_filter = cand['fid']
+        current_pid = cand['programid']
 
         jd.append(current_jd)
         mag.append(current_mag)
         emag.append(current_emag)
         filt.append(current_filter)
+        pid.append(current_pid)
 
     jd = np.array(jd)
     mag = np.array(mag)
     emag = np.array(emag)
     filt = np.array(filt)
+    pid = np.array(pid)
 
     # Sort in order of jd
     order = np.argsort(jd)
@@ -80,7 +97,8 @@ def get_lc(name):
     mag = mag[order]
     emag = emag[order]
     filt = filt[order] 
-    return jd,dt,mag,emag,filt
+    pid = pid[order]
+    return jd,dt,mag,emag,filt,pid
 
 
 def plot_lc(name, ra, dec):
