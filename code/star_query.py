@@ -40,8 +40,26 @@ def star_check(name):
             np.logical_and(zmag>0,zmag<17),
             )):
             pointunderneath = True
+
+    brightstar = False
+    if np.logical_and.reduce((rmag > 0, rmag < 12, sg > 0.49, dist < 20)):
+        brightstar = True
+    if np.logical_and.reduce((rmag > 0, rmag < 15, sg > 0.8, dist < 20)):
+        brightstar = True
+    if np.logical_and.reduce((gmag > 0, gmag < 12, sg > 0.49, dist < 20)):
+        brightstar = True
+    if np.logical_and.reduce((gmag > 0, gmag < 15, sg > 0.8, dist < 20)):
+        brightstar = True
+    if np.logical_and.reduce((imag > 0, imag < 12, sg > 0.49, dist < 20)):
+        brightstar = True
+    if np.logical_and.reduce((imag > 0, imag < 15, sg > 0.8, dist < 20)):
+        brightstar = True
+    if np.logical_and.reduce((zmag > 0, zmag < 12, sg > 0.49, dist < 20)):
+        brightstar = True
+    if np.logical_and.reduce((zmag > 0, zmag < 15, sg > 0.8, dist < 20)):
+        brightstar = True
     
-    return pointunderneath
+    return np.logical_or(pointunderneath, brightstar)
 
 
 if __name__=="__main__":
