@@ -53,7 +53,7 @@ def cadence_hist(mjd, fields, filt):
 
 # These are all the 1DC observations
 path = '/Users/annaho/Dropbox/Projects/Research/Koala/docs/anna.db'
-engine = create_engine(f'sqlite:///{path}')
+engine = create_engine('sqlite:///%s' %path)
 
 df = pd.read_sql('Summary', engine)
 
@@ -61,10 +61,15 @@ df = pd.read_sql('Summary', engine)
 
 # Load in the relevant info
 mjd = df['expMJD']
+print(Time(min(mjd), format='mjd').iso)
+print(Time(max(mjd), format='mjd').iso)
 fields = df['fieldID']
 filt = df['filter']
 
+fieldids = np.unique(fields)
+np.savetxt("fieldlist.txt", fieldids, fmt='%s')
+
 # Make the cadence histogram
-cadence_hist(mjd, fields, filt)
+# cadence_hist(mjd, fields, filt)
 
 # Number of epochs as a function of position in the sky
