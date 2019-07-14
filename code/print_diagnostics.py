@@ -12,7 +12,7 @@ from penquins import Kowalski
 import glob
 
 
-names = np.loadtxt("/Users/annaho/Dropbox/Projects/Research/Koala/code/keep_field_791_792.txt", dtype=str)
+names = np.loadtxt("/Users/annaho/Dropbox/Projects/Research/Koala/code/toscan_byeye.txt", dtype=str)
 
 # Log onto Kowalski and ZTFquery
 username = 'ah'
@@ -57,52 +57,57 @@ def get_dets(name):
          }
          }
     query_result = s.query(query=q)
-    out = query_result['result_data']['query_result']
-    return out
+    try:
+        out = query_result['result_data']['query_result']
+        return out
+    except:
+        return None
 
 
 def get_lc(name):
     out = get_dets(name)
     jd = []
+    dt = []
     mag = []
     emag = []
     filt = []
     pid = []
 
-    for det in out:
-        cand = det['candidate']
+    if out is not None:
+        for det in out:
+            cand = det['candidate']
 
-        current_jd = cand['jd']
-        current_mag = cand['magpsf']
-        current_emag = cand['sigmapsf']
-        current_filter = cand['fid']
-        current_pid = cand['programid']
+            current_jd = cand['jd']
+            current_mag = cand['magpsf']
+            current_emag = cand['sigmapsf']
+            current_filter = cand['fid']
+            current_pid = cand['programid']
 
-        jd.append(current_jd)
-        mag.append(current_mag)
-        emag.append(current_emag)
-        filt.append(current_filter)
-        pid.append(current_pid)
+            jd.append(current_jd)
+            mag.append(current_mag)
+            emag.append(current_emag)
+            filt.append(current_filter)
+            pid.append(current_pid)
 
-    jd = np.array(jd)
-    mag = np.array(mag)
-    emag = np.array(emag)
-    filt = np.array(filt)
-    pid = np.array(pid)
+        jd = np.array(jd)
+        mag = np.array(mag)
+        emag = np.array(emag)
+        filt = np.array(filt)
+        pid = np.array(pid)
 
-    # Sort in order of jd
-    order = np.argsort(jd)
-    jd = jd[order]
-    dt = jd-jd[0]
-    mag = mag[order]
-    emag = emag[order]
-    filt = filt[order] 
-    pid = pid[order]
+        # Sort in order of jd
+        order = np.argsort(jd)
+        jd = jd[order]
+        dt = jd-jd[0]
+        mag = mag[order]
+        emag = emag[order]
+        filt = filt[order] 
+        pid = pid[order]
     return jd,dt,mag,emag,filt,pid
 
 
 def plot_lc(name, ra, dec):
-    jd,dt,mag,emag,filt = get_lc(name)
+    jd,dt,mag,emag,filt,pid = get_lc(name)
     fname = "%s_lc.png" %name
     plt.figure()
 
@@ -188,7 +193,9 @@ def plot_ls(name,ra,dec):
 
 
 def run():
-    for ii,name in enumerate(names):
+    names = np.loadtxt("toscan_byeye.txt", dtype=str)
+    ind = np.where(names=='ZTF18aahjcrq')[0][0]
+    for ii,name in enumerate(names[ind:]):
         print(ii,name)
         ra, dec = get_pos(name)
         print("plotting light curves")
@@ -199,3 +206,6 @@ def run():
         plot_ps1(name,ra,dec)
         print("plotting legacysurvey image")
         plot_ls(name,ra,dec)
+
+if __name__=="__main__":
+    run()

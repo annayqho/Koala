@@ -124,9 +124,19 @@ if __name__=="__main__":
 
     fig,axarr = plt.subplots(1,2, figsize=(8,4))
 
-    cands = ['ZTF18abtmbaz', 'ZTF18abvkwla', 'ZTF18abwzedh', 'ZTF18aceaape', 'ZTF18acwtydh', 'ZTF19aaaasxu', 'ZTF18abtgkdo', 'ZTF18abtslai', 'ZTF18abtslci']
-
+    cands = np.loadtxt("toscan_byeye.txt", dtype=str)
+    m = marshal.MarshalAccess()
+    m.get_target_classification(cands)
+    classes = []
     for cand in cands:
+        classes.append(m.get_target_classification(cand).values[0])
+    classes = np.array(classes)
+    
+    # Choose the Ia SNe and calculate their trise and tfade
+    isia = np.array(['Ia' in val for val in classes])
+    snia = cands[isia]
+
+    for sn in snia:
         print(cand)
         # get the LC from the marshal
         marshal.download_lightcurve(cand)
@@ -149,16 +159,16 @@ if __name__=="__main__":
     ax.set_xlabel("Rise Time in Days", fontsize=16)
     ax.set_ylabel("Number of Objects", fontsize=16)
 
-    ax = axarr[1]
-    fades_all = np.array(fades_all)
-    ax.hist(fades_all[fades_all>0], histtype='step', color='k')
-    ax.axvline(x=4.5, c='k', lw=2)
-    ax.axvline(x=18, c='r', lw=2, label="Ia SN")
-    ax.axvline(x=2, c='k', lw=2, label="FBOT")
+    # ax = axarr[1]
+    # fades_all = np.array(fades_all)
+    # ax.hist(fades_all[fades_all>0], histtype='step', color='k')
+    # ax.axvline(x=4.5, c='k', lw=2)
+    # ax.axvline(x=18, c='r', lw=2, label="Ia SN")
+    # ax.axvline(x=2, c='k', lw=2, label="FBOT")
 
-    ax.set_xlabel("Fade Time in Days", fontsize=16)
-    ax.set_ylabel("Number of Objects", fontsize=16)
-    ax.tick_params(labelsize=14, axis='both')
+    # ax.set_xlabel("Fade Time in Days", fontsize=16)
+    # ax.set_ylabel("Number of Objects", fontsize=16)
+    # ax.tick_params(labelsize=14, axis='both')
 
-    plt.tight_layout()
-    plt.show()
+    # plt.tight_layout()
+    # plt.show()

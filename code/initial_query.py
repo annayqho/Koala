@@ -16,13 +16,13 @@ from kowalski_login import logon
 
 
 if __name__=="__main__":
+    s = logon()
     allfields = np.loadtxt("fieldlist.txt")
 
     for field in allfields:
         print("running field %s" %field)
         outf = "field%s_filter1.txt" %field
         if len(glob.glob(outf))==0:
-            s = logon()
             q = {"query_type": "find",
                  "query": {
                      "catalog": "ZTF_alerts",

@@ -7,12 +7,17 @@ def calc(search):
 
     cands = np.loadtxt(allf[0], dtype=str)
     for f in allf:
-        cands = np.append(cands, np.loadtxt(f, dtype=str))
+        #print(f)
+        newcands = np.loadtxt(f, dtype=str)
+        #print(newcands)
+        cands = np.append(cands, newcands)
 
     ucands = np.unique(cands)
+    np.savetxt("passed_lc_check.txt", ucands, fmt='%s')
     return len(allf), len(ucands)
 
 
 if __name__=="__main__":
-    print(calc("field*filter1.txt"))
-    print(calc("field*nostars.txt"))
+    #print(calc("field*filter1.txt"))
+    #print(calc("field*nostars.txt"))
+    print(calc("field*goodlc.txt"))

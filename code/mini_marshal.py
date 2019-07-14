@@ -7,7 +7,7 @@ from astropy.io import fits
 from penquins import Kowalski
 from ztfquery import query, marshal
 
-names = np.loadtxt("/Users/annaho/Dropbox/Projects/Research/Koala/code/keep_field_791_792.txt", dtype=str)
+names = np.loadtxt("toscan_byeye.txt", dtype=str)
 
 # Initialize the table
 print('<!doctype html>')
