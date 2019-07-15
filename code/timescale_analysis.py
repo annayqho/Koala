@@ -72,6 +72,7 @@ def fade(jd_all, dt_all, mag_all, emag_all, pid_all, filt_all, filt=1):
                 tval = np.interp(mpeak+1, mag[ind:][order], dt[ind:][order], left=-999, right=-999)
                 if tval != -999:
                     tfade = tval - tpeak
+                    print(tfade)
                     if tfade < 8:
                         return 1
                     else:
@@ -97,6 +98,7 @@ if __name__=="__main__":
     names = np.loadtxt("real.txt", dtype=str)
     keep = []
 
+    names = ['ZTF19aapfmki']
     for ii,sn in enumerate(names):
         # 0: no info, 1: short, 2: long
         print(ii)

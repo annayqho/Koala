@@ -36,11 +36,11 @@ def cadence_hist(mjd, fields, filt):
     plt.figure(figsize=(6,4))
     weights = np.ones_like(g_dt_all)/float(len(g_dt_all))
     plt.hist(
-            g_dt_all, histtype='step', range=(0,10),
+            g_dt_all, histtype='step', range=(-0.5,10.5), bins=11,
             color='#140b34', weights=weights, label="$g$-band", lw=2)
     weights = np.ones_like(r_dt_all)/float(len(r_dt_all))
     plt.hist(
-            r_dt_all, histtype='step', range=(0,10),
+            r_dt_all, histtype='step', range=(-0.5,10.5), bins=11,
             color='#e55c30', weights=weights, label="$r$-band", lw=2)
     plt.xlabel("Nights Between Observations (Days)", fontsize=16)
     plt.ylabel("Fraction of Observations", fontsize=16)
@@ -51,9 +51,75 @@ def cadence_hist(mjd, fields, filt):
     plt.savefig("cadence_hist.eps", format='eps', dpi=500)
 
 
+def calc_efficiency(dt):
+    n_prevday = np.sum(np.logical_and(dt > 0.5, dt < 1.5), axis=0) > 0
+    n_2d = np.sum(np.logical_and(dt > 1.5, dt < 2.5), axis=0) > 0
+    n_3in5 = np.sum(np.logical_and(dt > 0, dt < 5.5), axis=0) >= 3
+    good_time = np.logical_and.reduce((n_prevday, n_2d, n_3in5))
+    eff = sum(good_time)#/len(good_time)
+    return eff
+
+
+def get_efficiency(mjd, fields, filt, fieldid):
+    choose = np.logical_and(fields == fieldid, filt=='g')
+    g_obsdates = mjd[choose].values
+    g_dt = g_obsdates[None,:]-g_obsdates[:,None]
+    g_eff = calc_efficiency(g_dt)
+
+    choose = np.logical_and(fields == fieldid, filt=='r')
+    r_obsdates = mjd[choose].values
+    r_dt = r_obsdates[None,:]-r_obsdates[:,None]
+    r_eff = calc_efficiency(r_dt)
+    return g_eff, r_eff
+
+
+def get_nobs(fields, filt, fieldid):
+    choose = np.logical_and(fields == fieldid, filt=='g')
+    g_nobs = sum(choose)
+
+    choose = np.logical_and(fields == fieldid, filt=='r')
+    r_nobs = sum(choose)
+    return g_nobs, r_nobs
+
+
+def plot_efficiencies():
+    nflds = len(fieldids)
+    geff = np.zeros(nflds)
+    reff = np.zeros(nflds)
+
+    for ii,fid in enumerate(fieldids):
+        gval, rval = get_efficiency(mjd, fields, filt, fid)
+    #    gval, rval= get_nobs(fields, filt, fid)
+        if fid==554:
+            print(gval, rval)
+        geff[ii] = gval
+        reff[ii] = rval
+
+    print(sum(geff))
+    print(sum(reff))
+
+    plt.hist(
+            reff, histtype='step', color='#e55c30', lw=2, 
+            bins=11)
+            #range=(-0.05, 1.05), bins=11, label="$r$")
+
+    plt.hist(
+            geff, histtype='step', color='#140b34', lw=2, 
+            bins=11)
+            #range=(-0.05, 1.05), bins=11, label="$g$")
+
+    plt.tick_params(axis='both', labelsize=16)
+    plt.xlabel("Number of Obs", fontsize=16)
+    plt.ylabel("Number of Fields", fontsize=16)
+    plt.legend(fontsize=14)
+    plt.tight_layout()
+    #plt.savefig("nobs.eps", format='eps', dpi=500)
+    plt.show()
+
+
 # These are all the 1DC observations
 path = '/Users/annaho/Dropbox/Projects/Research/Koala/docs/anna.db'
-engine = create_engine('sqlite:///%s' %path)
+engine = create_engine('sqlite:////Users/annaho/Dropbox/Projects/Research/Koala/data/anna.db')
 
 df = pd.read_sql('Summary', engine)
 
@@ -67,9 +133,7 @@ fields = df['fieldID']
 filt = df['filter']
 
 fieldids = np.unique(fields)
-np.savetxt("fieldlist.txt", fieldids, fmt='%s')
+# np.savetxt("fieldlist.txt", fieldids, fmt='%s')
 
 # Make the cadence histogram
-# cadence_hist(mjd, fields, filt)
-
-# Number of epochs as a function of position in the sky
+cadence_hist(mjd, fields, filt)

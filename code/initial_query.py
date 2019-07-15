@@ -18,6 +18,7 @@ from kowalski_login import logon
 if __name__=="__main__":
     s = logon()
     allfields = np.loadtxt("fieldlist.txt")
+    allfields = [528]
 
     for field in allfields:
         print("running field %s" %field)
@@ -51,4 +52,4 @@ if __name__=="__main__":
             names = np.unique(np.array(names))
             print("%s unique cands" %len(names))
 
-            np.savetxt(outf, names, fmt='%s')
+            #np.savetxt(outf, names, fmt='%s')

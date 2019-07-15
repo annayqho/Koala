@@ -162,6 +162,7 @@ if __name__=="__main__":
     # ax = axarr[1]
     # fades_all = np.array(fades_all)
     # ax.hist(fades_all[fades_all>0], histtype='step', color='k')
+
     # ax.axvline(x=4.5, c='k', lw=2)
     # ax.axvline(x=18, c='r', lw=2, label="Ia SN")
     # ax.axvline(x=2, c='k', lw=2, label="FBOT")
