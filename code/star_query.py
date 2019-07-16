@@ -75,11 +75,11 @@ if __name__=="__main__":
     s = logon()
 
     # Read in all of the candidates, and only choose the unique ones 
-    files = glob.glob("*filter1.txt")
+    files = glob.glob("recent*filter1.txt")
     for inputf in files:
         field = inputf.split("_")[0]
         print(field)
-        newfname = field+"_nostars.txt"
+        newfname = "recent_"+field+"_nostars.txt"
         if len(glob.glob(newfname)) == 0:
             print("removing stars...")
             cands = np.loadtxt(inputf,dtype=str)
@@ -92,4 +92,4 @@ if __name__=="__main__":
                         isstar[ii] = star_check(cand)
                 frac_star = np.round(sum(isstar)/ncands * 100, 2)
                 print("removed %s percent of sources" %frac_star)
-                np.savetxt(field+"_nostars.txt", ucands[~isstar], fmt='%s')
+                np.savetxt(newfname, ucands[~isstar], fmt='%s')

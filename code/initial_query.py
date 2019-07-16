@@ -18,17 +18,16 @@ from kowalski_login import logon
 if __name__=="__main__":
     s = logon()
     allfields = np.loadtxt("fieldlist.txt")
-    allfields = [528]
 
     for field in allfields:
         print("running field %s" %field)
-        outf = "field%s_filter1.txt" %field
+        outf = "recent_field%s_filter1.txt" %field
         if len(glob.glob(outf))==0:
             q = {"query_type": "find",
                  "query": {
                      "catalog": "ZTF_alerts",
                      "filter": {
-                             'candidate.jd': {'$gt': 2458211, '$lt': 2458585},
+                             'candidate.jd': {'$gt': 2458585, '$lt': 2458682},
                              'candidate.field': {'$eq': field},
                              'candidate.rb': {'$gt': 0.3},
                              'candidate.ndethist': {'$gt': 2},
@@ -52,4 +51,4 @@ if __name__=="__main__":
             names = np.unique(np.array(names))
             print("%s unique cands" %len(names))
 
-            #np.savetxt(outf, names, fmt='%s')
+            np.savetxt(outf, names, fmt='%s')

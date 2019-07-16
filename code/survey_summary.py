@@ -8,6 +8,7 @@ rc("text", usetex=True)
 from astropy.time import Time
 from sqlalchemy import create_engine
 import pandas as pd
+import requests
 
 
 def cadence_hist(mjd, fields, filt):
@@ -117,6 +118,19 @@ def plot_efficiencies():
     plt.show()
 
 
+def get_footprint(fields,nights,night):
+    """ for a given night, get the footprint """
+    choose = nights == night
+    fids = list(np.unique(fields[choose]))
+    fids = [str(val) for val in fids]
+    fstr = "%2C%0D%0A+".join(fids)
+    url = "http://yupana.caltech.edu/cgi-bin/ptf/tb//zoc?skycoverage=1&fieldlist=%s&submitskycoverage=SUBMIT+Sky+Coverage" %fstr
+    out = requests.get(url)
+    toparse = out.text.split('\n')
+    footprint = float((toparse[6].strip()).split("=")[-1])
+    return footprint
+
+
 # These are all the 1DC observations
 path = '/Users/annaho/Dropbox/Projects/Research/Koala/docs/anna.db'
 engine = create_engine('sqlite:////Users/annaho/Dropbox/Projects/Research/Koala/data/anna.db')
@@ -127,13 +141,21 @@ df = pd.read_sql('Summary', engine)
 
 # Load in the relevant info
 mjd = df['expMJD']
-print(Time(min(mjd), format='mjd').iso)
-print(Time(max(mjd), format='mjd').iso)
 fields = df['fieldID']
 filt = df['filter']
-
+nights = df['night']
 fieldids = np.unique(fields)
+unights = np.unique(nights)
+
+coverage = []
+
+for night in unights:
+    print(night)
+    area = get_footprint(fields,nights,night)
+    print(area)
+    coverage.append(area)
+
 # np.savetxt("fieldlist.txt", fieldids, fmt='%s')
 
 # Make the cadence histogram
-cadence_hist(mjd, fields, filt)
+# cadence_hist(mjd, fields, filt)
