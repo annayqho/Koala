@@ -77,7 +77,7 @@ if __name__=="__main__":
     # Read in all of the candidates, and only choose the unique ones 
     files = glob.glob("recent*filter1.txt")
     for inputf in files:
-        field = inputf.split("_")[0]
+        field = inputf.split("_")[1]
         print(field)
         newfname = "recent_"+field+"_nostars.txt"
         if len(glob.glob(newfname)) == 0:
@@ -88,8 +88,7 @@ if __name__=="__main__":
             if ncands > 0:
                 isstar = np.zeros(ucands.shape, dtype=bool)
                 for ii,cand in enumerate(ucands):
-                    if cand not in ["ZTF17aabwrow", "ZTF17aabwnkn", "ZTF17aabwnic", "ZTF17aabwnhy", "ZTF17aabwnhv", "ZTF17aabwnhh", "ZTF17aabwngz", "ZTF17aabtykg", "ZTF17aaapviw", "ZTF17aaapviu", "ZTF17aaapvim", "ZTF17aaapvid", "ZTF17aaapmar", "ZTF17aaaplwv", "ZTF17aaaplsj", "ZTF17aaaplrc", "ZTF18aabpyzi", "ZTF17aabxpvk", "ZTF17aabxiva", "ZTF17aabxisx", "ZTF17aabwtib", "ZTF17aaapluk", "ZTF18aabqenz", "ZTF18aabqdia", "ZTF17aabmifv", "ZTF18aabjhfp","ZTF18aabjjom"]:
-                        isstar[ii] = star_check(cand)
+                    isstar[ii] = star_check(cand)
                 frac_star = np.round(sum(isstar)/ncands * 100, 2)
                 print("removed %s percent of sources" %frac_star)
                 np.savetxt(newfname, ucands[~isstar], fmt='%s')

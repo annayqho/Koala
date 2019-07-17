@@ -12,7 +12,7 @@ from penquins import Kowalski
 import glob
 
 
-names = np.loadtxt("/Users/annaho/Dropbox/Projects/Research/Koala/code/toscan_byeye.txt", dtype=str)
+names = np.loadtxt("/Users/annaho/Dropbox/Projects/Research/Koala/code/recent_passed_lc_check.txt", dtype=str)
 
 # Log onto Kowalski and ZTFquery
 username = 'ah'
@@ -193,9 +193,8 @@ def plot_ls(name,ra,dec):
 
 
 def run():
-    names = np.loadtxt("toscan_byeye.txt", dtype=str)
-    ind = np.where(names=='ZTF18aahjcrq')[0][0]
-    for ii,name in enumerate(names[ind:]):
+    names = np.loadtxt("recent_passed_lc_check.txt", dtype=str)
+    for ii,name in enumerate(names):
         print(ii,name)
         ra, dec = get_pos(name)
         print("plotting light curves")

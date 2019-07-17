@@ -13,11 +13,11 @@ def calc(search):
         cands = np.append(cands, newcands)
 
     ucands = np.unique(cands)
-    np.savetxt("passed_lc_check.txt", ucands, fmt='%s')
+    np.savetxt("recent*passed_lc_check.txt", ucands, fmt='%s')
     return len(allf), len(ucands)
 
 
 if __name__=="__main__":
-    #print(calc("field*filter1.txt"))
-    #print(calc("field*nostars.txt"))
-    print(calc("field*goodlc.txt"))
+    #print(calc("recent*field*filter1.txt"))
+    #print(calc("recent*field*nostars.txt"))
+    print(calc("recent*field*goodlc.txt"))

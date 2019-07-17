@@ -7,7 +7,7 @@ from astropy.io import fits
 from penquins import Kowalski
 from ztfquery import query, marshal
 
-names = np.loadtxt("toscan_byeye.txt", dtype=str)
+names = np.loadtxt("recent_passed_lc_check.txt", dtype=str)
 
 # Initialize the table
 print('<!doctype html>')
