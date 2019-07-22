@@ -72,8 +72,10 @@ def plot_18cow_margutti():
 
 
 def plot_koala():
-    # Plot the X-band Koala detection
-    plt.errorbar(81, 8.3E39, 0.0006*8.3E39, c='blue', fmt='*', ms=20)
+    # Plot the X-band Koala detections
+    f = np.array([8.3E39,5.85E38])
+    plt.errorbar([81,313], f, 0.0006*f, c='blue', fmt='*', ms=20)
+    plt.plot([81,313], f, c='blue', lw=2)
     plt.text(
             70, 8.3E39, "ZTF18abvkwla", fontsize=14, 
             horizontalalignment='right', verticalalignment='center')
@@ -95,12 +97,7 @@ z = z_raw[~bad]
 dcm = Planck15.luminosity_distance(z=z).cgs.value
 llim = 3E9*flim*1E-6*1E-23*4*np.pi*dcm**2
 plt.scatter(dt, llim, marker='v', s=30, c='k',
-        label='VLASS limits, 2--4 GHz')
-
-plt.axhline(y=2E39, ls='--', lw=0.5, c='k')
-plt.text(
-        10, 1E39, "15 GHz peak lum of 18cow", fontsize=12, 
-        horizontalalignment='left', verticalalignment='bottom')
+        label='FBOT VLASS limits, 2--4 GHz')
 
 # Formatting
 plt.tick_params(axis='both', labelsize=14)
@@ -111,5 +108,5 @@ plt.xlabel("$\Delta t$ [days]", fontsize=16)
 plt.legend(fontsize=12, loc='lower right')
 plt.tight_layout()
 
-plt.show()
-#plt.savefig("vlass_lims.png")
+#plt.show()
+plt.savefig("vlass_lims.eps", format='eps', dpi=500)
