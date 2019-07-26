@@ -77,7 +77,7 @@ def plot_koala():
     plt.errorbar([81,313], f, 0.0006*f, c='blue', fmt='*', ms=20)
     plt.plot([81,313], f, c='blue', lw=2)
     plt.text(
-            70, 8.3E39, "ZTF18abvkwla", fontsize=14, 
+            70, 1E40, "ZTF18abvkwla", fontsize=14, 
             horizontalalignment='right', verticalalignment='center')
 
 
@@ -108,5 +108,5 @@ plt.xlabel("$\Delta t$ [days]", fontsize=16)
 plt.legend(fontsize=12, loc='lower right')
 plt.tight_layout()
 
-#plt.show()
-plt.savefig("vlass_lims.eps", format='eps', dpi=500)
+plt.show()
+#plt.savefig("vlass_lims.eps", format='eps', dpi=500)
