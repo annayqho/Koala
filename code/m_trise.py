@@ -149,37 +149,39 @@ def cow():
     """ Plot 18cow """
     x = 1.5
     y = -19.9
-    ax.scatter(x, y, marker='*', c='#1f78b4', s=300)
-    ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
-            color='#1f78b4')
-    ax.text(x+losx, y+losy, "18cow", fontsize=12)
+    ax.errorbar(x, y, xerr=1, marker='*', c='#1f78b4', markersize=30)
+    #ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
+    #        color='#1f78b4')
+    ax.text(x+losx, y+losy, "18cow", fontsize=16)
 
 
 def asu():
     """ Plot iPTF16asu, this is g-band though """
     x = 4
     y = -20.4
-    ax.scatter(x, y, marker='*', c='#1f78b4', s=300)
-    ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
-            color='#1f78b4')
-    ax.text(x+losx, y+losy, "16asu", fontsize=12)
+    ax.scatter(x, y, marker='*', c='#1f78b4', s=500)
+    #ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
+    #        color='#1f78b4')
+    ax.text(x+losx, y-2*losy, "PTF16asu", fontsize=16, verticalalignment='top',
+            horizontalalignment='center')
 
 
 def koala():
     """ Plot koala"""
-    x = 2
+    x = 1.5
     y = -20.6
-    ax.scatter(x, y, marker='*', c='#1f78b4', s=300)
-    ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
-            color='#1f78b4')
-    ax.text(x+losx, y+losy, "Koala", fontsize=12)
+    ax.errorbar(x, y, xerr=0.5, fmt='*', c='#1f78b4', markersize=30)
+    #ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
+    #        color='#1f78b4')
+    ax.text(x+losx, y+losy, "ZTF18abvkwla", fontsize=16)
 
 
 def sn06aj():
     """ Plot SN2006aj """
     x = 6.4/24
     y = -18.4
-    ax.scatter(x, y, marker='*', c='#1f78b4', s=300)
+    ax.scatter(x, y, marker='*', c='#1f78b4', s=800)
+    ax.scatter(0, 0, marker='*', c='#1f78b4', s=200, label="Candidate Engines")
     ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
             color='#1f78b4')
     ax.text(x+losx, y+losy, "SN2006aj", fontsize=12)
@@ -189,10 +191,10 @@ def gep():
     """ Plot gep"""
     x = 3
     y = -19.5
-    ax.scatter(x, y, marker='*', c='#1f78b4', s=300, zorder=5)
-    ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
-            color='#1f78b4', zorder=5)
-    ax.text(x+losx, y+losy, "18gep", fontsize=12)
+    ax.scatter(x, y, marker='*', c='#1f78b4', s=500, zorder=5)
+    #ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
+    #        color='#1f78b4', zorder=5)
+    ax.text(x+losx, y+losy, "ZTF18abukavn", fontsize=16)
 
 
 
@@ -206,6 +208,10 @@ fbot()
 kepler()
 ptf09uj()
 sn06aj()
+
+#plt.axvspan(0 ,5 , facecolor='white', edgecolor='k', lw=3)
+#plt.axvline(x=3, ls='--', c='k')
+
 ax.legend(loc='upper right', fontsize=14)
 ax.set_xlabel("Rise Time (days)", fontsize=16)
 ax.set_ylabel("Peak Magnitude", fontsize=16)
