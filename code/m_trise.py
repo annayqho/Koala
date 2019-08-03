@@ -21,27 +21,34 @@ losy = -0.06
 def plot_ia():
     """ Plot some Ia SNe from ZTF, using Yuhan's light curves
     and also a IIb """
-    ax.scatter(10, -19, marker='D', color='lightblue')
+    ax.scatter(10, -19, marker='D', color='k')
     ax.text(
             10-losx, -19-losy, 'SN Ia', fontsize=12,
             horizontalalignment='right')
-    ax.scatter(8, -18.2, marker='D', color='lightblue')
+    ax.scatter(8, -18.2, marker='D', color='k')
     ax.text(
             8+losx, -18.2+losy, 'SN IIb', fontsize=12)
 
 
 def plot_ibn():
     """ Ibn SNe: Table 4 in Hosseinzadeh 2017 """
-    kwargs = dict(mec='#b2df8a', marker='s', mfc='white', c='#b2df8a')
-    akwargs = dict(length_includes_head=True, head_width=0.05, color='#b2df8a')
+    #kwargs = dict(mec='#b2df8a', marker='s', mfc='white', c='#b2df8a')
+    kwargs = dict(edgecolor='k', marker='s', facecolor='white')
+    ekwargs = dict(mec='k', marker='s', mfc='white', c='darkgrey')
+    #akwargs = dict(
+        #length_includes_head=True, head_width=0.05, color='#b2df8a')
+    akwargs = dict(
+            length_includes_head=True, head_width=0.05, color='darkgrey')
     dx = -0.5 
     ax.scatter(
             0,0,facecolor='white', 
-            edgecolor='#b2df8a', label="Ibn", marker='s') 
+            edgecolor='k', label="Ibn", marker='s', zorder=3) 
 
     # SN 1999cq
     ax.errorbar(
-        3.9, -19.73, yerr=0.10, **kwargs)
+        3.9, -19.73, yerr=0.10, **ekwargs)
+    ax.scatter(
+        3.9, -19.73, **kwargs)
 
     # PTF11rfh
     # Shri says error bar too big
@@ -49,67 +56,90 @@ def plot_ibn():
     #         7, -20.49, xerr=4.7, yerr=0.99, color=ibn_c, marker=ibn_m, label="Ibn")
 
     # LSQ12btw
-    ax.errorbar(3.8, -19.44, yerr=0.04, **kwargs)
+    ax.errorbar(3.8, -19.44, yerr=0.04, **ekwargs)
+    ax.scatter(3.8, -19.44, **kwargs)
     ax.arrow(3.3, -19.73, dx, 0, **akwargs)
 
     # PTF12ldy
-    ax.errorbar(6.2, -19.20, xerr=2.0, yerr=0.02, **kwargs)
+    ax.errorbar(6.2, -19.20, xerr=2.0, yerr=0.02, **ekwargs)
+    ax.scatter(6.2, -19.20, **kwargs)
 
     # iPTF13beo
-    ax.errorbar(1.6, -18.57, xerr=0.9, yerr=0.05, **kwargs)
+    ax.errorbar(1.6, -18.57, xerr=0.9, yerr=0.05, **ekwargs)
+    ax.scatter(1.6, -18.57, **kwargs)
 
     # LSQ13ccw
-    ax.errorbar(4.7, -18.46, xerr=2.1, yerr=0.06, **kwargs)
+    ax.errorbar(4.7, -18.46, xerr=2.1, yerr=0.06, **ekwargs)
+    ax.scatter(4.7, -18.46, **kwargs)
 
     # iPTF14aki
-    ax.errorbar(7.0, -19.30, xerr=1.9, yerr=0.03, **kwargs)
+    ax.errorbar(7.0, -19.30, xerr=1.9, yerr=0.03, **ekwargs)
+    ax.scatter(7.0, -19.30, **kwargs)
 
     # SN 2014bk
-    ax.errorbar(9.9, -19.99, yerr=0.65, **kwargs)
+    ax.errorbar(9.9, -19.99, yerr=0.65, **ekwargs)
+    ax.scatter(9.9, -19.99, **kwargs)
     ax.arrow(9.9, -19.99, dx, 0, **akwargs)
 
     # SN 2015U
-    ax.errorbar(8.8, -19.41, xerr=0.9, yerr=0.27, **kwargs)
+    ax.errorbar(8.8, -19.41, xerr=0.9, yerr=0.27, **ekwargs)
+    ax.scatter(8.8, -19.41, **kwargs)
 
     # iPTF15ul
-    ax.errorbar(3, -20.43, xerr=0.7, yerr=0.26, **kwargs)
+    ax.errorbar(3, -20.43, xerr=0.7, yerr=0.26, **ekwargs)
+    ax.scatter(3, -20.43, **kwargs)
 
     # iPTF15akq
-    ax.errorbar(8.3, -18.62, xerr=2.7, yerr=0.31, **kwargs)
+    ax.errorbar(8.3, -18.62, xerr=2.7, yerr=0.31, **ekwargs)
+    ax.scatter(8.3, -18.62, **kwargs)
 
 
 def fbot():
     """ The PanSTARRS FBOT (gold and silveR) sample. 
     Taken fro Table 4 of Drout+14 """
-    kwargs = dict(mec='#a6cee3', marker='o', mfc='white', c='#a6cee3')
-    akwargs = dict(length_includes_head=True, head_width=0.05, color='#a6cee3')
+    #kwargs = dict(mec='#a6cee3', marker='o', 
+    #        mfc='white', c='#a6cee3', zorder=3)
+    kwargs = dict(edgecolor='k', marker='o', 
+            facecolor='white', zorder=3)
+    ekwargs = dict(mec='k', marker='o', mfc='white', c='darkgrey')
+    akwargs = dict(
+            length_includes_head=True, head_width=0.05, 
+            color='darkgrey', zorder=3)
     dx = -0.5
 
     # for legend
     ax.scatter(
-            0,0,facecolor='white', edgecolor='#a6cee3', label="Unclassified") 
+            0,0,facecolor='white', edgecolor='k', 
+            label="Unclassified", zorder=3) 
 
     # PS1-10bjp
     ax.errorbar(
-            3.4, -18.14, xerr=0.1, yerr=0.11, **kwargs)
+            3.4, -18.14, xerr=0.1, yerr=0.11, **ekwargs)
+    ax.scatter(
+            3.4, -18.14, **kwargs)
 
     # PS1-11qr
-    ax.errorbar(2.9, -19.56, xerr=0.1, yerr=0.08, **kwargs)
+    ax.errorbar(2.9, -19.56, xerr=0.1, yerr=0.08, **ekwargs)
+    ax.scatter(2.9, -19.56, **kwargs)
 
     # PS1-11bbq
-    ax.errorbar(3.3, -19.73, yerr=0.10, **kwargs)
+    ax.errorbar(3.3, -19.73, yerr=0.10, **ekwargs)
+    ax.scatter(3.3, -19.73, **kwargs)
     ax.arrow(3.3, -19.73, dx, 0, **akwargs)
 
     # PS1-12bv
-    ax.errorbar(2.2, -19.49, yerr=0.07, **kwargs)
+    ax.errorbar(2.2, -19.49, yerr=0.07, **ekwargs)
+    ax.scatter(2.2, -19.49, **kwargs)
     ax.arrow(2.2, -19.49, dx, 0, **akwargs)
 
     # PS1-12brf
-    ax.errorbar(1, -18.43, yerr=0.08, **kwargs)
+    ax.errorbar(1, -18.43, yerr=0.08, **ekwargs)
+    ax.scatter(1, -18.43, **kwargs)
     ax.arrow(1, -18.43, dx, 0, **akwargs)
 
     # PS1-13ess
-    ax.errorbar(8.9, -18.43, yerr=0.18, **kwargs)
+    ax.errorbar(8.9, -18.43, **ekwargs)
+    ax.scatter(8.9, -18.43, **kwargs)
     ax.arrow(8.9, -18.43, dx, 0, **akwargs)
 
     # Now from DES ... but these are in g-band
@@ -134,22 +164,23 @@ def fbot():
 
 def kepler():
     """ Plot the Kepler transient """
-    ax.scatter(2.2, -18.8, marker='D', c='lightblue'), 
-    ax.text(2.2+losx, -18.8+losy, "15K", fontsize=12)
+    ax.scatter(2.2, -18.8, marker='D', c='k', zorder=3)
+    ax.text(2.2+losx, -18.8+losy, "15K", fontsize=12, zorder=3)
 
 
 
 def ptf09uj():
     """ Plot PTF09uj """
-    ax.scatter(3.5, -19, marker='D', c='lightblue')
-    ax.text(3.5+losx, -19+losy, "09uj", fontsize=12)
+    ax.scatter(3.5, -19, marker='D', c='k', zorder=3)
+    ax.text(3.5, -19+losy, "09uj", fontsize=12, zorder=3,
+            horizontalalignment='right')
 
 
 def cow():
     """ Plot 18cow """
     x = 1.5
     y = -19.9
-    ax.errorbar(x, y, xerr=1, marker='*', c='#1f78b4', markersize=30)
+    ax.errorbar(x, y, xerr=1, marker='*', c='k', markersize=30)
     #ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
     #        color='#1f78b4')
     ax.text(x+losx, y+losy, "18cow", fontsize=16)
@@ -159,42 +190,45 @@ def asu():
     """ Plot iPTF16asu, this is g-band though """
     x = 4
     y = -20.4
-    ax.scatter(x, y, marker='*', c='#1f78b4', s=500)
+    ax.scatter(x, y, marker='*', c='k', s=500, zorder=3)
     #ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
     #        color='#1f78b4')
     ax.text(x+losx, y-2*losy, "PTF16asu", fontsize=16, verticalalignment='top',
-            horizontalalignment='center')
+            horizontalalignment='right', zorder=3)
 
 
 def koala():
     """ Plot koala"""
     x = 1.5
     y = -20.6
-    ax.errorbar(x, y, xerr=0.5, fmt='*', c='#1f78b4', markersize=30)
+    ax.errorbar(x, y, xerr=0.5, fmt='*', c='k', markersize=30)
     #ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
     #        color='#1f78b4')
-    ax.text(x+losx, y+losy, "ZTF18abvkwla", fontsize=16)
+    ax.text(
+            x+losx, y+2*losy, "ZTF18abvkwla", fontsize=16,
+            horizontalalignment='center', verticalalignment='bottom')
 
 
 def sn06aj():
     """ Plot SN2006aj """
     x = 6.4/24
     y = -18.4
-    ax.scatter(x, y, marker='*', c='#1f78b4', s=800)
-    ax.scatter(0, 0, marker='*', c='#1f78b4', s=200, label="Candidate Engines")
+    ax.scatter(x, y, marker='*', c='k', s=800, zorder=5)
+    ax.scatter(0, 0, marker='*', c='k', s=200, label="Candidate Engines")
     ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
-            color='#1f78b4')
-    ax.text(x+losx, y+losy, "SN2006aj", fontsize=12)
+            color='k', zorder=3)
+    ax.text(x+3*losx, y-2.5*losy, "SN2006aj", fontsize=12)
 
 
 def gep():
     """ Plot gep"""
     x = 3
     y = -19.5
-    ax.scatter(x, y, marker='*', c='#1f78b4', s=500, zorder=5)
+    ax.scatter(x, y, marker='*', c='k', s=500, zorder=5)
     #ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
     #        color='#1f78b4', zorder=5)
-    ax.text(x+losx, y+losy, "ZTF18abukavn", fontsize=16)
+    ax.text(x+4*losx, y-2*losy, "ZTF18abukavn", fontsize=16,
+            horizontalalignment='right', verticalalignment='top')
 
 
 
@@ -211,16 +245,28 @@ sn06aj()
 
 #plt.axvspan(0 ,5 , facecolor='white', edgecolor='k', lw=3)
 #plt.axvline(x=3, ls='--', c='k')
+ax.axvspan(0,15, color='lightgrey', zorder=0)
 
 ax.legend(loc='upper right', fontsize=14)
 ax.set_xlabel("Rise Time (days)", fontsize=16)
 ax.set_ylabel("Peak Magnitude", fontsize=16)
-ax.set_xlim(0,10.5)
+ax.set_xlim(-0,10.5)
 ax.set_ylim(-21, -18)
 ax.invert_yaxis()
+
+#ax.axvline(x=5, ls='--', c='k')
+
+linex = np.linspace(0,7)
+liney = (-0.10)*linex**3-13
+ax.plot(linex,liney,ls='--',c='k')
+#ax.plot(linex,liney,ls='-',c='red', lw=5)
+#ax.axvline(x=0, lw=10, c='red')
+#ax.plot([0,2.3], [-18,-18], lw=10, c='red')
+#ax.plot([0,5.1], [-21,-21], lw=10, c='red')
+
 
 plt.tick_params(axis='both', labelsize=14)
 plt.tight_layout()
 
-#plt.show()
-plt.savefig("M_trise.png", dpi=500)
+plt.show()
+#plt.savefig("M_trise_grey.png", dpi=500)

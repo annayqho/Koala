@@ -62,7 +62,7 @@ def plot_line(ax, d, t, nufnu, name, label, col, legend=False, zorder=1):
             marker='s'
             fcol = col 
             s=nsize
-            label = 'Relativistic SN'
+            label = 'Rel. SN'
         elif label=='TDE':
             marker='s'
             fcol = 'white' #unfilled
@@ -508,7 +508,7 @@ def othersn(ax):
 
 
 if __name__=="__main__":
-    fig, axarr = plt.subplots(1, 1, figsize=(6,6), sharex=True, sharey=True)
+    fig, ax = plt.subplots(1, 1, figsize=(6,6), sharex=True, sharey=True)
     props = dict(boxstyle='round', facecolor='white')
 
     # viridis color palette
@@ -533,43 +533,47 @@ if __name__=="__main__":
     # and two dark ones.
 
     #maxi(ax)
-    #tde(axarr, '#57106e', legend=True)
-    #asassn14li(axarr, '#57106e', None)
+    #tde(ax, '#57106e', legend=True)
+    #asassn14li(ax, '#57106e', None)
 
-    sn2003L(axarr, 'lightblue', legend=True)
-    sn1979c(axarr, 'lightblue', None)
-    sn1993J(axarr, 'lightblue', None)
-    sn2011dh(axarr, 'lightblue', None)
-    sn2007bg(axarr, 'lightblue', None)
-    sn2003bg(axarr, 'lightblue', None)
+    sn2003L(ax, 'lightblue', legend=True)
+    sn1979c(ax, 'lightblue', None)
+    sn1993J(ax, 'lightblue', None)
+    sn2011dh(ax, 'lightblue', None)
+    sn2007bg(ax, 'lightblue', None)
+    sn2003bg(ax, 'lightblue', None)
 
-    grb030329(axarr, '#f98e09', legend=True)
-    grb130427A(axarr, '#f98e09', None)
+    grb030329(ax, '#f98e09', legend=True)
+    grb130427A(ax, '#f98e09', None)
 
-    sn2009bb(axarr, '#bc3754', legend=True)
-    sn1998bw(axarr, '#bc3754', None)
+    sn2009bb(ax, '#bc3754', legend=True)
+    sn1998bw(ax, '#bc3754', None)
 
-    at2018cow(axarr, 'k', None)
-    koala(axarr, 'k', None)
+    at2018cow(ax, 'k', legend=True)
+    #koala(ax, 'k', None)
 
-    axarr.set_ylabel(
+    ax.set_ylabel(
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
             fontsize=16)
-    axarr.tick_params(axis='both', labelsize=14)
-    axarr.set_xlim(1, 2000) 
-    axarr.set_ylim(1E34, 9E41)
-    axarr.set_xscale('log')
-    axarr.set_yscale('log')
-    axarr.set_xlabel(r"Time [days; rest frame]", fontsize=16)
-    axarr.legend(fontsize=12, loc='upper right', ncol=3)
+    ax.tick_params(axis='both', labelsize=14)
+    ax.set_xlim(1, 2000) 
+    ax.set_ylim(1E34, 9E41)
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.set_xlabel(r"Time [days; rest frame]", fontsize=16)
 
-    #axarr.axhspan(1E34,1E37,edgecolor='k', fc='white', lw=3)
-    axarr.axhline(y=1E37, c='k', ls='--')
-    #axarr.axvspan(1,2000,edgecolor='k', fc='white', lw=3)
-    axarr.text(
+    #ax.scatter(
+    #        0,0,c='k',marker='*',s=100,label="Fast-Lum. Opt. Transient")
+    ax.legend(fontsize=12, loc='upper right', ncol=3, columnspacing=1)
+
+    #ax.axhspan(1E34,1E37,edgecolor='k', fc='white', lw=3)
+    ax.axhline(y=1E37, c='k', ls='--')
+    #ax.axvspan(1,2000,edgecolor='k', fc='white', lw=3)
+    ax.text(
             1.1,9E36,"Ordinary SNe", fontstyle='italic', fontsize=12,
             verticalalignment='top')
 
+
     plt.tight_layout()
     #plt.show()
-    plt.savefig("lum_evolution.png", dpi=500)
+    plt.savefig("lum_evolution_nokoala.png", dpi=500)
