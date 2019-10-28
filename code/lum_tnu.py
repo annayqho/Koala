@@ -7,14 +7,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 from astropy.table import Table
 from astropy.cosmology import Planck15
-from radio_lc import ujy_to_flux
-
 
 smallsize=12
 medsize=14
 bigsize=16
 
 squaresize = 50
+
+
+def ujy_to_flux(ujy, z):
+    d = Planck15.luminosity_distance(z=z).cgs.value
+    return ujy*1E-6*1E-23*4*np.pi*d**2
 
 
 def vel_lines(ax, x, v):
@@ -85,19 +88,16 @@ def density_curves(ax, x, ne):
 
 
 def lumtnu(ax):
-    # ZTF18aaqjovh
-    xmin = 20*(3/5)
-    xmax = 20*(15/5)
-    xavg = (xmin+xmax)/2
-    ymin = ujy_to_flux(20, 0.05403)
-    ymax = ujy_to_flux(30, 0.05403)
-    yavg = (ymin+ymax)/2
-    ax.plot([xmin,xmax],[yavg,yavg],c='k')
-    ax.plot([xavg,xavg],[ymin,ymax],c='k')
-    ax.text(
-            xmax, ymin, "ZTF18aaqjovh", fontsize=medsize,
-            verticalalignment='center',
-            horizontalalignment='right')
+    # Koala
+    tnu = (100)*(10/5)
+    lpeak = 8.3E39 / 10E9
+    ax.scatter(tnu, lpeak, marker='*', c='k', s=300, label=None)
+    ax.arrow(
+            tnu, lpeak, -100, 0, color='k', 
+            length_includes_head=True, head_width=2E29,
+            head_length=20)
+    ax.text(tnu, lpeak*1.2, "ZTF18abvkwla", fontsize=medsize,
+            horizontalalignment='center')
 
     # 11qcj
     tnu = (100)*(5/5)
@@ -194,18 +194,18 @@ def lumtnu(ax):
     y = vel_lines(ax, 550, 0.01)
 
     # AT2018cow
-    x1 = 22*100/5
-    y1 = 4.4E29
+    x2 = 91*10/5
+    y2 = 4.3E28
     ax.scatter(
-            x1, y1, marker='*', s=100, 
+            x2, y2, marker='*', s=100,
             facecolors='black', edgecolors='black')
     ax.text(
-            22*100/7, 5.5E29, "AT2018cow", fontsize=medsize, 
-            verticalalignment='bottom', 
+            x2*1.1, y2*1, "AT2018cow", fontsize=medsize,
+            verticalalignment='bottom',
             horizontalalignment='left')
 
     ax.set_xlim(2, 3000)
-    ax.set_ylim(5E26, 1E30)
+    ax.set_ylim(9E26, 1.8E30)
     ax.set_xscale('log')
     ax.set_yscale('log')
     ax.tick_params(axis='both', labelsize=bigsize)
