@@ -18,15 +18,16 @@ datadir = "/Users/annaho/Dropbox/Projects/Research/ZTF18abukavn/data"
 textsize=14
 
 
+
 def sn2018gep(ax):
     """ Rise time and peak g-band mag for SN2018gep """
-    trise = 3
-    plum = -19.9
+    trise = 1.3
+    plum = -20.9
 
     ax.scatter(
-            trise, plum, marker='*', s=500, 
-            facecolors='black', edgecolors='black')
-    ax.text(trise*1.1, plum/1.005, "18gep (Ic-BL)", fontsize=textsize)
+            trise, plum, marker='o', c='k') 
+    ax.text(trise*1.1, plum, "Koala", fontsize=textsize,
+            verticalalignment='center')
 
 
 def at2018cow(ax):
@@ -75,12 +76,6 @@ def rest2018(ax):
 def drout(ax):
     """ using rest-frame g-band """
     x = 1.0
-    y = -17.5
-    ax.errorbar(
-           x, y, xerr=0.1, yerr=0.11, c='k', marker='o')
-    ax.text(x, y*1.01, "10ah", fontsize=textsize)
-
-    x = 1.0
     y = -18.2
     ax.errorbar(
            x, y, xerr=0.1, yerr=0.11, c='k', marker='o')
@@ -117,7 +112,8 @@ def arcavi(ax):
            x, y, yerr=0.1, c='k', marker='o')
     ax.arrow(
            x, y, -0.3, 0, color='k', head_width=0.1, head_length=0.1)
-    ax.text(x, y*1.005, "04D4ec", fontsize=textsize)
+    ax.text(x*1.05, y, "04D4ec", fontsize=textsize,
+        horizontalalignment='left')
 
     x = 3
     y = -20.08
@@ -129,7 +125,9 @@ def arcavi(ax):
     y = -20.7
     ax.errorbar(
            x, y, yerr=0.1, c='k', marker='o')
-    ax.text(x, y*1.005, "06D1hc", fontsize=textsize)
+    ax.text(
+            x, y*1.005, "06D1hc", 
+            fontsize=textsize, horizontalalignment='right')
 
 
 fig,ax = plt.subplots(1,1,figsize=(5,5))
@@ -141,7 +139,7 @@ arcavi(ax)
 rest2018(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
-ax.set_xlim(0,6)
+ax.set_xlim(0,5)
 ax.set_ylim(-21, -18)
 #ax.set_xscale('log')
 ax.invert_yaxis()

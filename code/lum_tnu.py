@@ -89,14 +89,16 @@ def density_curves(ax, x, ne):
 
 def lumtnu(ax):
     # Koala
-    tnu = (100)*(10/5)
-    lpeak = 8.3E39 / 10E9
-    ax.scatter(tnu, lpeak, marker='*', c='k', s=300, label=None)
+    tnu = [(100)*(10/5), (343)*(6/5)]
+    lpeak = [8.3E39 / 10E9, 2.2E39 / 10E9]
+    ax.scatter(tnu[0], lpeak[0], marker='*', c='k', s=300, label=None)
+    ax.scatter(tnu[1], lpeak[1], marker='*', c='k', s=100, label=None)
+    ax.plot(tnu, lpeak, c='k', lw=1, label=None)
     ax.arrow(
-            tnu, lpeak, -100, 0, color='k', 
+            tnu[0], lpeak[0], 200, 0, color='k', 
             length_includes_head=True, head_width=2E29,
-            head_length=20)
-    ax.text(tnu, lpeak*1.2, "ZTF18abvkwla", fontsize=medsize,
+            head_length=50)
+    ax.text(tnu[0], lpeak[0]*1.2, "ZTF18abvkwla", fontsize=medsize,
             horizontalalignment='center')
 
     # 11qcj
@@ -246,5 +248,5 @@ ax2.set_xlim(2,3000)
 plt.tight_layout()
 
 
-plt.show()
-#plt.savefig("lum_tnu.png", dpi=500)
+#plt.show()
+plt.savefig("lum_tnu.png", dpi=500)

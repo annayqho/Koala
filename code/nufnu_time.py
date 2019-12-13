@@ -94,8 +94,9 @@ def plot_points(ax, d, nu, t, f, marker, name=None):
 
 
 def koala(ax, col, legend):
-    dt = np.array([81,313])
-    f = np.array([8.3E39,5.85E38])
+    # This is the X-band light curve
+    dt = np.array([81,310,396])
+    f = np.array([8.3E39,1.5E39,8.16E38])
     ax.errorbar(dt/(1.2714), f, 0.0006*f, c='black', fmt='*', ms=20)
     ax.plot(dt/(1.2714), f, c='black', lw=2)
     ax.text(
@@ -550,7 +551,7 @@ if __name__=="__main__":
     sn1998bw(ax, '#bc3754', None)
 
     at2018cow(ax, 'k', legend=True)
-    #koala(ax, 'k', None)
+    koala(ax, 'k', None)
 
     ax.set_ylabel(
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
@@ -576,4 +577,4 @@ if __name__=="__main__":
 
     plt.tight_layout()
     #plt.show()
-    plt.savefig("lum_evolution_nokoala.png", dpi=500)
+    plt.savefig("lum_evolution.png", dpi=500)
