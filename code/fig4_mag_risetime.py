@@ -18,24 +18,34 @@ datadir = "/Users/annaho/Dropbox/Projects/Research/ZTF18abukavn/data"
 textsize=14
 
 
-
 def sn2018gep(ax):
+    """ Rise time and peak g-band mag for SN2018gep """
+    trise = 3
+    plum = -19.9
+
+    ax.scatter(
+            trise, plum, marker='o', c='k') 
+    ax.text(trise*1.1, plum, "ZTF18abukavn", fontsize=textsize,
+            verticalalignment='center')
+
+
+def koala(ax):
     """ Rise time and peak g-band mag for SN2018gep """
     trise = 1.3
     plum = -20.9
 
     ax.scatter(
             trise, plum, marker='o', c='k') 
-    ax.text(trise*1.1, plum, "Koala", fontsize=textsize,
+    ax.text(trise*1.1, plum, "ZTF18abvkwla", fontsize=textsize,
             verticalalignment='center')
 
 
 def at2018cow(ax):
     """ Rise time and peak mag """
-    x = 1.5
-    y = -20.4
-    ax.errorbar(
-            x, y, xerr=0.5, yerr=0.03, c='k', marker='o')
+    x = 0.4
+    y = -20.6
+    #ax.errorbar(
+    #        x, y, xerr=0.5, yerr=0.03, c='k', marker='o')
     ax.text(x, y*1.005, "18cow", fontsize=textsize)
     
 
@@ -58,7 +68,7 @@ def iptf16asu(ax):
     ax.errorbar(
             trise, plum, yerr=0.1, xerr=0.19, marker='o', c='k')
     ax.text(
-            trise, plum*1.005, "16asu (Ic-BL)", fontsize=textsize)
+            trise, plum*1.005, "iPTF16asu", fontsize=textsize)
 
 
 def rest2018(ax):
@@ -132,6 +142,7 @@ def arcavi(ax):
 
 fig,ax = plt.subplots(1,1,figsize=(5,5))
 sn2018gep(ax)
+koala(ax)
 at2018cow(ax)
 iptf16asu(ax)
 drout(ax)
@@ -150,6 +161,6 @@ ax.xaxis.set_tick_params(labelsize=14)
 ax.yaxis.set_tick_params(labelsize=14)
 
 fig.tight_layout()
-plt.savefig("lum_rise.eps", format='eps', dpi=1000)
+plt.savefig("lum_rise.png", dpi=200)
 
 #plt.show()

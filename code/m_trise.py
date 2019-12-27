@@ -12,7 +12,7 @@ import numpy as np
 from astropy.cosmology import Planck15
 
 
-fig, ax = plt.subplots(1,1, figsize=(6,5))
+fig, ax = plt.subplots(1,1, figsize=(5,5))
 
 losx = 0.1
 losy = -0.06
@@ -30,7 +30,7 @@ def plot_ia():
             8+losx, -18.2+losy, 'SN IIb', fontsize=12)
 
 
-def plot_ibn():
+def plot_ibn(ax):
     """ Ibn SNe: Table 4 in Hosseinzadeh 2017 """
     #kwargs = dict(mec='#b2df8a', marker='s', mfc='white', c='#b2df8a')
     kwargs = dict(edgecolor='k', marker='s', facecolor='white')
@@ -94,7 +94,7 @@ def plot_ibn():
     ax.scatter(8.3, -18.62, **kwargs)
 
 
-def fbot():
+def fbot(ax):
     """ The PanSTARRS FBOT (gold and silveR) sample. 
     Taken fro Table 4 of Drout+14 """
     #kwargs = dict(mec='#a6cee3', marker='o', 
@@ -162,31 +162,31 @@ def fbot():
     # ax.errorbar(5.87, -20.34, yerr=0.02, c=fbot_c, marker='<')
 
 
-def kepler():
+def kepler(ax):
     """ Plot the Kepler transient """
     ax.scatter(2.2, -18.8, marker='D', c='k', zorder=3)
     ax.text(2.2+losx, -18.8+losy, "15K", fontsize=12, zorder=3)
 
 
 
-def ptf09uj():
+def ptf09uj(ax):
     """ Plot PTF09uj """
     ax.scatter(3.5, -19, marker='D', c='k', zorder=3)
     ax.text(3.5, -19+losy, "09uj", fontsize=12, zorder=3,
             horizontalalignment='right')
 
 
-def cow():
+def cow(ax):
     """ Plot 18cow """
-    x = 1.5
-    y = -19.9
+    x = 0.4
+    y = -20.6
     ax.errorbar(x, y, xerr=1, marker='*', c='k', markersize=30)
     #ax.arrow(x, y, -0.5, 0, length_includes_head=True, head_width=0.05, 
     #        color='#1f78b4')
     ax.text(x+losx, y+losy, "18cow", fontsize=16)
 
 
-def asu():
+def asu(ax):
     """ Plot iPTF16asu, this is g-band though """
     x = 4
     y = -20.4
@@ -197,7 +197,7 @@ def asu():
             horizontalalignment='right', zorder=3)
 
 
-def koala():
+def koala(ax):
     """ Plot koala"""
     x = 1.5
     y = -20.6
@@ -220,7 +220,7 @@ def sn06aj():
     ax.text(x+3*losx, y-2.5*losy, "SN2006aj", fontsize=12)
 
 
-def gep():
+def gep(ax):
     """ Plot gep"""
     x = 3
     y = -19.5
@@ -231,42 +231,45 @@ def gep():
             horizontalalignment='right', verticalalignment='top')
 
 
+def run():
+    #plot_ia()
+    gep(ax)
+    koala(ax)
+    cow(ax)
+    plot_ibn(ax)
+    asu(ax)
+    fbot(ax)
+    kepler(ax)
+    ptf09uj(ax)
+    sn06aj()
 
-plot_ia()
-gep()
-koala()
-cow()
-plot_ibn()
-asu()
-fbot()
-kepler()
-ptf09uj()
-sn06aj()
+    #plt.axvspan(0 ,5 , facecolor='white', edgecolor='k', lw=3)
+    #plt.axvline(x=3, ls='--', c='k')
+    ax.axvspan(0,15, color='lightgrey', zorder=0)
 
-#plt.axvspan(0 ,5 , facecolor='white', edgecolor='k', lw=3)
-#plt.axvline(x=3, ls='--', c='k')
-ax.axvspan(0,15, color='lightgrey', zorder=0)
+    ax.legend(loc='upper right', fontsize=14)
+    ax.set_xlabel("Rise Time (days)", fontsize=16)
+    ax.set_ylabel("Peak Magnitude", fontsize=16)
+    ax.set_xlim(-0,6)
+    ax.set_ylim(-21, -18)
+    ax.invert_yaxis()
 
-ax.legend(loc='upper right', fontsize=14)
-ax.set_xlabel("Rise Time (days)", fontsize=16)
-ax.set_ylabel("Peak Magnitude", fontsize=16)
-ax.set_xlim(-0,10.5)
-ax.set_ylim(-21, -18)
-ax.invert_yaxis()
+    #ax.axvline(x=5, ls='--', c='k')
 
-#ax.axvline(x=5, ls='--', c='k')
-
-linex = np.linspace(0,7)
-liney = (-0.10)*linex**3-13
-ax.plot(linex,liney,ls='--',c='k')
-#ax.plot(linex,liney,ls='-',c='red', lw=5)
-#ax.axvline(x=0, lw=10, c='red')
-#ax.plot([0,2.3], [-18,-18], lw=10, c='red')
-#ax.plot([0,5.1], [-21,-21], lw=10, c='red')
+    linex = np.linspace(0,7)
+    liney = (-0.10)*linex**3-13
+    ax.plot(linex,liney,ls='--',c='k')
+    #ax.plot(linex,liney,ls='-',c='red', lw=5)
+    #ax.axvline(x=0, lw=10, c='red')
+    #ax.plot([0,2.3], [-18,-18], lw=10, c='red')
+    #ax.plot([0,5.1], [-21,-21], lw=10, c='red')
 
 
-plt.tick_params(axis='both', labelsize=14)
-plt.tight_layout()
+    plt.tick_params(axis='both', labelsize=14)
+    plt.tight_layout()
 
-plt.show()
-#plt.savefig("M_trise_grey.png", dpi=500)
+    plt.show()
+    #plt.savefig("M_trise_grey.png", dpi=500)
+
+if __name__=="__main__":
+    run()

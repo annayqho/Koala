@@ -95,8 +95,8 @@ def plot_points(ax, d, nu, t, f, marker, name=None):
 
 def koala(ax, col, legend):
     # This is the X-band light curve
-    dt = np.array([81,310,396])
-    f = np.array([8.3E39,1.5E39,8.16E38])
+    dt = np.array([81,310,352,396])
+    f = np.array([8.3E39,1.5E39,1.1E39,8.16E38])
     ax.errorbar(dt/(1.2714), f, 0.0006*f, c='black', fmt='*', ms=20)
     ax.plot(dt/(1.2714), f, c='black', lw=2)
     ax.text(
