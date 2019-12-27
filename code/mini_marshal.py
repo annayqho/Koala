@@ -17,7 +17,7 @@ print('<title>SOURCE MARSHAL</title>')
 print('</head>')
 print('<body>')
 
-print('<font size="5" color="green">Fast Transient Candidates</font>')
+print('<font size="5" color="green">FBOT Candidates</font>')
 print('</br>')
 print('<hr>')
 print('</br>')
