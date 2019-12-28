@@ -81,9 +81,17 @@ def plot_koala():
             horizontalalignment='right', verticalalignment='center')
 
 
+def plot_98bw():
+    dat = np.loadtxt("/Users/annaho/Dropbox/Projects/Research/IcBL/data/radio_compilations/98bw_low_freq.txt", delimiter=',')
+    dcm = Planck15.luminosity_distance(z=0.0085).cgs.value
+    lum = dat[:,1] * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 1.38E9
+    plt.plot(dat[:,0], lum, c='grey', label='98bw, 1.38 GHz')
+
+
 plot_18cow_atca()
 plot_18cow_margutti()
 plot_koala()
+plot_98bw()
 
 # Step 4: Add in the VLASS limits
 dat = ascii.read("../data/radio_lims.dat")
@@ -97,7 +105,7 @@ z = z_raw[~bad]
 dcm = Planck15.luminosity_distance(z=z).cgs.value
 llim = 3E9*flim*1E-6*1E-23*4*np.pi*dcm**2
 plt.scatter(dt, llim, marker='v', s=30, c='k',
-        label='FBOT VLASS limits, 2--4 GHz')
+        label='VLASS limits, 2--4 GHz')
 
 # Formatting
 plt.tick_params(axis='both', labelsize=14)
@@ -105,8 +113,8 @@ plt.xscale('log')
 plt.yscale('log')
 plt.ylabel(r"$\nu L_{\nu}$ [erg/s]", fontsize=16)
 plt.xlabel("$\Delta t$ [days]", fontsize=16)
-plt.legend(fontsize=12, loc='lower right')
+plt.legend(fontsize=11, loc='lower right', ncol=2)
 plt.tight_layout()
 
-plt.show()
-#plt.savefig("vlass_lims.eps", format='eps', dpi=500)
+#plt.show()
+plt.savefig("vlass_lims.png", dpi=200)
