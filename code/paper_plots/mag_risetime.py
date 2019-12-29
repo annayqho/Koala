@@ -85,33 +85,11 @@ def rest2018(ax):
 
 def drout(ax):
     """ using rest-frame g-band """
-    x = 1.0
-    y = -18.2
-    ax.errorbar(
-           x, y, xerr=0.1, yerr=0.11, c='k', marker='o')
-    ax.text(x, y/1.01, "10bjp", fontsize=textsize)
-    
     x = 2.9
     y = -19.5
     ax.errorbar(
            x, y, xerr=0.1, yerr=0.08, c='k', marker='o')
     ax.text(x, y*1.005, "11qr", fontsize=textsize)
-    
-    x = 2.2
-    y = -19.1
-    ax.errorbar(
-           x, y, yerr=0.1, c='k', marker='o')
-    ax.arrow(
-           x, y, -0.3, 0, color='k', head_width=0.1, head_length=0.1)
-    ax.text(x, y*1.005, "12bv", fontsize=textsize)
-    
-    x = 1.0
-    y = -18.3
-    ax.errorbar(
-           x, y, yerr=0.1, c='k', marker='o')
-    ax.arrow(
-           x, y, -0.3, 0, color='k', head_width=0.1, head_length=0.1)
-    ax.text(x, y*1.005, "12brf", fontsize=textsize)
     
 
 def arcavi(ax):
@@ -151,7 +129,7 @@ rest2018(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
 ax.set_xlim(0,5)
-ax.set_ylim(-21, -18)
+ax.set_ylim(-21, -19.5)
 #ax.set_xscale('log')
 ax.invert_yaxis()
 ax.set_xlabel(
@@ -161,6 +139,6 @@ ax.xaxis.set_tick_params(labelsize=14)
 ax.yaxis.set_tick_params(labelsize=14)
 
 fig.tight_layout()
-plt.savefig("lum_rise.png", dpi=200)
+#plt.savefig("lum_rise.png", dpi=200)
 
-#plt.show()
+plt.show()
