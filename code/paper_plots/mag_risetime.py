@@ -125,7 +125,6 @@ at2018cow(ax)
 iptf16asu(ax)
 drout(ax)
 arcavi(ax)
-rest2018(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
 ax.set_xlim(0,5)
