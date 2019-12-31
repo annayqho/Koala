@@ -42,8 +42,7 @@ dt = (jd-t0)/(1+z)
 rmag = dat['mag'][choose] - 0.115
 ermag = dat['mag_unc'][choose]
 ax.errorbar(
-        dt, rmag, yerr=ermag, fmt='o', c='grey', mec='k', 
-        mfc='white', lw=0.5, 
+        dt, rmag, yerr=ermag, fmt='o', c='#e55c30', lw=0.5,
         label=r"ZTF $r$ ($\lambda_\mathrm{rest}=4950$\AA)")
 
 # Plot the r-band upper limits
@@ -51,10 +50,10 @@ choose = np.logical_and(filts=='r', dat['mag'] == 0)
 jd = dat['jdobs'][choose]
 dt = (jd-t0)/(1+z)
 lims = dat['limmag'][choose] - 0.115
-ax.scatter(dt, lims, facecolor='white', edgecolor='k', marker='o', label=None)
+ax.scatter(dt, lims, c='#e55c30', marker='o', label=None)
 for ii,dt_val in enumerate(dt):
-    ax.arrow(dt_val, lims[ii], 0, +0.1, edgecolor='k', lw=0.5,
-            facecolor='white', length_includes_head=True,
+    ax.arrow(dt_val, lims[ii], 0, +0.1, edgecolor='#e55c30', lw=0.5,
+            facecolor='#e55c30', length_includes_head=True,
             head_width=0.2, head_length=0.05, label=None)
 
 # Plot the 18cow light curves
@@ -69,7 +68,7 @@ t0_cow = t_g[0] - 2
 dt_g = t_g - t0_cow
 mag_g = np.array([13.40, 13.65, 14.10, 14.18, 14.48, 
     14.57, 14.63, 14.70, 14.94, 14.99, 15.09]) - 0.287 # extinction in g
-ax.plot(dt_g, mag_g + dmag, c='k', lw=0.5)
+ax.plot(dt_g, mag_g + dmag, c='#e55c30', lw=0.5)
 ax.text(4.5, 21.1, "18cow $g$", fontsize=11, rotation=-55)
 
 # Connect the LC to the last upper limit 
@@ -114,5 +113,5 @@ ax.legend(fontsize=13)
 ax.set_xlim(-2.2,8.1)
 
 plt.tight_layout()
-#plt.show()
-plt.savefig("lc.png", dpi=300)
+plt.show()
+#plt.savefig("lc.png", dpi=300)

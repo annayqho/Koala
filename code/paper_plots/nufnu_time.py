@@ -67,7 +67,7 @@ def plot_line(ax, d, t, nufnu, name, label, col, legend=False, zorder=1):
             marker='s'
             fcol = 'white' #unfilled
             s=nsize
-            label='Tidal disruption event'
+            label='TDE'
     ax.scatter(
             t, lum, facecolor=fcol, edgecolor=col, 
             marker=marker, s=s, zorder=zorder)
@@ -96,7 +96,7 @@ def plot_points(ax, d, nu, t, f, marker, name=None):
 def koala(ax, col, legend):
     # This is the X-band light curve
     dt = np.array([81,310,352,396])
-    f = np.array([8.3E39,1.5E39,1.1E39,8.16E38])
+    f = np.array([8.3E39,1.5E39,1.1E39,8.16E38])-2.65E38
     ax.errorbar(dt/(1.2714), f, 0.0006*f, c='black', fmt='*', ms=20)
     ax.plot(dt/(1.2714), f, c='black', lw=2)
     ax.text(
@@ -174,20 +174,6 @@ def tde(ax, col, legend):
     nu, dt, f, ef, islim = zauderer()
     t = (dt+3.04)/(1+z)
 
-    nu_plt = 225E9
-    choose = np.logical_and(~islim, nu == nu_plt/1E9)
-    dt_all = t[choose]
-    nufnu_all = f[choose]*nu_plt
-
-    # Berger2012
-    nu_plt = 230E9
-    t_plt = (np.array([10.30, 11.13, 17.23, 18.25, 20.24, 21.25, 125.05]))/(1+z)
-    f_plt = np.array([14.90, 11.70, 13.30, 9.90, 8.20, 8.30, 6.10])
-    dt_all = np.append(dt_all, t_plt)
-    nufnu_all = np.append(nufnu_all, f_plt*nu_plt)
-
-    order = np.argsort(dt_all)
-
     # Low frequency
     nu_plt = 4.9E9
     choose = np.logical_and(~islim, nu == nu_plt/1E9)
@@ -196,13 +182,18 @@ def tde(ax, col, legend):
 
     # adding the set from Berger2012
     # and making the same correction as above
+    # this is 4.9 GHz
     t = (np.array([3.87, 4.76, 5.00, 5.79, 6.78, 7.77, 9.79, 14.98, 22.78,
         35.86, 50.65, 67.61, 94.64, 111.62, 126.51, 143.62, 164.38, 174.47,
         197.41, 213.32])) / (1+z)
     f = np.array([0.25, 0.34, 0.34, 0.61, 0.82, 1.48, 1.47, 1.80, 2.10, 4.62,
         4.84, 5.86, 9.06, 9.10, 9.10, 11.71, 12.93, 12.83, 13.29, 12.43])
-    dt_all = np.append(dt_all, t)
-    nufnu_all = np.append(nufnu_all, f*nu_plt)
+
+    # Berger 2012: use the 8.4 GHz light curve, since that's closest in freq
+    #t = (np.array([14.97, 127.69, 159.77, 174.47, 177.50, 197.41, 213.32, 219.22]))/(1+z)
+    #f = np.array([5.49, 19.03, 22.15, 23.19, 23.65, 22.42, 22.04, 21.52])
+    #dt_all = np.append(dt_all, t)
+    #nufnu_all = np.append(nufnu_all, f*nu_plt)
 
     # adding the set from Zauderer2013
     # they also say it's relative to March 25.5...
@@ -349,7 +340,7 @@ def sn2011dh(ax, col, legend):
 
 
 def grb030329(ax, col, legend):
-    """ Sheth et al. 2003 
+    """ 
     Berger 2003
     Van der Horst et al. 2008
     
@@ -358,12 +349,6 @@ def grb030329(ax, col, legend):
     z = 0.1686
     d = Planck15.luminosity_distance(z=z).cgs.value
 
-    # HIGH FREQUENCY
-
-    # Sheth
-    freq = 250E9
-    t = np.array([1, 4, 6, 7, 8, 16, 22]) / (1+z)
-    f = np.array([49.2, 45.7, 41.6, 32, 25.5, 9.3, 5.2])
     # LOW FREQUENCY
 
     # Berger: this is the best frequency to pick from this paper
@@ -398,13 +383,14 @@ def grb130427A(ax, col, legend):
     z = 0.340
     d = Planck15.luminosity_distance(z=z).cgs.value
 
-    freq = 93E9
-    t = np.array([0.77, 1, 1.91, 2.8]) / (1+z)
-    flux = np.array([3416, 2470, 1189, 807]) * 1E-3
-
     freq = 5.10E9
     t = np.array([0.677, 2.04, 4.75, 9.71, 17.95, 63.78, 128.34]) / (1+z)
     f = np.array([1290, 1760, 648, 454, 263, 151, 86]) * 1E-3
+
+    freq = 6.8E9
+    t = np.array([0.677, 2.04, 4.75, 9.71, 9.95, 12.92, 27.67, 59.8, 128]) / (1+z)
+    f = np.array([2570, 1820, 607, 374, 385, 332, 243, 109, 91]) * 1E-3
+
     lum = plot_line(ax, d, t, freq*f, 'GRB130427A', 'GRB', col, legend)
     ax.text(t[-3]*1.05, lum[-3], 'GRB130427A', fontsize=11,
             verticalalignment='bottom',
@@ -534,8 +520,8 @@ if __name__=="__main__":
     # and two dark ones.
 
     #maxi(ax)
-    #tde(ax, '#57106e', legend=True)
-    #asassn14li(ax, '#57106e', None)
+    tde(ax, '#57106e', legend=True)
+    asassn14li(ax, '#57106e', None)
 
     sn2003L(ax, 'lightblue', legend=True)
     sn1979c(ax, 'lightblue', None)
@@ -558,14 +544,14 @@ if __name__=="__main__":
             fontsize=16)
     ax.tick_params(axis='both', labelsize=14)
     ax.set_xlim(1, 2000) 
-    ax.set_ylim(1E34, 9E41)
+    ax.set_ylim(1E34, 1E42)
     ax.set_xscale('log')
     ax.set_yscale('log')
     ax.set_xlabel(r"Time [days; rest frame]", fontsize=16)
 
     #ax.scatter(
     #        0,0,c='k',marker='*',s=100,label="Fast-Lum. Opt. Transient")
-    ax.legend(fontsize=12, loc='upper right', ncol=3, columnspacing=1)
+    ax.legend(fontsize=12, loc='upper right', ncol=4, columnspacing=1)
 
     #ax.axhspan(1E34,1E37,edgecolor='k', fc='white', lw=3)
     ax.axhline(y=1E37, c='k', ls='--')
