@@ -151,14 +151,14 @@ def arcavi(ax):
 def ibn(ax):
     """ using rest-frame g-band """
     x = 2.3
-    y = -21.3
+    y = -22.3
     ax.scatter(
            x, y, c='k', marker='o')
     ax.text(x*1.05, y, "iPTF15ul (Ibn)", fontsize=textsize,
         horizontalalignment='left')
 
 
-fig,ax = plt.subplots(1,1,figsize=(6,5))
+fig,ax = plt.subplots(1,1,figsize=(6,6))
 ibn(ax)
 sn2018gep(ax)
 ztf(ax)
@@ -169,7 +169,7 @@ arcavi(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
 ax.set_xlim(0,5)
-ax.set_ylim(-21.4, -19.4)
+ax.set_ylim(-22.4, -19.4)
 #ax.set_xscale('log')
 ax.invert_yaxis()
 ax.set_xlabel(

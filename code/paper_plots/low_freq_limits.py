@@ -94,7 +94,7 @@ plot_koala()
 plot_98bw()
 
 # Step 4: Add in the VLASS limits
-dat = ascii.read("../data/radio_lims.dat")
+dat = ascii.read("../../data/radio_lims.dat")
 flim_raw = dat['limit']
 z_raw = dat['z']
 bad = np.logical_or(flim_raw.mask, z_raw <= 0)
@@ -116,5 +116,5 @@ plt.xlabel("$\Delta t$ [days]", fontsize=16)
 plt.legend(fontsize=11, loc='lower right', ncol=2)
 plt.tight_layout()
 
-#plt.show()
-plt.savefig("vlass_lims.png", dpi=200)
+plt.show()
+#plt.savefig("vlass_lims.png", dpi=200)
