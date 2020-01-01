@@ -89,7 +89,7 @@ def plot_points(ax, d, nu, t, f, marker, name=None):
             lum = plot_point(ax, d, nuval, t[ii], f[ii], marker)
             lums.append(lum)
     ax.plot(
-        t, lums, ls='--', c='k')
+        t, lums, ls='--', c='k', zorder=0)
     return lums
 
 
@@ -414,7 +414,7 @@ def sn2007bg(ax, col, legend):
     lum = plot_line(ax, d, t, nu*f, 'SN2007bg', 'SN', col, legend)
     ax.text(t[0]/1.05, lum[0], 'SN2007bg', fontsize=11,
             verticalalignment='bottom',
-            horizontalalignment='right')
+            horizontalalignment='right', zorder=0)
 
 
 def sn2003bg(ax, col, legend):
@@ -438,7 +438,7 @@ def sn2003bg(ax, col, legend):
                 21.67, 21.31, 20.88, 20.33, 19.85, 18.84, 17.14,
                 14.61, 14.49, 14.16, 13.25, 13.08, 10.04, 8.92,
                 6.23, 6.18, 4.62, 3.93, 4.69, 4.48])
-    lum = plot_line(ax, d, t, nu*f, 'SN2003bg', 'SN', col, legend)
+    lum = plot_line(ax, d, t, nu*f, 'SN2003bg', 'SN', col, legend, zorder=0)
     #ax.text(t[0]/1.05, lum[0], 'SN2003bg', fontsize=11,
     #        verticalalignment='center',
     #        horizontalalignment='right')
@@ -492,6 +492,55 @@ def othersn(ax):
     """
 
 
+def limits(ax):
+    # VLASS limits for FBOTs
+
+    # 11qr
+    z = 0.324
+    t = 2467
+    f = 130 # 130 uJy
+    nu = 4E9
+    dcm = Planck15.luminosity_distance(z=z).cgs.value
+    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    print(t/(1+z), lum)
+    ax.scatter(t/(1+z), lum, marker='v', c='k')
+
+    # 05D2bk
+    z = 0.699
+    t = 4739
+    f = 134 # uJy
+    nu = 4E9
+    dcm = Planck15.luminosity_distance(z=z).cgs.value
+    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    print(t/(1+z), lum)
+    ax.scatter(t/(1+z), lum, marker='v', c='k')
+
+    # 06D1hc
+    z = 0.555
+    t = 4034
+    f = 136 # uJy
+    nu = 4E9
+    dcm = Planck15.luminosity_distance(z=z).cgs.value
+    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    print(t/(1+z), lum)
+    ax.scatter(t/(1+z), lum, marker='v', c='k')
+
+    # 16asu
+    z = 0.187
+    t = np.array([43.7, 255])
+    f = np.array([17, 17])
+    nu = 6.2E9
+    dcm = Planck15.luminosity_distance(z=z).cgs.value
+    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    ax.scatter(t/(1+z), lum, marker='v', c='k', zorder=10)
+    ax.plot(t/(1+z), lum, c='k', ls='--', zorder=10)
+
+    # 18gep
+    f = [8.3E36, 6E36, 4E37, 5.9E37]
+    ax.scatter([5,16,75,332], f, marker='v', c='k', 
+            label="Fast-luminous transient limits")
+    ax.plot([5,16,75,332], f, c='k', ls='--')
+    
 
 
 if __name__=="__main__":
@@ -539,11 +588,13 @@ if __name__=="__main__":
     at2018cow(ax, 'k', legend=True)
     koala(ax, 'k', None)
 
+    limits(ax)
+
     ax.set_ylabel(
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
             fontsize=16)
     ax.tick_params(axis='both', labelsize=14)
-    ax.set_xlim(1, 2000) 
+    ax.set_xlim(1, 3000) 
     ax.set_ylim(1E34, 1E42)
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -551,14 +602,14 @@ if __name__=="__main__":
 
     #ax.scatter(
     #        0,0,c='k',marker='*',s=100,label="Fast-Lum. Opt. Transient")
-    ax.legend(fontsize=12, loc='upper right', ncol=4, columnspacing=1)
+    ax.legend(fontsize=12, loc='lower left', ncol=2, columnspacing=1)
 
     #ax.axhspan(1E34,1E37,edgecolor='k', fc='white', lw=3)
-    ax.axhline(y=1E37, c='k', ls='--')
+    #ax.axhline(y=1E37, c='k', ls='--')
     #ax.axvspan(1,2000,edgecolor='k', fc='white', lw=3)
-    ax.text(
-            1.1,9E36,"Ordinary SNe", fontstyle='italic', fontsize=12,
-            verticalalignment='top')
+    #ax.text(
+    #        1.1,9E36,"Ordinary SNe", fontstyle='italic', fontsize=12,
+    #        verticalalignment='top')
 
 
     plt.tight_layout()
