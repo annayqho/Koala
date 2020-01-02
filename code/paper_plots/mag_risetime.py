@@ -157,6 +157,25 @@ def ibn(ax):
     ax.text(x*1.05, y, "iPTF15ul (Ibn)", fontsize=textsize,
         horizontalalignment='left')
 
+    x = 0.95
+    y = -19.58
+    ax.scatter(
+           x, y, c='k', marker='o')
+    ax.text(x*1.05, y, "1999cq (Ibn)", fontsize=textsize,
+        horizontalalignment='left', verticalalignment='top')
+    ax.arrow(
+           x, y, -0.1, 0, color='k', head_width=0.1, head_length=0.1)
+
+
+def dougie(ax):
+    """ using rest-frame g-band, which is r-band from Vinko+2015 """
+    x = 3.92
+    y = -22.98
+    ax.scatter(
+           x, y, c='k', marker='o')
+    ax.text(x/1.01, y, "Dougie", fontsize=textsize,
+        horizontalalignment='right', verticalalignment='top')
+
 
 fig,ax = plt.subplots(1,1,figsize=(6,6))
 ibn(ax)
@@ -166,10 +185,11 @@ at2018cow(ax)
 iptf16asu(ax)
 drout(ax)
 arcavi(ax)
+dougie(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
 ax.set_xlim(0,5)
-ax.set_ylim(-22.4, -19.4)
+ax.set_ylim(-23.1, -19.4)
 #ax.set_xscale('log')
 ax.invert_yaxis()
 ax.set_xlabel(
@@ -179,6 +199,6 @@ ax.xaxis.set_tick_params(labelsize=14)
 ax.yaxis.set_tick_params(labelsize=14)
 
 fig.tight_layout()
-plt.savefig("lum_rise.png", dpi=200)
+#plt.savefig("lum_rise.png", dpi=200)
 
-#plt.show()
+plt.show()
