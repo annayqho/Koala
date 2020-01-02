@@ -496,14 +496,14 @@ def limits(ax):
     # VLASS limits for FBOTs
 
     # 11qr
-    z = 0.324
-    t = 2467
-    f = 130 # 130 uJy
-    nu = 4E9
-    dcm = Planck15.luminosity_distance(z=z).cgs.value
-    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
-    print(t/(1+z), lum)
-    ax.scatter(t/(1+z), lum, marker='v', c='k')
+    # z = 0.324
+    # t = 2467
+    # f = 130 # 130 uJy
+    # nu = 4E9
+    # dcm = Planck15.luminosity_distance(z=z).cgs.value
+    # lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    # print(t/(1+z), lum)
+    # ax.scatter(t/(1+z), lum, marker='v', c='k')
 
     # 05D2bk
     z = 0.699
@@ -542,7 +542,7 @@ def limits(ax):
     ax.plot([5,16,75,332], f, c='k', ls='--')
     
     # 1999cq
-    ax.scatter(6686, 7.38E36, marker='v', c='k')
+    #ax.scatter(6686, 7.38E36, marker='v', c='k')
 
 if __name__=="__main__":
     fig, ax = plt.subplots(1, 1, figsize=(6,6), sharex=True, sharey=True)
@@ -595,7 +595,7 @@ if __name__=="__main__":
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
             fontsize=16)
     ax.tick_params(axis='both', labelsize=14)
-    ax.set_xlim(1, 8000) 
+    ax.set_xlim(1, 4000) 
     ax.set_ylim(1E34, 1E42)
     ax.set_xscale('log')
     ax.set_yscale('log')
