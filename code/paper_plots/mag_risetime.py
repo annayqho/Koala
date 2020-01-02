@@ -199,6 +199,6 @@ ax.xaxis.set_tick_params(labelsize=14)
 ax.yaxis.set_tick_params(labelsize=14)
 
 fig.tight_layout()
-#plt.savefig("lum_rise.png", dpi=200)
+plt.savefig("lum_rise.png", dpi=200)
 
-plt.show()
+#plt.show()
