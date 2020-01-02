@@ -44,12 +44,12 @@ def ztf(ax):
             verticalalignment='bottom')
 
     # ZTF19aapfmki
-    trise = 4.6
-    plum = -19.5
-    ax.scatter(
-            trise, plum, marker='o', c='k') 
-    ax.text(trise*1.08, plum*1.001, "ZTF19aapfmki (Ibn)", fontsize=textsize,
-            verticalalignment='bottom', horizontalalignment='right')
+    # trise = 4.6
+    # plum = -19.5
+    # ax.scatter(
+    #         trise, plum, marker='o', c='k') 
+    # ax.text(trise*1.08, plum*1.001, "ZTF19aapfmki (Ibn)", fontsize=textsize,
+    #         verticalalignment='bottom', horizontalalignment='right')
 
 
     # ZTF18abvkwla
@@ -161,10 +161,10 @@ def ibn(ax):
     y = -19.58
     ax.scatter(
            x, y, c='k', marker='o')
-    ax.text(x*1.05, y, "1999cq (Ibn)", fontsize=textsize,
-        horizontalalignment='left', verticalalignment='top')
-    ax.arrow(
-           x, y, -0.1, 0, color='k', head_width=0.1, head_length=0.1)
+    #ax.text(x*1.05, y, "1999cq (Ibn)", fontsize=textsize,
+    #    horizontalalignment='left', verticalalignment='top')
+    #ax.arrow(
+    #       x, y, -0.1, 0, color='k', head_width=0.1, head_length=0.1)
 
 
 def dougie(ax):
@@ -179,17 +179,17 @@ def dougie(ax):
 
 fig,ax = plt.subplots(1,1,figsize=(6,6))
 ibn(ax)
-sn2018gep(ax)
+#sn2018gep(ax)
 ztf(ax)
 at2018cow(ax)
 iptf16asu(ax)
-drout(ax)
+#drout(ax)
 arcavi(ax)
 dougie(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
 ax.set_xlim(0,5)
-ax.set_ylim(-23.1, -19.4)
+ax.set_ylim(-23.1, -19.9)
 #ax.set_xscale('log')
 ax.invert_yaxis()
 ax.set_xlabel(
