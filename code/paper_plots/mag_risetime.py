@@ -40,8 +40,8 @@ def ztf(ax):
             trise+5, plum, marker='o', c='k') 
     ax.arrow(
            trise+5, plum, -5, 0, color='k', head_width=0.1, head_length=0.1)
-    ax.text(trise*1.1, plum, "ZTF18achdidy (SLSN-I)", fontsize=textsize,
-            verticalalignment='bottom')
+    ax.text(trise*1.4, plum, "ZTF18achdidy (SLSN-I)", fontsize=textsize,
+            verticalalignment='bottom', horizontalalignment='left')
 
     # ZTF19aapfmki
     # trise = 4.6
@@ -177,6 +177,16 @@ def dougie(ax):
         horizontalalignment='right', verticalalignment='top')
 
 
+def sn2011kl(ax):
+    """ using rest-frame g-band, which is i-band from Greiner+2015 """
+    x = 2.57
+    y = -20.35
+    ax.scatter(
+           x, y, c='k', marker='o')
+    ax.text(x/1.01, y, "SN2011kl", fontsize=textsize,
+        horizontalalignment='right', verticalalignment='top')
+
+
 fig,ax = plt.subplots(1,1,figsize=(6,6))
 ibn(ax)
 #sn2018gep(ax)
@@ -186,6 +196,7 @@ iptf16asu(ax)
 #drout(ax)
 arcavi(ax)
 dougie(ax)
+sn2011kl(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
 ax.set_xlim(0,5)
