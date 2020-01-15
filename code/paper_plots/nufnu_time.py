@@ -101,7 +101,7 @@ def koala(ax, col, legend):
     ax.plot(dt/(1.2714), f, c='black', lw=2)
     ax.text(
             81, 1E40, "ZTF18abvkwla", 
-            fontsize=14, horizontalalignment='center',
+            fontsize=14, horizontalalignment='left',
             verticalalignment='bottom')
 
 
@@ -374,6 +374,22 @@ def grb030329(ax, col, legend):
             horizontalalignment='left')
     
 
+def grb111209a(ax, col, legend):
+    """ 
+    Hancock+ 2012, GCN 12804
+    """
+    z = 0.677
+    d = Planck15.luminosity_distance(z=z).cgs.value
+
+    t = np.array([5.1])/(1+z)
+    f = np.array([0.97])
+    nu = np.array([9E9]*len(f))
+
+    lum = plot_line(ax, d, t, nu*f, 'GRB111209A', 'GRB', col, legend)
+    ax.text(t[0]*1.05, lum[0]/1.1, 'GRB111209A', fontsize=11,
+            verticalalignment='bottom',
+            horizontalalignment='left')
+
 
 def grb130427A(ax, col, legend):
     """ Perley et al
@@ -392,7 +408,7 @@ def grb130427A(ax, col, legend):
     f = np.array([2570, 1820, 607, 374, 385, 332, 243, 109, 91]) * 1E-3
 
     lum = plot_line(ax, d, t, freq*f, 'GRB130427A', 'GRB', col, legend)
-    ax.text(t[-3]*1.05, lum[-3], 'GRB130427A', fontsize=11,
+    ax.text(t[-4]*1.05, lum[-4], 'GRB130427A', fontsize=11,
             verticalalignment='bottom',
             horizontalalignment='left')
 
@@ -492,6 +508,7 @@ def othersn(ax):
     """
 
 
+
 def limits(ax):
     # VLASS limits for FBOTs
 
@@ -582,6 +599,7 @@ if __name__=="__main__":
 
     grb030329(ax, '#f98e09', legend=True)
     grb130427A(ax, '#f98e09', None)
+    grb111209a(ax, '#f98e09', None)
 
     sn2009bb(ax, '#bc3754', legend=True)
     sn1998bw(ax, '#bc3754', None)
