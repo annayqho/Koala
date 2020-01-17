@@ -512,15 +512,15 @@ def othersn(ax):
 def limits(ax):
     # VLASS limits for FBOTs
 
-    # 11qr
-    # z = 0.324
-    # t = 2467
-    # f = 130 # 130 uJy
-    # nu = 4E9
-    # dcm = Planck15.luminosity_distance(z=z).cgs.value
-    # lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
-    # print(t/(1+z), lum)
-    # ax.scatter(t/(1+z), lum, marker='v', c='k')
+    # iPTF15ul
+    z = 0.0657
+    t = 5
+    f = 12*3 #uJy (RMS) times 3
+    nu = 6E9
+    dcm = Planck15.luminosity_distance(z=z).cgs.value
+    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    ax.scatter(t/(1+z), lum, marker='v', c='k')
+    ax.text(t/1.2, lum, "iPTF15ul", fontsize=11, horizontalalignment='right')
 
     # 05D2bk
     z = 0.699
