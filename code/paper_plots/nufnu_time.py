@@ -213,9 +213,9 @@ def tde(ax, col, legend):
     lum = plot_line(
             ax, d, dt_all[order], nufnu_all[order], 
             'SwiftJ1644+57', 'TDE', col, legend)
-    ax.text(dt_all[order][0], lum[0]/2, 'Swift J1644+57', fontsize=11,
-            verticalalignment='top',
-            horizontalalignment='center')
+    ax.text(dt_all[order][10], lum[10]*1.1, 'Swift J1644+57', fontsize=11,
+            verticalalignment='bottom',
+            horizontalalignment='left')
 
 
 def asassn14li(ax, col, legend):
@@ -551,15 +551,6 @@ def limits(ax):
     lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
     ax.scatter(t/(1+z), lum, marker='v', c='k', zorder=10)
     ax.plot(t/(1+z), lum, c='k', ls='--', zorder=10)
-
-    # 18gep
-    f = [8.3E36, 6E36, 4E37, 5.9E37]
-    ax.scatter([5,16,75,332], f, marker='v', c='k', 
-            label="Fast-luminous transient limits")
-    ax.plot([5,16,75,332], f, c='k', ls='--')
-    
-    # 1999cq
-    #ax.scatter(6686, 7.38E36, marker='v', c='k')
 
 if __name__=="__main__":
     fig, ax = plt.subplots(1, 1, figsize=(6,6), sharex=True, sharey=True)

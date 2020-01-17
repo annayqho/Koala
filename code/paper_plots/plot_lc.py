@@ -9,8 +9,8 @@ from mpl_toolkits.axes_grid1.inset_locator import mark_inset
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 z = 0.2714
-rcol = '#e55c30'
-gcol = 'k'
+rcol = '#d95f02'
+gcol = '#1b9e77'
 t0 = 58373.407523+2400000.5
 
 # Full light curve
@@ -22,11 +22,12 @@ def full(ax):
     filt = np.array(dat['col4'])
 
     choose = filt == 'r'
-    ax.errorbar(jd[choose]/(1+z),flux[choose],eflux[choose],c=rcol,fmt='o',
+    ax.errorbar(jd[choose]/(1+z),flux[choose],eflux[choose],mec=rcol,fmt='o',
+            mfc='white',c=rcol,
             label=r"ZTF $r$ ($\lambda_\mathrm{rest}=4950$\AA)")
 
     choose = filt == 'g'
-    ax.errorbar(jd[choose]/(1+z),flux[choose],eflux[choose],c=gcol,fmt='o',
+    ax.errorbar(jd[choose]/(1+z),flux[choose],eflux[choose],c=gcol,fmt='s',
             label=r"ZTF $g$ ($\lambda_\mathrm{rest}=3820$\AA)")
 
     ax.set_xlabel("Rest-frame days since first detection", fontsize=16)
@@ -57,16 +58,17 @@ def zoomed(ax):
     rmag = dat['mag'][choose] - 0.167 #extinction in SDSS g
     ermag = dat['mag_unc'][choose]
     ax.errorbar(
-            dt, rmag, yerr=ermag, fmt='s', c='k', lw=0.5)
+            dt, rmag, yerr=ermag, fmt='s', c=gcol, lw=0.5)
 
     # Plot the g-band upper limits
     choose = np.logical_and(filts=='g', dat['mag'] == 0)
     jd = dat['jdobs'][choose]
     dt = (jd-t0)/(1+z)
     lims = dat['limmag'][choose] - 0.167 # extinction in SDSS g
-    ax.scatter(dt, lims, c='k', marker='s', label=None)
+    ax.scatter(dt, lims, c=gcol, marker='s', label=None)
     for ii,dt_val in enumerate(dt):
-        ax.arrow(dt_val, lims[ii], 0, +0.1, color='k', length_includes_head=True,
+        ax.arrow(dt_val, lims[ii], 0, +0.1, color=gcol, 
+                length_includes_head=True,
                 head_width=0.2, head_length=0.05, label=None)
      
     # Plot the r-band light curve
@@ -76,17 +78,18 @@ def zoomed(ax):
     rmag = dat['mag'][choose] - 0.115
     ermag = dat['mag_unc'][choose]
     ax.errorbar(
-            dt, rmag, yerr=ermag, fmt='o', c='#e55c30', lw=0.5)
+            dt,rmag,yerr=ermag,fmt='o',mec=rcol, mfc='white', c=rcol, lw=0.5)
 
     # Plot the r-band upper limits
     choose = np.logical_and(filts=='r', dat['mag'] == 0)
     jd = dat['jdobs'][choose]
     dt = (jd-t0)/(1+z)
     lims = dat['limmag'][choose] - 0.115
-    ax.scatter(dt, lims, c='#e55c30', marker='o', label=None)
+    ax.scatter(dt, lims, edgecolor=rcol, facecolor='white', 
+            marker='o', label=None)
     for ii,dt_val in enumerate(dt):
-        ax.arrow(dt_val, lims[ii], 0, +0.1, edgecolor='#e55c30', lw=0.5,
-                facecolor='#e55c30', length_includes_head=True,
+        ax.arrow(dt_val, lims[ii], 0, +0.1, edgecolor=rcol, lw=0.5,
+                facecolor=rcol, length_includes_head=True,
                 head_width=0.2, head_length=0.05, label=None)
 
     # Plot the 18cow light curves
@@ -101,7 +104,7 @@ def zoomed(ax):
     dt_g = t_g - t0_cow
     mag_g = np.array([13.40, 13.65, 14.10, 14.18, 14.48, 
         14.57, 14.63, 14.70, 14.94, 14.99, 15.09]) - 0.287 # extinction in g
-    ax.plot(dt_g, mag_g + dmag, c='#e55c30', lw=0.5)
+    ax.plot(dt_g, mag_g + dmag, c=rcol, lw=0.5)
     ax.text(4.5, 21.1, "18cow $g$", fontsize=11, rotation=-55)
 
     # Connect the LC to the last upper limit 
@@ -110,7 +113,7 @@ def zoomed(ax):
     #        [58284.1300-t0_cow, dt_g[0]], 
     #        [18.90 + dmag, mag_g[0]+dmag], c='k', lw=0.5, ls='--')
     # instead, just indicate the last non-detection
-    ax.plot([-1, -1], [21.6, 21.8], c='k', lw=0.5)
+    ax.plot([-1, -1], [21.5, 21.8], c=gcol, lw=2)
     ax.text(-0.9, 21.68, 'time of last 18cow upper limit', fontsize=11)
 
     # what filter is closest to 3820 rest-frame? I think u-band
@@ -120,7 +123,7 @@ def zoomed(ax):
         58290.2267, 58290.6697, 58290.9036, 58291.1809])
     mag_u = np.array(
             [13.97, 14.03, 14.24, 14.31, 14.43, 14.46, 14.63, 14.66, 14.83])
-    ax.plot(t_u-t0_cow, mag_u - 0.368 + dmag, c='k', lw=0.5, ls='-')
+    ax.plot(t_u-t0_cow, mag_u - 0.368 + dmag, c=gcol, lw=0.5, ls='-')
     ax.text(5, 21.05, "18cow $u$", fontsize=11, rotation=-55)
 
     # Format the panel

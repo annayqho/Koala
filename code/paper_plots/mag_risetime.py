@@ -183,8 +183,8 @@ def sn2011kl(ax):
     y = -20.35
     ax.scatter(
            x, y, c='k', marker='o')
-    ax.text(x/1.01, y, "SN2011kl", fontsize=textsize,
-        horizontalalignment='right', verticalalignment='top')
+    ax.text(x*1.01, y, "SN2011kl (GRB-SN)", fontsize=textsize,
+        horizontalalignment='left', verticalalignment='top')
 
 
 fig,ax = plt.subplots(1,1,figsize=(6,5))
