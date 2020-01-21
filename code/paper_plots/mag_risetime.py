@@ -63,8 +63,8 @@ def ztf(ax):
 
 def at2018cow(ax):
     """ Rise time and peak mag """
-    x = 0.4
-    y = -20.6
+    x = 3
+    y = -20.9
     ax.errorbar(
             x, y, yerr=0.03, c='k', marker='o')
     ax.arrow(
@@ -150,8 +150,8 @@ def arcavi(ax):
 
 def ibn(ax):
     """ using rest-frame g-band """
-    x = 2.3
-    y = -21.26
+    x = 1.5
+    y = -21.2
     ax.scatter(
            x, y, c='k', marker='o')
     ax.text(x*1.05, y, "iPTF15ul (Ibn)", fontsize=textsize,
@@ -199,8 +199,8 @@ arcavi(ax)
 sn2011kl(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
-ax.set_xlim(0,5)
-ax.set_ylim(-21.4, -19.9)
+ax.set_xlim(0.7,5)
+ax.set_ylim(-21.3, -19.9)
 #ax.set_xscale('log')
 ax.invert_yaxis()
 ax.set_xlabel(
