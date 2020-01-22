@@ -89,9 +89,9 @@ def iptf16asu(ax):
     ax.errorbar(
             trise, plum, yerr=0.1, xerr=0.19, marker='o', c='k')
     ax.text(
-            trise*1.05, plum, "iPTF16asu (Ic-BL)", fontsize=textsize,
+            trise/1.05, plum, "iPTF16asu (Ic-BL)", fontsize=textsize,
             verticalalignment='bottom',
-            horizontalalignment='left')
+            horizontalalignment='right')
 
 
 def rest2018(ax):
@@ -119,29 +119,30 @@ def drout(ax):
 
 def arcavi(ax):
     """ using rest-frame g-band """
-    x = 1.12
-    y = -20.7
+    x = 3.81
+    y = -20.26
     ax.errorbar(
-           x, y, yerr=0.1, c='k', marker='o')
+           x, y, yerr=0.03, c='k', marker='o')
     ax.arrow(
            x, y, -0.1, 0, color='k', head_width=0.1, head_length=0.1)
-    ax.text(x*1.05, y, "04D4ec", fontsize=textsize,
-        horizontalalignment='left')
+    ax.text(x/1.06, y, "04D4ec", fontsize=textsize,
+        horizontalalignment='right', verticalalignment='center')
 
-    x = 3
-    y = -20.08
+    x = 2.90
+    y = -20.39
     ax.errorbar(
-           x, y, yerr=0.1, c='k', marker='o')
-    ax.text(x*1.05, y, "05D2bk", fontsize=textsize,
-    verticalalignment='center', horizontalalignment='left')
+           x, y, xerr=0.06, yerr=0.02, c='k', marker='o')
+    ax.text(x/1.01, y*1.001, "05D2bk", fontsize=textsize,
+    verticalalignment='bottom', horizontalalignment='left')
 
-    x = 4.6
-    y = -20.7
+    x = 4.59
+    y = -20.28
     ax.errorbar(
-           x, y, yerr=0.1, c='k', marker='o')
+           x, y, xerr=0.06, yerr=0.03, c='k', marker='o')
     ax.text(
-            x, y*1.005, "06D1hc", 
-            fontsize=textsize, horizontalalignment='right')
+            x, y/1.001, "06D1hc", 
+            fontsize=textsize, horizontalalignment='center',
+            verticalalignment='top')
 
 
 def ibn(ax):
@@ -180,8 +181,8 @@ def sn2011kl(ax):
     y = -20.31
     ax.errorbar(
            x, y, xerr=1.22, yerr=0.13, c='k', marker='o')
-    ax.text(x/1.01, y/1.001, "SN2011kl (GRB-SN)", fontsize=textsize,
-        horizontalalignment='right', verticalalignment='top')
+    ax.text(x/1.01, y*1.001, "SN2011kl (GRB-SN)", fontsize=textsize,
+        horizontalalignment='right', verticalalignment='bottom')
 
 
 fig,ax = plt.subplots(1,1,figsize=(6,5))
@@ -197,7 +198,7 @@ sn2011kl(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
 ax.set_xlim(0.7,5.2)
-ax.set_ylim(-21.6, -19.9)
+ax.set_ylim(-21.6, -20.1)
 #ax.set_xscale('log')
 ax.invert_yaxis()
 ax.set_xlabel(
@@ -207,6 +208,6 @@ ax.xaxis.set_tick_params(labelsize=14)
 ax.yaxis.set_tick_params(labelsize=14)
 
 fig.tight_layout()
-plt.savefig("lum_rise.png", dpi=200)
+plt.savefig("lum_rise.png", dpi=500)
 
 #plt.show()

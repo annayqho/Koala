@@ -315,3 +315,194 @@ def koala():
         tfade[ii] = np.interp(mpeak/2, ysamples[ii], x)-tpeak
 
     print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+
+
+def SNLS04D4ec():
+    dat = pd.read_fwf("../../data/SNLS04D4ec.txt")
+    jd = dat['JD']
+    filt = dat['F']
+    mag = dat['mag']
+    emag = dat['emag']
+
+    choose = filt == 'i'
+
+    xall = jd[choose].values
+    yall = mag[choose].values
+    yerrall = emag[choose].values
+    yall[-1] = 25.998
+    yerrall[-1] = 0.1
+    xall = xall.astype(float)
+    yall = yall.astype(float)
+    yerrall = yerrall.astype(float)
+
+    ind = np.argmin(yall)
+    tpeak = xall[ind]
+    mpeak = yall[ind]
+    empeak = yerrall[ind]
+    mpeak = np.min(yall)
+
+    # Rising behavior
+    x = xall[xall<=tpeak]
+    y = yall[xall<=tpeak]
+    ey = yerrall[xall>=tpeak]
+    order = np.argsort(y)
+    x = x[order]
+    y = y[order] 
+    ey = ey[order] 
+
+    nsim = 1000
+    trise = np.zeros(nsim)
+
+    ysamples = np.zeros((nsim,len(x)))
+    for ii,val in enumerate(y):
+        ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
+
+    for ii in np.arange(nsim):
+        trise[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
+
+    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
+
+    # Fading behavior
+    x = xall[xall>=tpeak][0:4]
+    y = yall[xall>=tpeak][0:4]
+    ey = yerrall[xall>=tpeak][0:4]
+    order = np.argsort(y)
+    x = x[order]
+    y = y[order] 
+    ey = ey[order] 
+
+    nsim = 1000
+    tfade = np.zeros(nsim)
+
+    ysamples = np.zeros((nsim,len(x)))
+    for ii,val in enumerate(y):
+        ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
+
+    for ii in np.arange(nsim):
+        tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
+
+    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+
+
+def SNLS05D2bk():
+    dat = pd.read_fwf("../../data/SNLS05D2bk.txt")
+    jd = dat['JD']
+    filt = dat['F']
+    mag = dat['mag']
+    emag = dat['emag']
+
+    choose = filt == 'i'
+
+    xall = jd[choose].values[0:-2].astype(float)
+    yall = mag[choose].values[0:-2].astype(float)
+    yerrall = emag[choose].values[0:-2].astype(float)
+
+    ind = np.argmin(yall)
+    tpeak = xall[ind]
+    mpeak = yall[ind]
+    empeak = yerrall[ind]
+    mpeak = np.min(yall)
+
+    # Rising behavior
+    x = xall[xall<=tpeak]
+    y = yall[xall<=tpeak]
+    ey = yerrall[xall>=tpeak]
+    order = np.argsort(y)
+    x = x[order]
+    y = y[order] 
+    ey = ey[order] 
+
+    nsim = 1000
+    trise = np.zeros(nsim)
+
+    ysamples = np.zeros((nsim,len(x)))
+    for ii,val in enumerate(y):
+        ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
+
+    for ii in np.arange(nsim):
+        trise[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
+
+    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
+
+    # Fading behavior
+    x = xall[xall>=tpeak][0:6]
+    y = yall[xall>=tpeak][0:6]
+    ey = yerrall[xall>=tpeak][0:6]
+    order = np.argsort(y)
+    x = x[order]
+    y = y[order] 
+    ey = ey[order] 
+
+    nsim = 1000
+    tfade = np.zeros(nsim)
+
+    ysamples = np.zeros((nsim,len(x)))
+    for ii,val in enumerate(y):
+        ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
+
+    for ii in np.arange(nsim):
+        tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
+
+    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+
+
+def SNLS06D1hc():
+    dat = pd.read_fwf("../../data/SNLS06D1hc.txt")
+    jd = dat['JD']
+    filt = dat['F']
+    mag = dat['mag']
+    emag = dat['emag']
+
+    choose = filt == 'i'
+
+    xall = jd[choose].values[0:-1].astype(float)
+    yall = mag[choose].values[0:-1].astype(float)
+    yerrall = emag[choose].values[0:-1].astype(float)
+
+    ind = np.argmin(yall)
+    tpeak = xall[ind]
+    mpeak = yall[ind]
+    empeak = yerrall[ind]
+    mpeak = np.min(yall)
+
+    # Rising behavior
+    x = xall[xall<=tpeak]
+    y = yall[xall<=tpeak]
+    ey = yerrall[xall>=tpeak]
+    order = np.argsort(y)
+    x = x[order]
+    y = y[order] 
+    ey = ey[order] 
+
+    nsim = 1000
+    trise = np.zeros(nsim)
+
+    ysamples = np.zeros((nsim,len(x)))
+    for ii,val in enumerate(y):
+        ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
+
+    for ii in np.arange(nsim):
+        trise[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
+
+    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
+
+    # Fading behavior
+    x = xall[xall>=tpeak][0:5]
+    y = yall[xall>=tpeak][0:5]
+    ey = yerrall[xall>=tpeak][0:5]
+    order = np.argsort(y)
+    x = x[order]
+    y = y[order] 
+    ey = ey[order] 
+
+    nsim = 1000
+    tfade = np.zeros(nsim)
+
+    ysamples = np.zeros((nsim,len(x)))
+    for ii,val in enumerate(y):
+        ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
+
+    for ii in np.arange(nsim):
+        tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
+
+    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
