@@ -53,12 +53,12 @@ def ztf(ax):
 
 
     # ZTF18abvkwla
-    trise = 1.3
-    plum = -20.9
-    ax.scatter(
-            trise, plum, marker='o', c='k') 
-    ax.text(trise*1.1, plum, "ZTF18abvkwla", fontsize=textsize,
-            verticalalignment='center')
+    trise = 1.83
+    plum = -20.85
+    ax.errorbar(
+            trise, plum, xerr=0.05, yerr=0.07, marker='o', c='k') 
+    ax.text(trise*1.05, plum, "ZTF18abvkwla", fontsize=textsize,
+            verticalalignment='top')
 
 
 def at2018cow(ax):
@@ -66,12 +66,12 @@ def at2018cow(ax):
     x = 3
     y = -20.9
     ax.errorbar(
-            x, y, yerr=0.03, c='k', marker='o')
+            x, y, yerr=0.05, c='k', marker='o')
     ax.arrow(
            x, y, -0.1, 0, color='k', head_width=0.1, head_length=0.1)
-    ax.text(x, y/1.003, "18cow", fontsize=textsize,
-            horizontalalignment='center',
-            verticalalignment='top')
+    ax.text(x*1.05, y, "18cow", fontsize=textsize,
+            horizontalalignment='left',
+            verticalalignment='center')
     
 
 def iptf16asu(ax):
@@ -83,11 +83,7 @@ def iptf16asu(ax):
     I calculated the t_1/2, rise using that quadratic function.
     I took their measurement of the g-band max magnitude.
     """
-    # from the paper: 3.97 \pm 0.19 days in g-band
-    # peak is -20.4
-    trise = 1.25
-
-    # we do resolve Mg, but Lbol is a strict lower limit
+    trise = 2.73
     plum = -20.4
 
     ax.errorbar(
@@ -152,8 +148,8 @@ def ibn(ax):
     """ using rest-frame g-band """
     x = 1.5
     y = -21.2
-    ax.scatter(
-           x, y, c='k', marker='o')
+    ax.errorbar(
+           x, y, xerr=0.05, yerr=0.3, c='k', marker='o')
     ax.text(x*1.05, y, "iPTF15ul (Ibn)", fontsize=textsize,
         horizontalalignment='left')
 
@@ -170,21 +166,22 @@ def ibn(ax):
 def dougie(ax):
     """ using rest-frame g-band, which is r-band from Vinko+2015 """
     x = 3.92
-    y = -22.98
-    ax.scatter(
-           x, y, c='k', marker='o')
+    y = -22.97
+    ax.errorbar(
+           x, y, xerr=0.14, yerr=0.13, c='k', marker='o')
     ax.text(x/1.01, y, "Dougie", fontsize=textsize,
         horizontalalignment='right', verticalalignment='top')
 
 
 def sn2011kl(ax):
-    """ using rest-frame g-band, which is i-band from Greiner+2015 """
-    x = 2.57
-    y = -20.35
-    ax.scatter(
-           x, y, c='k', marker='o')
-    ax.text(x*1.01, y, "SN2011kl (GRB-SN)", fontsize=textsize,
-        horizontalalignment='left', verticalalignment='top')
+    """ using rest-frame g-band, which is i-band from Greiner+2015
+    and Kann+2019 """
+    x = 5.0
+    y = -20.31
+    ax.errorbar(
+           x, y, xerr=1.22, yerr=0.13, c='k', marker='o')
+    ax.text(x/1.01, y/1.001, "SN2011kl (GRB-SN)", fontsize=textsize,
+        horizontalalignment='right', verticalalignment='top')
 
 
 fig,ax = plt.subplots(1,1,figsize=(6,5))
@@ -199,8 +196,8 @@ arcavi(ax)
 sn2011kl(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
-ax.set_xlim(0.7,5)
-ax.set_ylim(-21.3, -19.9)
+ax.set_xlim(0.7,5.2)
+ax.set_ylim(-21.6, -19.9)
 #ax.set_xscale('log')
 ax.invert_yaxis()
 ax.set_xlabel(
