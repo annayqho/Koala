@@ -151,7 +151,7 @@ def ibn(ax):
     y = -21.2
     ax.errorbar(
            x, y, xerr=0.05, yerr=0.3, c='k', marker='o')
-    ax.text(x*1.05, y, "iPTF15ul (Ibn)", fontsize=textsize,
+    ax.text(x*1.05, y, "iPTF15ul (Ibn?)", fontsize=textsize,
         horizontalalignment='left')
 
     x = 0.95

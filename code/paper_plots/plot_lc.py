@@ -16,19 +16,41 @@ t0 = 58373.407523+2400000.5
 # Full light curve
 def full(ax):
     dat = ascii.read("../../data/koala_lc.txt")
-    jd = np.array(dat['col1'])-t0
+    dt = np.array(dat['col1'])-t0
     flux = np.array(dat['col2'])
     eflux = np.array(dat['col3'])
     filt = np.array(dat['col4'])
 
     choose = filt == 'r'
-    ax.errorbar(jd[choose]/(1+z),flux[choose],eflux[choose],mec=rcol,fmt='o',
+    ax.errorbar(dt[choose]/(1+z),flux[choose],eflux[choose],mec=rcol,fmt='o',
             mfc='white',c=rcol,
             label=r"ZTF $r$ ($\lambda_\mathrm{rest}=4950$\AA)")
 
     choose = filt == 'g'
-    ax.errorbar(jd[choose]/(1+z),flux[choose],eflux[choose],c=gcol,fmt='s',
+    ax.errorbar(dt[choose]/(1+z),flux[choose],eflux[choose],c=gcol,fmt='s',
             label=r"ZTF $g$ ($\lambda_\mathrm{rest}=3820$\AA)")
+
+    # Plot the radioactively powered LC
+    mni_vals = [0.1, 0.2, 0.3]
+    for mni in mni_vals:
+        tmod = np.linspace(5,40,10000)
+        lum = 2E43 * (mni) * \
+            (3.9*np.exp(-tmod/8.8)+0.678*(np.exp(-tmod/113.6)-np.exp(-tmod/8.8)))
+        lam = 4950*1E-8 # cm
+        nu = 3E10/lam # Hz
+        dcm = Planck15.luminosity_distance(z=0.2714).cgs.value
+        flam = lum/nu/(4*np.pi*dcm**2)
+        fmcmc = flam*10**(29.44)
+        ax.plot(tmod, fmcmc, c='k', ls='--', lw=0.5)
+        if mni==0.3:
+            ax.text(
+                    5, fmcmc[0], "$M_\mathrm{Ni}=$"+str(mni)+r"$M_\odot$", fontsize=12, 
+                    horizontalalignment='right', verticalalignment='center')
+        else:
+            ax.text(
+                    5, fmcmc[0], str(mni)+r"$M_\odot$", fontsize=12, 
+                    horizontalalignment='right', verticalalignment='center')
+    ax.axhline(y=0, c='lightgrey')
 
     ax.set_xlabel("Rest-frame days since first detection", fontsize=16)
     ax.set_ylabel("Flux (ZP=25)", fontsize=16)
@@ -43,7 +65,22 @@ def full(ax):
             bbox_to_anchor=(0.9,1),
             bbox_transform=ax.transAxes)
     zoomed(axins)
-
+    mni_vals = [0.1, 0.2, 0.3]
+    tmod = np.linspace(3,8,100)
+    for mni in mni_vals:
+        tmod = np.linspace(5,20,10000)
+        lum = 2E43 * (mni) * \
+            (3.9*np.exp(-tmod/8.8)+0.678*(np.exp(-tmod/113.6)-np.exp(-tmod/8.8)))
+        lam = 4950*1E-8 # cm
+        nu = 3E10/lam # Hz
+        dcm = Planck15.luminosity_distance(z=0.2714).cgs.value
+        flux= lum/nu/(4*np.pi*dcm**2)
+        m = -2.5*np.log10(flux)-48.6
+        axins.plot(tmod,m,c='k',ls='--',lw=0.5)
+        axins.text(
+                5, m[0]*1.005, str(mni)+r"$M_\odot$", fontsize=12, 
+                horizontalalignment='left', verticalalignment='top')
+     
 
 # Zoomed-in light curve
 def zoomed(ax):
@@ -105,7 +142,7 @@ def zoomed(ax):
     mag_g = np.array([13.40, 13.65, 14.10, 14.18, 14.48, 
         14.57, 14.63, 14.70, 14.94, 14.99, 15.09]) - 0.287 # extinction in g
     ax.plot(dt_g, mag_g + dmag, c=rcol, lw=0.5)
-    ax.text(4.5, 21.1, "18cow $g$", fontsize=11, rotation=-55)
+    ax.text(4.3, 21.0, "18cow $g$", fontsize=11, rotation=-55)
 
     # Connect the LC to the last upper limit 
     # doesn't look good to do this...
@@ -142,7 +179,6 @@ def zoomed(ax):
 
     ax.text(0.9, 19.32, 'S', fontsize=12)
 
-    ax.set_ylabel("Apparent Mag", fontsize=14)
     ax.tick_params(axis='both', labelsize=14)
     ax.set_xlim(-2.2,8.1)
 
