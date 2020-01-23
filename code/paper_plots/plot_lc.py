@@ -65,7 +65,7 @@ def full(ax):
             bbox_to_anchor=(0.9,1),
             bbox_transform=ax.transAxes)
     zoomed(axins)
-    mni_vals = [0.1, 0.2, 0.3]
+    mni_vals = [0.3]
     tmod = np.linspace(3,8,100)
     for mni in mni_vals:
         tmod = np.linspace(5,20,10000)
