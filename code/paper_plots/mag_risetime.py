@@ -185,6 +185,16 @@ def sn2011kl(ax):
         horizontalalignment='right', verticalalignment='bottom')
 
 
+def des16X1eho(ax):
+    """ using rest-frame i-band LC from Miika """
+    x = 1.9
+    y = -21
+    ax.errorbar(
+           x, y, xerr=0.6, yerr=0.09, c='k', marker='o')
+    ax.text(x*1.01, y*1.001, "16X1eho", fontsize=textsize,
+        horizontalalignment='left', verticalalignment='bottom')
+
+
 fig,ax = plt.subplots(1,1,figsize=(6,5))
 ibn(ax)
 #sn2018gep(ax)
@@ -195,6 +205,7 @@ iptf16asu(ax)
 arcavi(ax)
 #dougie(ax)
 sn2011kl(ax)
+des16X1eho(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
 ax.set_xlim(0.7,5.2)
