@@ -506,3 +506,36 @@ def SNLS06D1hc():
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
     print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+
+
+def DESX1eho():
+    dat = pd.read_table("../../data/DES16X1eho_i.dat")
+    xall = dat['# t'][1:-1].values.astype(float)
+    yall= dat['M'][1:-1].values.astype(float)
+    yerrall = dat['M_e'][1:-1].values.astype(float)
+
+    ind = np.argmin(yall)
+    tpeak = xall[ind]
+    mpeak = yall[ind]
+    empeak = yerrall[ind]
+
+    # Fading behavior
+    x = xall[xall>=tpeak][0:5]
+    y = yall[xall>=tpeak][0:5]
+    ey = yerrall[xall>=tpeak][0:5]
+    order = np.argsort(y)
+    x = x[order]
+    y = y[order] 
+    ey = ey[order] 
+
+    nsim = 1000
+    tfade = np.zeros(nsim)
+
+    ysamples = np.zeros((nsim,len(x)))
+    for ii,val in enumerate(y):
+        ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
+
+    for ii in np.arange(nsim):
+        tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
+
+    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
