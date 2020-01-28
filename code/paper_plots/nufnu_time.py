@@ -100,8 +100,8 @@ def koala(ax, col, legend):
     ax.errorbar(dt/(1.2714), f, 0.0006*f, c='black', fmt='*', ms=20)
     ax.plot(dt/(1.2714), f, c='black', lw=2)
     ax.text(
-            81, 1E40, "ZTF18abvkwla", 
-            fontsize=14, horizontalalignment='left',
+            60, 1.2E40, "ZTF18abvkwla", 
+            fontsize=14, horizontalalignment='center',
             verticalalignment='bottom')
 
 
@@ -369,7 +369,7 @@ def grb030329(ax, col, legend):
             f, np.array([1613, 1389, 871, 933, 707, 543, 504, 318]) * 1E-3)
     nu = np.append(nu, np.array([2.3E9]*8))
     lum = plot_line(ax, d, t, nu*f, 'GRB030329', 'GRB', col, legend)
-    ax.text(t[-8]*1.05, lum[-8]/1.1, 'GRB030329', fontsize=11,
+    ax.text(t[6]*1.05, lum[10]*1.05, 'GRB030329', fontsize=11,
             verticalalignment='bottom',
             horizontalalignment='left')
     
@@ -386,9 +386,9 @@ def grb111209a(ax, col, legend):
     nu = np.array([9E9]*len(f))
 
     lum = plot_line(ax, d, t, nu*f, 'GRB111209A', 'GRB', col, legend)
-    ax.text(t[0]*1.05, lum[0]/1.1, 'GRB111209A', fontsize=11,
+    ax.text(t[0]/1.05, lum[0], 'GRB111209A', fontsize=11,
             verticalalignment='bottom',
-            horizontalalignment='left')
+            horizontalalignment='center')
 
 
 def grb130427A(ax, col, legend):
@@ -408,9 +408,9 @@ def grb130427A(ax, col, legend):
     f = np.array([2570, 1820, 607, 374, 385, 332, 243, 109, 91]) * 1E-3
 
     lum = plot_line(ax, d, t, freq*f, 'GRB130427A', 'GRB', col, legend)
-    ax.text(t[-4]*1.05, lum[-4], 'GRB130427A', fontsize=11,
-            verticalalignment='bottom',
-            horizontalalignment='left')
+    ax.text(t[-4], lum[-4]/1.3, 'GRB130427A', fontsize=11,
+            verticalalignment='top',
+            horizontalalignment='center')
 
 
 def sn2007bg(ax, col, legend):
@@ -531,6 +531,18 @@ def limits(ax):
     lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
     print(t/(1+z), lum)
     ax.scatter(t/(1+z), lum, marker='v', c='k')
+
+    # DES16X1eho
+    z = 0.593
+    t = 365
+    f = 152 # uJy
+    nu = 4E9
+    dcm = Planck15.luminosity_distance(z=z).cgs.value
+    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    print(t/(1+z), lum)
+    ax.scatter(t/(1+z), lum, marker='v', c='k')
+    ax.text(t*1.1/(1+z), lum, "DES16X1eho", fontsize=11, 
+            horizontalalignment='left')
 
     # 06D1hc
     z = 0.555
