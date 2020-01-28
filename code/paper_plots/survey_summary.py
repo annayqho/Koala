@@ -132,8 +132,8 @@ def get_footprint(fields,nights,night):
 
 
 # These are all the 1DC observations
-path = '/Users/annaho/Dropbox/Projects/Research/Koala/docs/anna.db'
-engine = create_engine('sqlite:////Users/annaho/Dropbox/Projects/Research/Koala/data/anna.db')
+path = '/Users/annaho/Dropbox/Projects/Research/Koala/data/caltech_1DC.db'
+engine = create_engine('sqlite:////Users/annaho/Dropbox/Projects/Research/Koala/data/caltech_1DC.db')
 
 df = pd.read_sql('Summary', engine)
 
@@ -147,15 +147,15 @@ nights = df['night']
 fieldids = np.unique(fields)
 unights = np.unique(nights)
 
-coverage = []
-
-for night in unights:
-    print(night)
-    area = get_footprint(fields,nights,night)
-    print(area)
-    coverage.append(area)
+# coverage = []
+# 
+# for night in unights:
+#     print(night)
+#     area = get_footprint(fields,nights,night)
+#     print(area)
+#     coverage.append(area)
 
 # np.savetxt("fieldlist.txt", fieldids, fmt='%s')
 
 # Make the cadence histogram
-# cadence_hist(mjd, fields, filt)
+cadence_hist(mjd, fields, filt)
