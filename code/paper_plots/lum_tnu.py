@@ -91,7 +91,7 @@ def lumtnu(ax):
     # Koala
     tnu = [(81)*(10/5), (343)*(1.5/5)]
     lpeak = [8.3E39 / 10E9, 3.3E39 / 1.5E9]
-    ax.scatter(tnu[0], lpeak[0], marker='*', c='k', s=300, label=None)
+    ax.scatter(tnu[0], lpeak[0], marker='*', c='red', s=300, label="FBOT")
     #ax.scatter(tnu[1], lpeak[1], marker='*', c='k', s=100, label=None)
     #ax.plot(tnu, lpeak, c='k', lw=1, label=None)
     #ax.arrow(
@@ -99,7 +99,7 @@ def lumtnu(ax):
     #        length_includes_head=True, head_width=2E29,
     #        head_length=50)
     ax.text(tnu[0], lpeak[0]*1.2, "ZTF18abvkwla", fontsize=medsize,
-            horizontalalignment='center')
+            horizontalalignment='center', color='red')
 
     # 11qcj
     tnu = (100)*(5/5)
@@ -199,12 +199,11 @@ def lumtnu(ax):
     x2 = 91*10/5
     y2 = 4.3E28
     ax.scatter(
-            x2, y2, marker='*', s=100,
-            facecolors='black', edgecolors='black')
+            x2, y2, marker='*', s=300, c='red')
     ax.text(
             x2*1.1, y2*1, "AT2018cow", fontsize=medsize,
             verticalalignment='bottom',
-            horizontalalignment='left')
+            horizontalalignment='left', color='red', label="FBOT")
 
     ax.set_xlim(2, 3000)
     ax.set_ylim(9E26, 2E30)
@@ -227,7 +226,7 @@ ax.set_ylabel(
     fontsize=bigsize)
 #ax.get_yaxis().set_visible(False)
 ax.legend(
-        loc=(0.55,0.3), ncol=1, fontsize=medsize, 
+        loc=(0.55,0.25), ncol=1, fontsize=medsize, 
         columnspacing=0.01, borderpad=0.3)#, columnspacing=0.1)
 #y = mdot_curves(ax, 700, 1E1)
 
