@@ -187,5 +187,5 @@ if __name__=="__main__":
     fig,ax = plt.subplots(1,1, figsize=(11,5))
     full(ax)
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("lc.png", dpi=300)
+    plt.show()
+    #plt.savefig("lc.png", dpi=300)

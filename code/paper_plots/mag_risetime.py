@@ -15,7 +15,7 @@ from matplotlib.patches import Rectangle
 from matplotlib.collections import PatchCollection
 
 datadir = "/Users/annaho/Dropbox/Projects/Research/ZTF18abukavn/data"
-textsize=14
+textsize=12
 
 
 def sn2018gep(ax):
@@ -33,32 +33,13 @@ def sn2018gep(ax):
 def ztf(ax):
     """ Rise time and peak g-band mag for the three new ZTF sources """
 
-    # ZTF18achdidy
-    # trise = 2
-    # plum = -20.2
-    # ax.scatter(
-    #         trise+5, plum, marker='o', c='k') 
-    # ax.arrow(
-    #        trise+5, plum, -5, 0, color='k', head_width=0.1, head_length=0.1)
-    # ax.text(trise*1.4, plum, "ZTF18achdidy (SLSN-I)", fontsize=textsize,
-    #         verticalalignment='bottom', horizontalalignment='left')
-
-    # ZTF19aapfmki
-    # trise = 4.6
-    # plum = -19.5
-    # ax.scatter(
-    #         trise, plum, marker='o', c='k') 
-    # ax.text(trise*1.08, plum*1.001, "ZTF19aapfmki (Ibn)", fontsize=textsize,
-    #         verticalalignment='bottom', horizontalalignment='right')
-
-
     # ZTF18abvkwla
     trise = 1.83
     plum = -20.85
     ax.errorbar(
-            trise, plum, xerr=0.05, yerr=0.07, marker='o', c='k') 
-    ax.text(trise*1.05, plum, "ZTF18abvkwla", fontsize=textsize,
-            verticalalignment='top')
+            trise, plum, xerr=0.05, yerr=0.07, marker='*', c='k', ms=20) 
+    ax.text(trise, plum/1.003, "ZTF18abvkwla", fontsize=textsize+2,
+            verticalalignment='top', weight='bold', horizontalalignment='center')
 
 
 def at2018cow(ax):
@@ -69,7 +50,7 @@ def at2018cow(ax):
             x, y, yerr=0.05, c='k', marker='o')
     ax.arrow(
            x, y, -0.1, 0, color='k', head_width=0.1, head_length=0.1)
-    ax.text(x*1.05, y, "18cow", fontsize=textsize,
+    ax.text(x*1.03, y, "18cow", fontsize=textsize,
             horizontalalignment='left',
             verticalalignment='center')
     

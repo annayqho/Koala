@@ -71,11 +71,14 @@ def at2018cow():
     choose = filt == 'g'
 
     xall = mjd[choose][1:].values
-    yall = mag[choose][1:].values.astype(float)
+    yall = mag[choose][1:].values.astype(float)-0.287
     yerrall = emag[choose][1:].values.astype(float)
 
     tpeak = xall[np.argmin(yall)]
+    empeak = yerrall[np.argmin(yall)]
     mpeak = np.min(yall)
+    print(mpeak)
+    print(empeak)
 
     x = xall[xall>=tpeak]
     y = yall[xall>=tpeak]
