@@ -74,11 +74,43 @@ def at2018cow():
     yall = mag[choose][1:].values.astype(float)-0.287
     yerrall = emag[choose][1:].values.astype(float)
 
+    # Add the detection prior to peak
+    # o-band dominated by r-band flux
+    # r-band extinction: 0.198
+    xall = np.insert(xall, 0, 58285.44)
+    yall = np.insert(yall, 0, 14.70-0.198-0.4)
+    yerrall = np.insert(yerrall, 0, 0.10)
+
+    # Add the i-band detection prior to peak
+    xall = np.insert(xall, 0, 58286.1950)
+    yall = np.insert(yall, 0, 14.32-0.147-0.7)
+    yerrall = np.insert(yerrall, 0, 0.03)
+
     tpeak = xall[np.argmin(yall)]
     empeak = yerrall[np.argmin(yall)]
     mpeak = np.min(yall)
     print(mpeak)
     print(empeak)
+
+    x = xall[xall<=tpeak]
+    y = yall[xall<=tpeak]
+    ey = yerrall[xall<=tpeak]
+    order = np.argsort(y)
+    x = x[order]
+    y = y[order] 
+    ey = ey[order] 
+
+    nsim = 1000
+    trise = np.zeros(nsim)
+
+    ysamples = np.zeros((nsim,len(x)))
+    for ii,val in enumerate(y):
+        ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
+
+    for ii in np.arange(nsim):
+        trise[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
+
+    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
 
     x = xall[xall>=tpeak]
     y = yall[xall>=tpeak]

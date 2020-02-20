@@ -60,11 +60,6 @@ def full(ax):
     ax.legend(fontsize=13, loc='lower left', ncol=1)
 
     # zoom-in showing the LC compared to 18cow
-    axins = inset_axes(
-            ax, 4, 2.5, loc=1,
-            bbox_to_anchor=(0.9,1),
-            bbox_transform=ax.transAxes)
-    zoomed(axins)
     mni_vals = [0.3]
     tmod = np.linspace(3,8,100)
     for mni in mni_vals:
@@ -185,7 +180,7 @@ def zoomed(ax):
 
 if __name__=="__main__":
     fig,ax = plt.subplots(1,1, figsize=(11,5))
-    full(ax)
+    zoomed(ax)
     plt.tight_layout()
     plt.show()
     #plt.savefig("lc.png", dpi=300)
