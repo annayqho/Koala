@@ -35,7 +35,7 @@ def ztf(ax):
 
     # ZTF18abvkwla
     trise = 1.83
-    plum = -20.85
+    plum = -20.59
     ax.errorbar(
             trise, plum, xerr=0.05, yerr=0.07, marker='*', c='k', ms=20) 
     ax.text(trise, plum/1.003, "ZTF18abvkwla", fontsize=textsize+2,
@@ -44,15 +44,13 @@ def ztf(ax):
 
 def at2018cow(ax):
     """ Rise time and peak mag """
-    x = 3
-    y = -20.9
+    x = 1.43
+    y = -20.87
     ax.errorbar(
-            x, y, yerr=0.05, c='k', marker='o')
-    ax.arrow(
-           x, y, -0.1, 0, color='k', head_width=0.1, head_length=0.1)
-    ax.text(x*1.03, y, "18cow", fontsize=textsize,
-            horizontalalignment='left',
-            verticalalignment='center')
+            x, y, xerr=0.08, yerr=0.05, c='k', marker='o')
+    ax.text(x/1.03, y, "18cow", fontsize=textsize,
+            horizontalalignment='right',
+            verticalalignment='top')
     
 
 def iptf16asu(ax):
@@ -65,7 +63,7 @@ def iptf16asu(ax):
     I took their measurement of the g-band max magnitude.
     """
     trise = 2.73
-    plum = -20.4
+    plum = -20.2
 
     ax.errorbar(
             trise, plum, yerr=0.1, xerr=0.19, marker='o', c='k')
@@ -100,8 +98,9 @@ def drout(ax):
 
 def arcavi(ax):
     """ using rest-frame g-band """
+    # 04D4ec
     x = 3.81
-    y = -20.26
+    y = -19.75
     ax.errorbar(
            x, y, yerr=0.03, c='k', marker='o')
     ax.arrow(
@@ -109,15 +108,17 @@ def arcavi(ax):
     ax.text(x/1.06, y, "04D4ec", fontsize=textsize,
         horizontalalignment='right', verticalalignment='center')
 
+    # 05D2bk
     x = 2.90
-    y = -20.39
+    y = -19.81
     ax.errorbar(
            x, y, xerr=0.06, yerr=0.02, c='k', marker='o')
     ax.text(x/1.01, y*1.001, "05D2bk", fontsize=textsize,
     verticalalignment='bottom', horizontalalignment='left')
 
+    # 06D1hc
     x = 4.59
-    y = -20.28
+    y = -19.80
     ax.errorbar(
            x, y, xerr=0.06, yerr=0.03, c='k', marker='o')
     ax.text(
@@ -129,7 +130,7 @@ def arcavi(ax):
 def ibn(ax):
     """ using rest-frame g-band """
     x = 1.5
-    y = -21.2
+    y = -21.1
     ax.errorbar(
            x, y, xerr=0.05, yerr=0.3, c='k', marker='o')
     ax.text(x*1.05, y, "iPTF15ul (Ibn?)", fontsize=textsize,
@@ -159,7 +160,7 @@ def sn2011kl(ax):
     """ using rest-frame g-band, which is i-band from Greiner+2015
     and Kann+2019 """
     x = 5.0
-    y = -20.31
+    y = -19.75
     ax.errorbar(
            x, y, xerr=1.22, yerr=0.13, c='k', marker='o')
     ax.text(x/1.01, y*1.001, "SN2011kl (GRB-SN)", fontsize=textsize,
@@ -169,7 +170,7 @@ def sn2011kl(ax):
 def des16X1eho(ax):
     """ using rest-frame i-band LC from Miika """
     x = 1.9
-    y = -21
+    y = -20.39
     ax.errorbar(
            x, y, xerr=0.6, yerr=0.09, c='k', marker='o')
     ax.text(x*1.01, y*1.001, "16X1eho", fontsize=textsize,

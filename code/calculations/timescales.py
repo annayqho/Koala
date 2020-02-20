@@ -324,7 +324,10 @@ def koala():
     for ii in np.arange(nsim):
         trise[ii] = tpeak-np.interp(mpeak/2, ysamples[ii], x)
 
-    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
+    mean_rise = np.mean(trise)/1.2714
+    err_rise = np.std(trise)/1.2714
+
+    print("rise time is %s +/- %s" %(mean_rise,err_rise))
 
     x = xall[ind+1:14]
     y = yall[ind+1:14]
@@ -349,7 +352,10 @@ def koala():
     for ii in np.arange(nsim):
         tfade[ii] = np.interp(mpeak/2, ysamples[ii], x)-tpeak
 
-    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    mean_rise = np.mean(tfade)/1.2714
+    err_rise = np.std(tfade)/1.2714
+
+    print("fade time is %s +/- %s" %(mean_rise, err_rise))
 
 
 def SNLS04D4ec():
@@ -574,3 +580,8 @@ def DESX1eho():
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
     print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+
+
+if __name__=="__main__":
+    #koala()
+    SNLS04D4ec()
