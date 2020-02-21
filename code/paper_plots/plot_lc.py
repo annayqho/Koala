@@ -44,7 +44,8 @@ def full(ax):
         ax.plot(tmod, fmcmc, c='k', ls='--', lw=0.5)
         if mni==0.3:
             ax.text(
-                    5, fmcmc[0], "$M_\mathrm{Ni}=$"+str(mni)+r"$M_\odot$", fontsize=12, 
+                    5, fmcmc[0], "$M_\mathrm{Ni}=$"+str(mni)+r"$M_\odot$", 
+                    fontsize=12, 
                     horizontalalignment='right', verticalalignment='center')
         else:
             ax.text(
@@ -59,26 +60,10 @@ def full(ax):
 
     ax.legend(fontsize=13, loc='lower left', ncol=1)
 
-    # zoom-in showing the LC compared to 18cow
-    mni_vals = [0.3]
-    tmod = np.linspace(3,8,100)
-    for mni in mni_vals:
-        tmod = np.linspace(5,20,10000)
-        lum = 2E43 * (mni) * \
-            (3.9*np.exp(-tmod/8.8)+0.678*(np.exp(-tmod/113.6)-np.exp(-tmod/8.8)))
-        lam = 4950*1E-8 # cm
-        nu = 3E10/lam # Hz
-        dcm = Planck15.luminosity_distance(z=0.2714).cgs.value
-        flux= lum/nu/(4*np.pi*dcm**2)
-        m = -2.5*np.log10(flux)-48.6
-        axins.plot(tmod,m,c='k',ls='--',lw=0.5)
-        axins.text(
-                5, m[0]*1.005, str(mni)+r"$M_\odot$", fontsize=12, 
-                horizontalalignment='left', verticalalignment='top')
      
 
-# Zoomed-in light curve
-def zoomed(ax):
+# Magnitude space
+def mag(ax):
     dat = ascii.read("../../data/ZTF18abvkwla_lct.csv")
     filts = np.array([val[2:3] for val in dat['filter']])
 
@@ -87,17 +72,19 @@ def zoomed(ax):
     jd = dat['jdobs'][choose]
     t0 = jd[0]
     dt = (jd-t0)/(1+z)
-    rmag = dat['mag'][choose] - 0.167 #extinction in SDSS g
-    ermag = dat['mag_unc'][choose]
+    gmag = dat['mag'][choose] - 0.167 #extinction in SDSS g
+    egmag = dat['mag_unc'][choose]
     ax.errorbar(
-            dt, rmag, yerr=ermag, fmt='s', c=gcol, lw=0.5)
+            dt, gmag, yerr=egmag, fmt='s', c=gcol, lw=0.5, ms=8, 
+            label=r"ZTF $g$ ($\lambda_\mathrm{rest}=3820$\AA)")
 
     # Plot the g-band upper limits
     choose = np.logical_and(filts=='g', dat['mag'] == 0)
     jd = dat['jdobs'][choose]
     dt = (jd-t0)/(1+z)
     lims = dat['limmag'][choose] - 0.167 # extinction in SDSS g
-    ax.scatter(dt, lims, c=gcol, marker='s', label=None)
+    ax.scatter(
+            dt, lims, edgecolor=gcol, facecolor='white', marker='s', label=None)
     for ii,dt_val in enumerate(dt):
         ax.arrow(dt_val, lims[ii], 0, +0.1, color=gcol, 
                 length_includes_head=True,
@@ -110,7 +97,9 @@ def zoomed(ax):
     rmag = dat['mag'][choose] - 0.115
     ermag = dat['mag_unc'][choose]
     ax.errorbar(
-            dt,rmag,yerr=ermag,fmt='o',mec=rcol, mfc='white', c=rcol, lw=0.5)
+            dt, rmag, yerr=ermag, fmt='o', mec=rcol, mfc=rcol, c=rcol, 
+            lw=0.5, ms=8,
+            label=r"ZTF $r$ ($\lambda_\mathrm{rest}=4950$\AA)")
 
     # Plot the r-band upper limits
     choose = np.logical_and(filts=='r', dat['mag'] == 0)
@@ -158,6 +147,23 @@ def zoomed(ax):
     ax.plot(t_u-t0_cow, mag_u - 0.368 + dmag, c=gcol, lw=0.5, ls='-')
     ax.text(5, 21.05, "18cow $u$", fontsize=11, rotation=-55)
 
+    # ni-powered light curve
+    mni_vals = [0.3, 0.4]
+    tmod = np.linspace(3,8,100)
+    for mni in mni_vals:
+        tmod = np.linspace(5,20,10000)
+        lum = 2E43 * (mni) * \
+            (3.9*np.exp(-tmod/8.8)+0.678*(np.exp(-tmod/113.6)-np.exp(-tmod/8.8)))
+        lam = 4950*1E-8 # cm
+        nu = 3E10/lam # Hz
+        dcm = Planck15.luminosity_distance(z=0.2714).cgs.value
+        flux= lum/nu/(4*np.pi*dcm**2)
+        m = -2.5*np.log10(flux)-48.6
+        ax.plot(tmod,m,c='k',ls='--',lw=0.5)
+        ax.text(
+                8.4, m[0]*1.009, str(mni)+r"$M_\odot$", fontsize=12, 
+                horizontalalignment='left', verticalalignment='top')
+
     # Format the panel
     ax.set_ylim(21.7, 19.2)
     ax2 = ax.twinx()
@@ -172,15 +178,20 @@ def zoomed(ax):
     ax2.plot([],[])
     ax2.tick_params(axis='both', labelsize=14)
 
+    ax.legend(fontsize=13, loc='upper right', ncol=1)
+
     ax.text(0.9, 19.32, 'S', fontsize=12)
 
     ax.tick_params(axis='both', labelsize=14)
-    ax.set_xlim(-2.2,8.1)
+    ax.set_xlim(-2.2,20)
+    ax.set_xlabel("Rest-frame days since first detection", fontsize=16)
+    ax.set_ylabel("Apparent Mag", fontsize=16)
+    ax.tick_params(axis='both', labelsize=16)
 
 
 if __name__=="__main__":
     fig,ax = plt.subplots(1,1, figsize=(11,5))
-    zoomed(ax)
+    mag(ax)
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("lc.png", dpi=300)
+    #plt.show()
+    plt.savefig("lc.png", dpi=300)

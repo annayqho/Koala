@@ -38,8 +38,8 @@ def ztf(ax):
     plum = -20.59
     ax.errorbar(
             trise, plum, xerr=0.05, yerr=0.07, marker='*', c='k', ms=20) 
-    ax.text(trise, plum/1.003, "ZTF18abvkwla", fontsize=textsize+2,
-            verticalalignment='top', weight='bold', horizontalalignment='center')
+    ax.text(trise, plum*1.003, "ZTF18abvkwla", fontsize=textsize+2,
+            verticalalignment='bottom', weight='bold', horizontalalignment='center')
 
 
 def at2018cow(ax):
@@ -184,14 +184,14 @@ ztf(ax)
 at2018cow(ax)
 iptf16asu(ax)
 #drout(ax)
-arcavi(ax)
+#arcavi(ax)
 #dougie(ax)
-sn2011kl(ax)
+#sn2011kl(ax)
 des16X1eho(ax)
 
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
-ax.set_xlim(0.7,5.2)
-ax.set_ylim(-21.6, -20.1)
+ax.set_xlim(1,3)
+ax.set_ylim(-21.6, -20)
 #ax.set_xscale('log')
 ax.invert_yaxis()
 ax.set_xlabel(
