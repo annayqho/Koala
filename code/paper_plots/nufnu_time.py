@@ -523,14 +523,14 @@ def limits(ax):
     ax.text(t/1.2, lum, "iPTF15ul", fontsize=11, horizontalalignment='right')
 
     # 05D2bk
-    z = 0.699
-    t = 4739
-    f = 134 # uJy
-    nu = 4E9
-    dcm = Planck15.luminosity_distance(z=z).cgs.value
-    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
-    print(t/(1+z), lum)
-    ax.scatter(t/(1+z), lum, marker='v', c='k')
+    # z = 0.699
+    # t = 4739
+    # f = 134 # uJy
+    # nu = 4E9
+    # dcm = Planck15.luminosity_distance(z=z).cgs.value
+    # lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    # print(t/(1+z), lum)
+    # ax.scatter(t/(1+z), lum, marker='v', c='k')
 
     # DES16X1eho
     z = 0.593
@@ -545,14 +545,14 @@ def limits(ax):
             horizontalalignment='left')
 
     # 06D1hc
-    z = 0.555
-    t = 4034
-    f = 136 # uJy
-    nu = 4E9
-    dcm = Planck15.luminosity_distance(z=z).cgs.value
-    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
-    print(t/(1+z), lum)
-    ax.scatter(t/(1+z), lum, marker='v', c='k')
+    # z = 0.555
+    # t = 4034
+    # f = 136 # uJy
+    # nu = 4E9
+    # dcm = Planck15.luminosity_distance(z=z).cgs.value
+    # lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    # print(t/(1+z), lum)
+    # ax.scatter(t/(1+z), lum, marker='v', c='k')
 
     # 16asu
     z = 0.187

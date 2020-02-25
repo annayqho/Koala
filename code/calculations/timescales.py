@@ -4,6 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from astropy.io import ascii
 import pandas as pd
+import sys
+sys.path.append("/Users/annaho/Dropbox/Projects/Research/ZTF_fast_transient_search/code")
+from forced_phot.run_forced_phot import get_forced_phot
 
 
 def iptf15ul():
@@ -580,6 +583,14 @@ def DESX1eho():
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
     print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+
+
+def ztf_transients():
+    # ZTF18aalrxas
+    # rest-frame g-band is just observer-frame (z<0.15)
+    ext_g = 0.073
+    
+
 
 
 if __name__=="__main__":
