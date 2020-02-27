@@ -526,14 +526,19 @@ def limits(ax):
     ax.text(t/1.2, lum, "iPTF15ul", fontsize=11, horizontalalignment='right')
 
     # 05D2bk
-    # z = 0.699
-    # t = 4739
-    # f = 134 # uJy
-    # nu = 4E9
-    # dcm = Planck15.luminosity_distance(z=z).cgs.value
-    # lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
-    # print(t/(1+z), lum)
-    # ax.scatter(t/(1+z), lum, marker='v', c='k')
+    z = 0.699
+    t = 4739
+    f = 134 # uJy
+    nu = 4E9
+    dcm = Planck15.luminosity_distance(z=z).cgs.value
+    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    print(t/(1+z), lum)
+    ax.scatter(t/(1+z), lum, marker='*', c='k')
+    ax.arrow(
+            t/(1+z), lum, 0, -lum/2, color='k', 
+            length_includes_head=True, head_width=t/7, head_length=lum/5)
+    ax.text(t/(1+z), lum, "05D2bk", fontsize=11, horizontalalignment='center',
+            verticalalignment='bottom')
 
     # DES16X1eho
     z = 0.593
@@ -550,14 +555,19 @@ def limits(ax):
             length_includes_head=True, head_width=50, head_length=lum/5)
 
     # 06D1hc
-    # z = 0.555
-    # t = 4034
-    # f = 136 # uJy
-    # nu = 4E9
-    # dcm = Planck15.luminosity_distance(z=z).cgs.value
-    # lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
-    # print(t/(1+z), lum)
-    # ax.scatter(t/(1+z), lum, marker='v', c='k')
+    z = 0.555
+    t = 4034
+    f = 136 # uJy
+    nu = 4E9
+    dcm = Planck15.luminosity_distance(z=z).cgs.value
+    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    print(t/(1+z), lum)
+    ax.scatter(t/(1+z), lum, marker='*', c='k')
+    ax.arrow(
+            t/(1+z), lum, 0, -lum/2, color='k', 
+            length_includes_head=True, head_width=t/7, head_length=lum/5)
+    ax.text(t/(1+z), lum/2, "06D1hc", fontsize=11, 
+            horizontalalignment='center', verticalalignment='top')
 
     # 16asu
     z = 0.187
@@ -628,7 +638,7 @@ if __name__=="__main__":
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
             fontsize=16)
     ax.tick_params(axis='both', labelsize=14)
-    ax.set_xlim(1, 4000) 
+    ax.set_xlim(1, 5000) 
     ax.set_ylim(1E34, 1E42)
     ax.set_xscale('log')
     ax.set_yscale('log')
