@@ -81,7 +81,6 @@ def iptf16asu(ax,c):
     ax.plot(dt[16:30]+3, Mag, c=c)
 
 
-
 def koala(ax):
     z = 0.2714
     dat = ascii.read("../../data/ZTF18abvkwla_lct.csv")
@@ -112,16 +111,39 @@ def koala(ax):
                 head_width=0.2, head_length=0.05, label=None, zorder=5)
 
 
+def sn2011kl(ax, c):
+    dat = ascii.read("../../data/2011kl.txt")
+    xall = dat['col1']
+    yall = dat['col2']
+    yerrall = dat['col3']
+    ax.plot(xall-12, yall, c=c)
+
+
+def snls05d2bk(ax, c):
+    z = 0.699
+    dat = pd.read_fwf("../../data/SNLS05D2bk.txt")
+    jd = dat['JD']
+    filt = dat['F']
+    mag = dat['mag']
+    emag = dat['emag']
+    choose = filt == 'i'
+    xall = jd[choose][0:-2].values.astype(float)
+    yall = mag[choose][0:-2].values.astype(float)
+    yerrall = emag[choose][0:-2].values.astype(float)
+    ax.plot((xall-xall[0]-4)/(1+z), yall-Planck15.distmod(z=z).value, c=c)
+    
 
 
 if __name__=="__main__":
-    fig,axarr = plt.subplots(2,2, sharex=True, sharey=True) 
+    fig,axarr = plt.subplots(3,2, sharex=True, sharey=True, figsize=(8,8)) 
     for ax in axarr.reshape(-1): 
         koala(ax) 
         iptf15ul(ax, 'lightgrey')
         at2018cow(ax, 'lightgrey')
         des(ax, 'lightgrey')
         iptf16asu(ax, 'lightgrey')
+        sn2011kl(ax, 'lightgrey')
+        snls05d2bk(ax, 'lightgrey')
     ax = axarr[0,0]
     iptf15ul(ax, '#d95f0e')
     ax.text(0.95,0.95,'iPTF15ul', fontsize=12,
@@ -142,9 +164,21 @@ if __name__=="__main__":
     ax.text(0.95,0.95,'iPTF16asu', fontsize=12,
         horizontalalignment='right', verticalalignment='top',
         transform=ax.transAxes)
+    ax = axarr[2,0]
+    sn2011kl(ax, "#d95f0e")
+    ax.text(0.95,0.95,'SN2011kl', fontsize=12,
+        horizontalalignment='right', verticalalignment='top',
+        transform=ax.transAxes)
+    ax =axarr[2,1]
+    snls05d2bk(ax, "#d95f0e")
+    ax.text(0.95,0.95,'SNLS05D2bk', fontsize=12,
+        horizontalalignment='right', verticalalignment='top',
+        transform=ax.transAxes)
 
     # Labeling
-    fig.text(0.5, 0.04, r"$\Delta t$ (rest-frame days)", ha='center', fontsize=16)
+    fig.text(
+            0.5, 0.04, r"$\Delta t$ (rest-frame days)", 
+            ha='center', fontsize=16)
     fig.text(
             0.04, 0.5, r'Apparent Mag',
             fontsize=16, rotation='vertical', horizontalalignment='center',
@@ -154,7 +188,7 @@ if __name__=="__main__":
     axarr[0,0].set_xlim(-1.3,8)
     axarr[0,0].set_ylim(-21.5,-18.5)
     axarr[0,0].invert_yaxis()
-    fig.subplots_adjust(wspace=0.05, hspace=0.2, left=0.15, bottom=0.15)
+    #fig.subplots_adjust(wspace=0.05, hspace=0.2, left=0.15, bottom=0.15)
     for ax in axarr.reshape(-1):
         ax.yaxis.set_tick_params(labelsize=14)
         ax.xaxis.set_tick_params(labelsize=14)

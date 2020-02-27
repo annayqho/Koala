@@ -4,12 +4,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 from astropy.io import ascii
 import pandas as pd
+from astropy.cosmology import Planck15
 import sys
 sys.path.append("/Users/annaho/Dropbox/Projects/Research/ZTF_fast_transient_search/code")
 from forced_phot.run_forced_phot import get_forced_phot
 
+# corrections
+def correct(mpeak, trise, etrise, tfade, etfade, z, mw_ext):
+    Mpeak = mpeak-mw_ext-Planck15.distmod(z=z).value
+    trise_corr = trise / (1+z)
+    etrise_corr = etrise / (1+z)
+    tfade_corr = tfade / (1+z)
+    etfade_corr = etfade / (1+z)
+    return Mpeak, trise_corr, etrise_corr, tfade_corr, etfade_corr
+
 
 def iptf15ul():
+    z = 0.066
+    mw_ext = 0
+
     dat = ascii.read("../../data/iptf15ul/iptf15ul.txt")
     mjd = dat['col2']
     filt = dat['col3']
@@ -23,6 +36,7 @@ def iptf15ul():
 
     tpeak = xall[np.argmin(yall)]
     mpeak = np.min(yall)
+    empeak = yerrall[np.argmin(yall)]
 
     x = xall[xall<=tpeak].data
     y = yall[xall<=tpeak].data
@@ -33,16 +47,17 @@ def iptf15ul():
     ey = ey[order]
 
     nsim = 1000
-    tfade = np.zeros(nsim)
+    trise = np.zeros(nsim)
 
     ysamples = np.zeros((nsim,len(x)))
     for ii,val in enumerate(y):
         ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
 
     for ii in np.arange(nsim):
-        tfade[ii] = tpeak-np.interp(mpeak+0.75, ysamples[ii], x)
+        trise[ii] = tpeak-np.interp(mpeak+0.75, ysamples[ii], x)
 
-    print("rise time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    rise = np.mean(trise)
+    erise = np.std(trise)
 
     x = xall[xall>=tpeak].data 
     y = yall[xall>=tpeak].data 
@@ -53,7 +68,7 @@ def iptf15ul():
     ey = ey[order] 
 
     nsim = 1000
-    trise = np.zeros(nsim)
+    tfade = np.zeros(nsim)
 
     ysamples = np.zeros((nsim,len(x)))
     for ii,val in enumerate(y):
@@ -62,10 +77,19 @@ def iptf15ul():
     for ii in np.arange(nsim):
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    fade = np.mean(tfade)
+    efade = np.std(tfade)
+
+    Mpeak, trise_corr, etrise_corr, tfade_corr, etfade_corr = correct(
+        mpeak, rise, erise, fade, efade, z, mw_ext)
+
+    print("mpeak is %s +/- %s" %(Mpeak, empeak))
+    print("fade time is %s +/- %s" %(tfade_corr,etfade_corr))
+    print("rise time is %s +/- %s" %(trise_corr,etrise_corr))
 
 
 def at2018cow():
+    z = 0.0141
     dat = pd.read_fwf("../../data/at2018cow_photometry_table.dat")
     mjd = dat['MJD']
     filt = dat['Filt']
@@ -92,7 +116,7 @@ def at2018cow():
     tpeak = xall[np.argmin(yall)]
     empeak = yerrall[np.argmin(yall)]
     mpeak = np.min(yall)
-    print(mpeak)
+    print(mpeak-Planck15.distmod(z=z).value)
     print(empeak)
 
     x = xall[xall<=tpeak]
@@ -137,17 +161,18 @@ def at2018cow():
 
 
 def dougie():
+    redshift = 0.19
+    mw_ext = 0.031
+
     dat = ascii.read("../../data/dougie.txt")
     xall = dat['col1']
-    yall = dat['col2']+0.031
+    yall = dat['col2']
     yerrall = np.sqrt(dat['col3']**2+0.1**2)
 
     ind = np.argmin(yall)
     tpeak = xall[ind]
     mpeak = yall[ind]
     empeak = yerrall[ind]
-
-    print("peak is %s+/-%s" %(mpeak,empeak))
 
     # The shape of the LC is weird so have to do this manually
     x = xall[xall<=tpeak].data[2:4]
@@ -168,7 +193,8 @@ def dougie():
     for ii in np.arange(nsim):
         trise[ii] = tpeak-np.interp(mpeak+0.75, ysamples[ii], x)
 
-    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
+    rise = np.mean(trise)
+    erise = np.std(trise)
 
     x = xall[xall>=tpeak].data[4:6]
     y = yall[xall>=tpeak].data[4:6]
@@ -188,15 +214,64 @@ def dougie():
     for ii in np.arange(nsim):
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    fade = np.mean(tfade)
+    efade = np.std(tfade)
+
+    Mpeak, trise_corr, etrise_corr, tfade_corr, etfade_corr = correct(
+        mpeak, rise, erise, fade, efade, redshift, mw_ext)
+
+    print("peak is %s+/-%s" %(Mpeak,empeak))
+    print("fade time is %s +/- %s" %(tfade_corr,etfade_corr))
+    print("rise time is %s +/- %s" %(trise_corr,etrise_corr))
 
 
 def iptf16asu():
+    z = 0.187
+    # no need to correct for extinction
+    mw_ext = 0
+
     dat = pd.read_fwf("../../data/iptf16asu.txt")
     mjd = dat['MJD']
     filt = dat['filt']
     mag = dat['mag']
     emag = dat['emag']
+
+    # Rising behavior
+    islim = np.array(['>' in m for m in mag])
+    choose = np.logical_and(filt == 'g', islim==False)
+
+    xall = mjd[choose].values
+    yall = mag[choose].values.astype(float)
+    yerrall = emag[choose].values.astype(float)
+
+    ind = np.argmin(yall)
+    tpeak = xall[ind]
+    mpeak = yall[ind]
+    empeak = yerrall[ind]
+    mpeak = np.min(yall)
+    Mpeak = mpeak-Planck15.distmod(z=z).value
+    print("peak is %s +/- %s" %(Mpeak, empeak))
+
+    x = xall[xall<=tpeak]
+    y = yall[xall<=tpeak]
+    ey = yerrall[xall<=tpeak]
+    order = np.argsort(y)
+    x = x[order]
+    y = y[order] 
+    ey = ey[order] 
+
+    nsim = 1000
+    trise = np.zeros(nsim)
+
+    ysamples = np.zeros((nsim,len(x)))
+    for ii,val in enumerate(y):
+        ysamples[:,ii] = np.random.normal(loc=val,scale=ey[ii],size=nsim)
+
+    for ii in np.arange(nsim):
+        trise[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
+
+    print("rise time is %s +/- %s" %(np.mean(trise)/(1+z),np.std(trise)/(1+z)))
+
 
     # Fading behavior
     choose = filt == 'r'
@@ -210,6 +285,8 @@ def iptf16asu():
     mpeak = yall[ind]
     empeak = yerrall[ind]
     mpeak = np.min(yall)
+    Mpeak = mpeak-Planck15.distmod(z=z).value
+    print("peak is %s +/- %s" %(Mpeak, empeak))
 
     x = xall[xall>=tpeak]
     y = yall[xall>=tpeak]
@@ -229,10 +306,11 @@ def iptf16asu():
     for ii in np.arange(nsim):
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    print("fade time is %s +/- %s" %(np.mean(tfade)/(1+z),np.std(tfade)/(1+z)))
 
 
 def sn2011kl():
+    # this is already shifted to rest-frame and corrected for extinction
     dat = ascii.read("../../data/2011kl.txt")
     xall = dat['col1']
     yall = dat['col2']
@@ -242,8 +320,6 @@ def sn2011kl():
     tpeak = xall[ind]
     mpeak = yall[ind]
     empeak = yerrall[ind]
-
-    print("peak is %s+/-%s" %(mpeak,empeak))
 
     # The shape of the LC is weird so have to do this manually
     x = xall[xall<=tpeak].data
@@ -264,8 +340,6 @@ def sn2011kl():
     for ii in np.arange(nsim):
         trise[ii] = tpeak-np.interp(mpeak+0.75, ysamples[ii], x)
 
-    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
-
     x = xall[xall>=tpeak].data
     y = yall[xall>=tpeak].data
     ey = yerrall[xall>=tpeak].data
@@ -284,7 +358,9 @@ def sn2011kl():
     for ii in np.arange(nsim):
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    print("peak is %s+/-%s" %(mpeak,empeak)) # already abs mag
+    print("rise time is %s +/- %s" %(np.mean(trise), np.std(trise)))
+    print("fade time is %s +/- %s" %(np.mean(tfade), np.std(tfade)))
 
 
 def koala():
@@ -362,6 +438,9 @@ def koala():
 
 
 def SNLS04D4ec():
+    z = 0.593
+    mw_ext = 0.047
+
     dat = pd.read_fwf("../../data/SNLS04D4ec.txt")
     jd = dat['JD']
     filt = dat['F']
@@ -404,7 +483,8 @@ def SNLS04D4ec():
     for ii in np.arange(nsim):
         trise[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
+    rise = np.mean(trise)
+    erise = np.std(trise)
 
     # Fading behavior
     x = xall[xall>=tpeak][0:4]
@@ -425,10 +505,21 @@ def SNLS04D4ec():
     for ii in np.arange(nsim):
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    fade = np.mean(tfade)
+    efade = np.std(tfade)
+
+    Mpeak, trise_corr, etrise_corr, tfade_corr, etfade_corr = correct(
+        mpeak, rise, erise, fade, efade, z, mw_ext)
+
+    print("mpeak is %s +/- %s" %(Mpeak, empeak))
+    print("fade time is %s +/- %s" %(tfade_corr,etfade_corr))
+    print("rise time is %s +/- %s" %(trise_corr,etrise_corr))
 
 
 def SNLS05D2bk():
+    z = 0.699
+    mw_ext = 0.029
+
     dat = pd.read_fwf("../../data/SNLS05D2bk.txt")
     jd = dat['JD']
     filt = dat['F']
@@ -466,7 +557,8 @@ def SNLS05D2bk():
     for ii in np.arange(nsim):
         trise[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
+    rise = np.mean(trise)
+    erise = np.std(trise)
 
     # Fading behavior
     x = xall[xall>=tpeak][0:6]
@@ -487,10 +579,21 @@ def SNLS05D2bk():
     for ii in np.arange(nsim):
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    fade = np.mean(tfade)
+    efade = np.std(tfade)
+
+    Mpeak, trise_corr, etrise_corr, tfade_corr, etfade_corr = correct(
+        mpeak, rise, erise, fade, efade, z, mw_ext)
+
+    print("mpeak is %s +/- %s" %(Mpeak, empeak))
+    print("fade time is %s +/- %s" %(tfade_corr,etfade_corr))
+    print("rise time is %s +/- %s" %(trise_corr,etrise_corr))
 
 
 def SNLS06D1hc():
+    z = 0.555
+    mw_ext = 0.048
+
     dat = pd.read_fwf("../../data/SNLS06D1hc.txt")
     jd = dat['JD']
     filt = dat['F']
@@ -528,7 +631,8 @@ def SNLS06D1hc():
     for ii in np.arange(nsim):
         trise[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("rise time is %s +/- %s" %(np.mean(trise),np.std(trise)))
+    rise = np.mean(trise)
+    erise = np.std(trise)
 
     # Fading behavior
     x = xall[xall>=tpeak][0:5]
@@ -549,14 +653,25 @@ def SNLS06D1hc():
     for ii in np.arange(nsim):
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    fade = np.mean(tfade)
+    efade = np.std(tfade)
+
+    Mpeak, trise_corr, etrise_corr, tfade_corr, etfade_corr = correct(
+        mpeak, rise, erise, fade, efade, z, mw_ext)
+
+    print("mpeak is %s +/- %s" %(Mpeak, empeak))
+    print("fade time is %s +/- %s" %(tfade_corr,etfade_corr))
+    print("rise time is %s +/- %s" %(trise_corr,etrise_corr))
 
 
 def DESX1eho():
+    z = 0.76
     dat = pd.read_table("../../data/DES16X1eho_i.dat")
     xall = dat['# t'][1:-1].values.astype(float)
     yall= dat['M'][1:-1].values.astype(float)
     yerrall = dat['M_e'][1:-1].values.astype(float)
+    # this is absolute magnitude in observer frame,
+    # correctd for Galactic extinction
 
     ind = np.argmin(yall)
     tpeak = xall[ind]
@@ -582,7 +697,7 @@ def DESX1eho():
     for ii in np.arange(nsim):
         tfade[ii] = np.interp(mpeak+0.75, ysamples[ii], x)-tpeak
 
-    print("fade time is %s +/- %s" %(np.mean(tfade),np.std(tfade)))
+    print("fade time is %s +/- %s" %(np.mean(tfade)/(1+z),np.std(tfade)/(1+z)))
 
 
 def ztf_transients():
@@ -591,8 +706,5 @@ def ztf_transients():
     ext_g = 0.073
     
 
-
-
 if __name__=="__main__":
-    #koala()
-    SNLS04D4ec()
+    at2018cow()

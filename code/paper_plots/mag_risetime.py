@@ -100,7 +100,7 @@ def arcavi(ax):
     """ using rest-frame g-band """
     # 04D4ec
     x = 3.81
-    y = -19.75
+    y = -20.26
     ax.errorbar(
            x, y, yerr=0.03, c='k', marker='o')
     ax.arrow(
@@ -110,7 +110,7 @@ def arcavi(ax):
 
     # 05D2bk
     x = 2.90
-    y = -19.81
+    y = -20.39
     ax.errorbar(
            x, y, xerr=0.06, yerr=0.02, c='k', marker='o')
     ax.text(x/1.01, y*1.001, "05D2bk", fontsize=textsize,
@@ -118,7 +118,7 @@ def arcavi(ax):
 
     # 06D1hc
     x = 4.59
-    y = -19.80
+    y = -20.28
     ax.errorbar(
            x, y, xerr=0.06, yerr=0.03, c='k', marker='o')
     ax.text(
@@ -130,7 +130,7 @@ def arcavi(ax):
 def ibn(ax):
     """ using rest-frame g-band """
     x = 1.5
-    y = -21.1
+    y = -21.2
     ax.errorbar(
            x, y, xerr=0.05, yerr=0.3, c='k', marker='o')
     ax.text(x*1.05, y, "iPTF15ul (Ibn?)", fontsize=textsize,
@@ -149,7 +149,7 @@ def ibn(ax):
 def dougie(ax):
     """ using rest-frame g-band, which is r-band from Vinko+2015 """
     x = 3.92
-    y = -22.97
+    y = -23.03
     ax.errorbar(
            x, y, xerr=0.14, yerr=0.13, c='k', marker='o')
     ax.text(x/1.01, y, "Dougie", fontsize=textsize,
@@ -159,10 +159,10 @@ def dougie(ax):
 def sn2011kl(ax):
     """ using rest-frame g-band, which is i-band from Greiner+2015
     and Kann+2019 """
-    x = 5.0
-    y = -19.75
+    x = 4.97
+    y = -20.31
     ax.errorbar(
-           x, y, xerr=1.22, yerr=0.13, c='k', marker='o')
+           x, y, xerr=1.20, yerr=0.13, c='k', marker='o')
     ax.text(x/1.01, y*1.001, "SN2011kl (GRB-SN)", fontsize=textsize,
         horizontalalignment='right', verticalalignment='bottom')
 
