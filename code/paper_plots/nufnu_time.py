@@ -98,7 +98,7 @@ def koala(ax, col, legend):
     dt = np.array([81,310,352,396])
     f = np.array([8.3E39,1.5E39,1.1E39,8.16E38])-2.65E38
     ax.errorbar(dt/(1.2714), f, 0.0006*f, c='black', fmt='*', ms=20)
-    ax.plot(dt/(1.2714), f, c='black', lw=2)
+    ax.plot(dt/(1.2714), f, c='black', lw=4)
     ax.text(
             60, 1.2E40, "ZTF18abvkwla", 
             fontsize=14, horizontalalignment='center',
@@ -519,7 +519,10 @@ def limits(ax):
     nu = 6E9
     dcm = Planck15.luminosity_distance(z=z).cgs.value
     lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
-    ax.scatter(t/(1+z), lum, marker='v', c='k')
+    ax.scatter(t/(1+z), lum, marker='*', c='k', label='Fast-luminous transients')
+    ax.arrow(
+            t/(1+z), lum, 0, -lum/2, color='k', 
+            length_includes_head=True, head_width=1, head_length=lum/5)
     ax.text(t/1.2, lum, "iPTF15ul", fontsize=11, horizontalalignment='right')
 
     # 05D2bk
@@ -539,10 +542,12 @@ def limits(ax):
     nu = 4E9
     dcm = Planck15.luminosity_distance(z=z).cgs.value
     lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
-    print(t/(1+z), lum)
-    ax.scatter(t/(1+z), lum, marker='v', c='k')
+    ax.scatter(t/(1+z), lum, marker='*', c='k')
     ax.text(t*1.1/(1+z), lum, "DES16X1eho", fontsize=11, 
             horizontalalignment='left')
+    ax.arrow(
+            t/(1+z), lum, 0, -lum/2, color='k', 
+            length_includes_head=True, head_width=50, head_length=lum/5)
 
     # 06D1hc
     # z = 0.555
@@ -561,8 +566,15 @@ def limits(ax):
     nu = 6.2E9
     dcm = Planck15.luminosity_distance(z=z).cgs.value
     lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
-    ax.scatter(t/(1+z), lum, marker='v', c='k', zorder=10)
+    ax.scatter(t/(1+z), lum, marker='*', c='k', zorder=10)
     ax.plot(t/(1+z), lum, c='k', ls='--', zorder=10)
+    ax.text(t[1]*1.1/(1+z), lum[1], "iPTF16asu", fontsize=11, 
+            horizontalalignment='left')
+    for ii,tval in enumerate(t):
+        ax.arrow(
+                tval/(1+z), lum[ii], 0, -lum[ii]/2, color='k', 
+                length_includes_head=True, head_width=tval/5, 
+                head_length=lum[ii]/5)
 
 if __name__=="__main__":
     fig, ax = plt.subplots(1, 1, figsize=(6,6), sharex=True, sharey=True)

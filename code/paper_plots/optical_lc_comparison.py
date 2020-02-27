@@ -13,7 +13,7 @@ from astropy.cosmology import Planck15
 
 def iptf15ul(ax,c):
     z = 0.066
-    dat = ascii.read("../../data/iptf15ul/iptf15ul.txt")
+    dat = ascii.read("../../data/iptf15ul/iptf15ul_corr.txt")
     mjd = dat['col2']
     filt = dat['col3']
     dm = Planck15.distmod(z=z).value

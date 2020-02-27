@@ -134,7 +134,7 @@ def mag(ax):
     #        [58284.1300-t0_cow, dt_g[0]], 
     #        [18.90 + dmag, mag_g[0]+dmag], c='k', lw=0.5, ls='--')
     # instead, just indicate the last non-detection
-    ax.plot([-1, -1], [21.5, 21.8], c=gcol, lw=2)
+    ax.plot([-1, -1], [21.5, 21.8], c=rcol, lw=2)
     ax.text(-0.9, 21.68, 'time of last 18cow upper limit', fontsize=11)
 
     # what filter is closest to 3820 rest-frame? I think u-band
