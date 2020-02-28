@@ -23,7 +23,7 @@ def iptf15ul(ax,c):
     dt = (mjd[choose]-mjd[choose][0])/(1+z)
     dm = -21.1-min(mag[choose].astype(float))
     ax.plot(
-        dt-1.2, mag[choose].astype(float)+dm, c=c)
+        dt-1.2, mag[choose].astype(float)+dm+2.5*np.log10(1+z), c=c)
 
 
 def at2018cow(ax,c):
@@ -112,25 +112,32 @@ def koala(ax):
 
 
 def sn2011kl(ax, c):
+    z = 0.677
     dat = ascii.read("../../data/2011kl.txt")
     xall = dat['col1']
     yall = dat['col2']
     yerrall = dat['col3']
-    ax.plot(xall-12, yall, c=c)
+    ax.plot(xall-12, yall+2.5*np.log10(1+z), c=c)
 
 
 def snls05d2bk(ax, c):
     z = 0.699
+    mw_ext = 0.029
+
     dat = pd.read_fwf("../../data/SNLS05D2bk.txt")
     jd = dat['JD']
     filt = dat['F']
     mag = dat['mag']
     emag = dat['emag']
+
     choose = filt == 'i'
     xall = jd[choose][0:-2].values.astype(float)
     yall = mag[choose][0:-2].values.astype(float)
     yerrall = emag[choose][0:-2].values.astype(float)
-    ax.plot((xall-xall[0]-4)/(1+z), yall-Planck15.distmod(z=z).value, c=c)
+    ax.plot(
+            (xall-xall[0]-4)/(1+z), 
+            yall-mw_ext-Planck15.distmod(z=z).value+2.5*np.log10(1+z), 
+            c=c)
     
 
 
@@ -180,7 +187,7 @@ if __name__=="__main__":
             0.5, 0.04, r"$\Delta t$ (rest-frame days)", 
             ha='center', fontsize=16)
     fig.text(
-            0.04, 0.5, r'Apparent Mag',
+            0.04, 0.5, r'Absolute Mag',
             fontsize=16, rotation='vertical', horizontalalignment='center',
             verticalalignment='center')
 
