@@ -189,6 +189,14 @@ arcavi(ax)
 sn2011kl(ax)
 des16X1eho(ax)
 
+# plot a power law
+xvals = np.linspace(1, 6, 100)
+logyvals = -3*np.log10(xvals)
+yvals = 10**logyvals
+
+yvals = (-21)*(xvals/1.5)**(-3)
+ax.plot(xvals, yvals, c='k', lw=0.5, ls='--')
+
 ax.set_ylabel("Peak Mag (Rest-frame $g$-band)", fontsize=16)
 #ax.set_xlim(1,5)
 ax.set_ylim(-21.6, -20)
@@ -201,6 +209,6 @@ ax.xaxis.set_tick_params(labelsize=14)
 ax.yaxis.set_tick_params(labelsize=14)
 
 fig.tight_layout()
-plt.savefig("lum_rise.png", dpi=500)
+#plt.savefig("lum_rise.png", dpi=500)
 
-#plt.show()
+plt.show()

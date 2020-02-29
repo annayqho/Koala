@@ -8,3 +8,11 @@
 *.pyc
 *.eps
 *.swp
+*.dat
+*.pdf
+*.ascii
+*.tbl
+*.DS_Store
+*.fits
+*.zip
+*.db
