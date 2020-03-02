@@ -35,6 +35,12 @@ ax.errorbar([351], [0.135], yerr=[0.007],
         c='#57106e', marker='^', ms=10,
         label="VLA: 1.5 GHz")
 
+# GMRT point
+ax.errorbar([364], [0.21], yerr=[0.05],
+        c='k', marker='v', ms=10,
+        label="GMRT: 650 MHz")
+
+
 # zoom-in showing the SED
 axins = inset_axes(
         ax, 2, 1, loc=3,
@@ -44,6 +50,7 @@ axins.errorbar(10, 0.045, 0.003, marker='s', c='k')
 axins.errorbar(6, 0.089, 0.003, marker='D', c='#f98e09')
 axins.errorbar(3, 0.067, 0.005, marker='o', mfc='white', mec='black')
 axins.errorbar(1.5, 0.135, 0.007, marker='^', c='#57106e')
+axins.errorbar(0.65, 0.21, 0.05, marker='v', c='k')
 axins.tick_params(axis='both', labelsize=12)
 axins.set_ylabel("Flux (mJy)", fontsize=12)
 axins.set_xlabel("$\\nu$ (GHz)", fontsize=12)
@@ -62,7 +69,7 @@ ax.set_xticks([100,200,300,400])
 ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.tick_params(axis='both', labelsize=12)
-ax.legend(fontsize=12, loc='upper right', ncol=2)
+ax.legend(fontsize=10, loc='upper center', ncol=2)
 ax.xaxis.set_minor_formatter(NullFormatter())
 
 fig.tight_layout()
