@@ -51,5 +51,3 @@ if __name__=="__main__":
         zval = 10**(np.interp(lim, maglim_grid, np.log10(z)))
         zlim[ii] = zval
         dlim[ii] = Planck15.luminosity_distance(zval).value
-
-    

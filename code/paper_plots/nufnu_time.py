@@ -97,8 +97,8 @@ def koala(ax, col, legend):
     # This is the X-band light curve
     dt = np.array([81,310,352,396])
     f = np.array([8.3E39,1.5E39,1.1E39,8.16E38])-2.65E38
-    ax.errorbar(dt/(1.2714), f, 0.0006*f, c='black', fmt='*', ms=20)
-    ax.plot(dt/(1.2714), f, c='black', lw=4)
+    ax.errorbar(dt/(1.2714), f, 0.0006*f, c='black', fmt='*', ms=10)
+    ax.plot(dt/(1.2714), f, c='black', lw=2)
     ax.text(
             60, 1.2E40, "ZTF18abvkwla", 
             fontsize=14, horizontalalignment='center',
@@ -136,14 +136,35 @@ def at2018cow(ax, col, legend):
     choose = freq == 9
 
     # add the Margutti point
-    x = np.hstack((days[choose], 83.51))
-    y = np.hstack((flux[choose], 9.1)) * nu
+    margutti_x = np.array([83,131,172,217])
+    margutti_y = np.array([6E28, 2E28, 4.6E27, 1.4E27])/(4*np.pi*d**2)/1E-23/1E-3
+    x = np.hstack((days[choose], margutti_x))
+    y = np.hstack((flux[choose], margutti_y)) * nu
     lum = plot_line(
             ax, d, x, y,
             'AT2018cow', None, col, legend, zorder=10)
-    ax.text(x[-1], lum[-1]*1.2, 'AT2018cow', fontsize=11,
-            verticalalignment='bottom',
+    ax.text(x[0], lum[0]/1.4, 'AT2018cow', fontsize=11,
+            verticalalignment='top',
             horizontalalignment='center')
+
+
+def css(ax, col, legend):
+    """ 6 GHz light curve """
+    d = Planck15.luminosity_distance(z=0.034).cgs.value
+
+    # low frequency
+    nu = 6E9
+
+    # add the points from Deanne's paper
+    x = np.array([69, 99, 162, 357])
+    y = np.array([4.5, 6.1, 2.3, 0.07])*nu
+    lum = plot_line(
+            ax, d, x, y,
+            'AT2018cow', None, col, legend, zorder=10)
+    print(lum)
+    ax.text(x[0], lum[0]*1.1, 'CSS161010', fontsize=11,
+            verticalalignment='bottom',
+            horizontalalignment='right')
 
 
 def maxi(ax):
@@ -631,8 +652,9 @@ if __name__=="__main__":
 
     at2018cow(ax, 'k', legend=True)
     koala(ax, 'k', None)
+    css(ax, 'k', None)
 
-    limits(ax)
+    #limits(ax)
 
     ax.set_ylabel(
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 

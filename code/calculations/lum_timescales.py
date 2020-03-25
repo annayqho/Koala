@@ -1090,6 +1090,7 @@ def ZTF18abskrix():
     efpeak = yerrall[ind]
     mpeak = mag[choose][ind]-mw_ext
     empeak = emag[choose][ind]
+    print("peak mag is %s +/- %s" %(mpeak,empeak))
 
     # Rising behavior
     x = xall[xall<=tpeak]
@@ -1152,6 +1153,9 @@ def ZTF18absrffm():
     tpeak = xall[ind]
     fpeak = yall[ind]
     efpeak = yerrall[ind]
+
+    # peak mag
+    mag[choose][ind]-0.545
 
     # Rising behavior
     x = xall[xall<=tpeak]
@@ -1226,6 +1230,9 @@ def ZTF18abyzkeq():
     tpeak = xall[ind]
     fpeak = yall[ind]
     efpeak = yerrall[ind]
+
+    # Peak mag
+    mag[ind]-0.443
 
     # Rising behavior
     x = xall[xall<=tpeak]
@@ -1358,6 +1365,9 @@ def ZTF18ablxawt():
     tpeak = xall[ind]
     fpeak = yall[ind]
     efpeak = yerrall[ind]
+
+    # peak mag
+    mag[choose][ind]-0.362
 
     # Rising behavior
     x = xall[xall<=tpeak]
@@ -1925,7 +1935,7 @@ def ZTF19aaadfcp():
     mpeak = mag[choose][order][ind]-mw_ext
     empeak = emag[choose][order][ind]
     Mpeak = mpeak-Planck15.distmod(z=z).value
-    print("peak is %s +/- %s" %(Mpeak, empeak))
+    print("peak is %s +/- %s" %(mpeak, empeak))
 
     # Rising behavior
     x = xall[xall<=tpeak][2:]
@@ -1996,7 +2006,7 @@ def ZTF19aanvhyc():
     mpeak = mag[choose][order][ind]-mw_ext
     empeak = emag[choose][order][ind]
     Mpeak = mpeak-Planck15.distmod(z=z).value
-    print("peak is %s +/- %s" %(Mpeak, empeak))
+    print("peak is %s +/- %s" %(mpeak, empeak))
 
     # Rising behavior
     x = xall[xall<=tpeak]
@@ -2132,6 +2142,9 @@ def ZTF18abxxeai():
     fpeak = yall[ind]
     efpeak = yerrall[ind]
 
+    # peak mag
+    mag[choose][ind]-0.246
+
     # Rising behavior
     x = xall[xall<=tpeak]
     y = yall[xall<=tpeak]
@@ -2194,6 +2207,9 @@ def ZTF18abyjgaa():
     tpeak = xall[ind]
     fpeak = yall[ind]
     efpeak = yerrall[ind]
+
+    # Peak mag
+    mag[choose][ind]-0.460
 
     # Rising behavior
     x = xall[xall<=tpeak]
@@ -2258,6 +2274,9 @@ def ZTF18acgnwpo():
     fpeak = yall[ind]
     efpeak = yerrall[ind]
 
+    # peak mag
+    mag[choose][ind]-0.309
+
     # Rising behavior
     x = xall[xall<=tpeak]
     y = yall[xall<=tpeak]
@@ -2320,6 +2339,9 @@ def ZTF19aanqqzb():
     tpeak = xall[ind]
     fpeak = yall[ind]
     efpeak = yerrall[ind]
+
+    # Peak mag
+    mag[choose][ind]-0.824
 
     # Rising behavior
     x = xall[xall<=tpeak]
@@ -2384,6 +2406,9 @@ def ZTF19aaqfdvu():
     fpeak = yall[ind]
     efpeak = yerrall[ind]
 
+    # Peak mag
+    mag[choose][ind]-0.528
+
     # Rising behavior
     x = xall[xall<=tpeak]
     y = yall[xall<=tpeak]
@@ -2446,6 +2471,9 @@ def ZTF19aaxfqyx():
     tpeak = xall[ind]
     fpeak = yall[ind]
     efpeak = yerrall[ind]
+
+    # peak mag
+    mag[choose][ind]-0.344
 
     # Rising behavior
     x = xall[xall<=tpeak]
@@ -2510,6 +2538,9 @@ def ZTF19abfzfbs():
     fpeak = yall[ind]
     efpeak = yerrall[ind]
 
+    # peak mag
+    mag[choose][ind]-0.509
+
     # Rising behavior
     x = xall[xall<=tpeak]
     y = yall[xall<=tpeak]
@@ -2572,6 +2603,9 @@ def ZTF19abpwygn():
     tpeak = xall[ind]
     fpeak = yall[ind]
     efpeak = yerrall[ind]
+
+    # peak mag
+    mag[choose][ind]-0.477
 
     # Rising behavior
     x = xall[xall<=tpeak]
