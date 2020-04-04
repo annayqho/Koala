@@ -135,9 +135,9 @@ def at2018cow(ax, col, legend):
     eflux = np.sqrt(eflux_sys**2 + eflux_form**2)
     choose = freq == 9
 
-    # add the Margutti point
-    margutti_x = np.array([83,131,172,217])
-    margutti_y = np.array([6E28, 2E28, 4.6E27, 1.4E27])/(4*np.pi*d**2)/1E-23/1E-3
+    # add the Margutti point and the Bietenholz point
+    margutti_x = np.array([84,287])
+    margutti_y = np.array([6E28, 3.2E26])/(4*np.pi*d**2)/1E-23/1E-3
     x = np.hstack((days[choose], margutti_x))
     y = np.hstack((flux[choose], margutti_y)) * nu
     lum = plot_line(
@@ -407,7 +407,7 @@ def grb111209a(ax, col, legend):
     nu = np.array([9E9]*len(f))
 
     lum = plot_line(ax, d, t, nu*f, 'GRB111209A', 'GRB', col, legend)
-    ax.text(t[0]/1.05, lum[0], 'GRB111209A', fontsize=11,
+    ax.text(t[0]*1.5, lum[0]*1.3, 'GRB111209A/SN2011kl', fontsize=11,
             verticalalignment='bottom',
             horizontalalignment='center')
 
@@ -546,6 +546,21 @@ def limits(ax):
             length_includes_head=True, head_width=1, head_length=lum/5)
     ax.text(t/1.2, lum, "iPTF15ul", fontsize=11, horizontalalignment='right')
 
+    # Dougie
+    z = 0.19
+    t = 3736
+    f = 93 # uJy
+    nu = 3E9
+    dcm = Planck15.luminosity_distance(z=z).cgs.value
+    lum = f*1E-6 * 1E-23 * 4 * np.pi * dcm**2 * nu
+    ax.scatter(t/(1+z), lum, marker='*', c='k', label="_none")
+    ax.arrow(
+            t/(1+z), lum, 0, -lum/2, color='k', 
+            length_includes_head=True, head_width=700, head_length=lum/5)
+    ax.text(t/1.2, lum, "Dougie", fontsize=11, horizontalalignment='center',
+            verticalalignment='bottom')
+
+
     # 05D2bk
     z = 0.699
     t = 4739
@@ -654,7 +669,7 @@ if __name__=="__main__":
     koala(ax, 'k', None)
     css(ax, 'k', None)
 
-    #limits(ax)
+    limits(ax)
 
     ax.set_ylabel(
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 

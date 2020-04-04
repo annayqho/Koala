@@ -29,6 +29,12 @@ ax.plot([343,397], [0.089,0.033], c='#f98e09')
 ax.errorbar([346], [0.067], yerr=[0.005], mfc='white', 
         mec='k', marker='o', ms=9, c='k',
         label="VLA: 3 GHz")
+ax.scatter([188], [0.134], facecolor='white', 
+        edgecolor='k', marker='o', s=80, label="_none", zorder=5)
+ax.plot([188,346], [0.134,0.067], c='k', ls='--')
+ax.arrow(
+        188, 0.134, 0, -0.03, color='k', 
+        length_includes_head=True, head_width=10, head_length=0.01)
 
 # L-band
 ax.errorbar([351], [0.135], yerr=[0.007],
@@ -36,21 +42,23 @@ ax.errorbar([351], [0.135], yerr=[0.007],
         label="VLA: 1.5 GHz")
 
 # GMRT point
-ax.errorbar([364], [0.21], yerr=[0.05],
-        c='k', marker='v', ms=10,
-        label="GMRT: 650 MHz")
+ax.scatter(364, 0.105, c='k', marker='o', s=30, label="GMRT: 650 MHz")
+ax.arrow(
+        364, 0.105, 0, -0.02, color='k', 
+        length_includes_head=True, head_width=15, head_length=0.01)
 
 
 # zoom-in showing the SED
 axins = inset_axes(
         ax, 2, 1, loc=3,
-        bbox_to_anchor=(0.2,0.2),
+        bbox_to_anchor=(0.15,0.15),
         bbox_transform=ax.transAxes)
 axins.errorbar(10, 0.045, 0.003, marker='s', c='k')
 axins.errorbar(6, 0.089, 0.003, marker='D', c='#f98e09')
 axins.errorbar(3, 0.067, 0.005, marker='o', mfc='white', mec='black')
 axins.errorbar(1.5, 0.135, 0.007, marker='^', c='#57106e')
-axins.errorbar(0.65, 0.21, 0.05, marker='v', c='k')
+axins.scatter(0.65, 0.105, marker='o', c='k')
+axins.arrow(0.65, 0.105, 0, -0.02, color='k', head_width=0.5, head_length=0.01)
 axins.tick_params(axis='both', labelsize=12)
 axins.set_ylabel("Flux (mJy)", fontsize=12)
 axins.set_xlabel("$\\nu$ (GHz)", fontsize=12)
