@@ -5,37 +5,27 @@ import numpy as np
 
 c = 3E10
 dcm = Planck15.luminosity_distance(z=0.2714).cgs.value
+z = 0.2714
 
-rmag = 21.55
-#rmag = 19.4
+gmag = 21.51
+egmag = 0.21
+dt = 10.07
+dt_rest = dt/(1+z)
+lam = 4722.7E-8 # cm
+lam_rest = lam/(1+z)
 
-# r-band lambda is 6231 (Sloan r)
-# but in rest-frame 4950
-lam = 4950E-8 # cm
-
-# g-band lambda (rest-frame)
-#lam = 3820E-8
-
-# r-band mag = 21.55 +/- 0.23
-
-# -19.5 mag is 
-fnu = 10**((rmag+48.6)/(-2.5))
-print(fnu)
-
-# which is
-flam = fnu * c / lam**2 
-
-# at the distance of the source
+fnu = 10**((gmag+48.6)/(-2.5))
+# In rest-frame
+fnu_rest = fnu/(1+z)
+flam = fnu_rest * c / lam_rest**2 
 Flam = flam * 4 * np.pi * dcm**2
-
-# luminosity
-lum = lam * Flam
+lum = lam_rest * Flam
 print(lum)
 
 tni = 8.8
 tco = 113.6
-t = 8
-mni = lum / (2E43) / (3.9*np.exp(-t/tni)+0.678*(np.exp(-t/tco)-np.exp(-t/tni)))
+mni = lum / (2E43) / (
+        3.9*np.exp(-dt_rest/tni)+0.678*(np.exp(-dt_rest/tco)-np.exp(-dt_rest/tni)))
 print(mni)
 
 # from Khatami's equation
