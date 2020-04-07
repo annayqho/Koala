@@ -22,11 +22,21 @@ def run_ret():
 
         # Convert dec to degrees and RA to hours
         c = SkyCoord(ra_temp, dec_temp, frame='icrs')
-        lim,obsdate = search_vlass(names[ii], c, dates[ii])
-        limits[ii] = lim
-        dts[ii] = obsdate-dates[ii]
+        out = run_search(names[ii], c, dates[ii])
+        if out != None:
+            lim,obsdate = run_search(names[ii], c, dates[ii])
+            limits[ii] = lim
+            dts[ii] = obsdate-dates[ii]
     return names, z, ra_raw, dec_raw, dts, limits
 
 
 if __name__=="__main__":
     names, z, ra_raw, dec_raw, dts, limits = run_ret()
+    for ii,name in enumerate(names):
+        zstr = z[ii]
+        if z[ii] == -1:
+            zstr = '--'
+        if limits[ii] != 0:
+            print("%s & %s & %s & %s & %s & %s \\\ " %(
+                name, zstr, ra_raw[ii], dec_raw[ii], np.int(dts[ii]), 
+                np.int(limits[ii])))

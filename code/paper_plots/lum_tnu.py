@@ -89,18 +89,40 @@ def density_curves(ax, x, ne):
 
 def lumtnu(ax):
     # Koala
-    tnu = [(81)*(10/5), (343)*(1.5/5)]
-    lpeak = [8.3E39 / 10E9, 3.3E39 / 1.5E9]
+    tnu = np.array([(81/1.2714)*(10/5), (343)*(1.5/5)])/1.2714
+    lpeak = [(8.88E39 / 1.2714)/10E9, 3.3E39 / 1.5E9]
     ax.scatter(tnu[0], lpeak[0], marker='*', c='red', s=300, label="FBOT")
-    #ax.scatter(tnu[1], lpeak[1], marker='*', c='k', s=100, label=None)
-    #ax.plot(tnu, lpeak, c='k', lw=1, label=None)
-    #ax.arrow(
-    #        tnu[0], lpeak[0], 200, 0, color='k', 
-    #        length_includes_head=True, head_width=2E29,
-    #        head_length=50)
+    ax.text(
+            tnu[0]/1.2, lpeak[0], "$\Delta t$=64\,d", fontsize=10,
+            verticalalignment='center',
+            horizontalalignment='right')
     ax.text(tnu[0], lpeak[0]*1.2, "ZTF18abvkwla", fontsize=medsize,
             horizontalalignment='center', color='red')
 
+    # CSS 161010
+    tnu = np.array([69*(5.6/5), 99*4.4/5, 357*0.63/5])/1.033
+    nu = np.array([5.6, 4.4, 0.63])*1E9
+    dcm = Planck15.luminosity_distance(z=0.033).cgs.value
+    lpeak = np.array([8.8E-3, 12.2E-3, 1.2E-3])*1E-23*4*np.pi*dcm**2
+    ax.scatter(tnu, lpeak, marker='*', c='red', s=300, label="_none")
+    ax.text(tnu[1], lpeak[1]*1.2, "CSS161010", fontsize=medsize,
+            horizontalalignment='center', color='red',
+            verticalalignment='bottom')
+    ax.plot(tnu, lpeak, color='red', ls='-')
+    ax.text(
+            tnu[0]*1.2, lpeak[0], "$\Delta t$=69\,d", fontsize=10,
+            verticalalignment='center',
+            horizontalalignment='left')
+    ax.text(
+            tnu[1]*1.2, lpeak[1], "$\Delta t$=99\,d", fontsize=10,
+            verticalalignment='center',
+            horizontalalignment='left')
+    ax.text(
+            tnu[-1], lpeak[-1]/1.2, "$\Delta t$=357\,d", fontsize=10,
+            verticalalignment='top',
+            horizontalalignment='center')
+
+    # 11qcj
     # 11qcj
     tnu = (100)*(5/5)
     lpeak = 7E28
@@ -196,14 +218,31 @@ def lumtnu(ax):
     y = vel_lines(ax, 550, 0.01)
 
     # AT2018cow
+    x1 = 22*100/5
+    y1 = 4.4E29
+    ax.scatter(
+            x1, y1, marker='*', s=300, 
+            facecolors='red', edgecolors='red')
+    ax.text(
+            22*100/7, 5.5E29, "AT2018cow", fontsize=bigsize, 
+            verticalalignment='bottom',
+            horizontalalignment='left', color='red')
+    ax.text(
+            x1, y1/1.2, "$\Delta t$=22\,d", fontsize=10, 
+            verticalalignment='top',
+            horizontalalignment='left')
+
     x2 = 91*10/5
     y2 = 4.3E28
     ax.scatter(
-            x2, y2, marker='*', s=300, c='red')
+            x2, y2, marker='*', s=100, 
+            facecolors='red', edgecolors='red')
     ax.text(
-            x2*1.1, y2*1, "AT2018cow", fontsize=medsize,
+            x2*1.1, y2*1, "$\Delta t$=91\,d", fontsize=10,
             verticalalignment='bottom',
-            horizontalalignment='left', color='red', label="FBOT")
+            horizontalalignment='left')
+    plt.arrow(x1,y1,x2-x1,y2-y1, color='red')
+
 
     ax.set_xlim(2, 3000)
     ax.set_ylim(9E26, 2E30)
