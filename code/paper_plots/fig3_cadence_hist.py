@@ -19,17 +19,19 @@ def cadence_hist(mjd, fields, filt):
         # Use g-band 
         choose = np.logical_and(fields == fieldid, filt=='g')
         g_obsdates = mjd[choose].values
-        g_dt = g_obsdates[1:]-g_obsdates[0:-1]
-        [g_dt_all.append(val) for val in g_dt]
-        start = Time(min(g_obsdates), format='mjd').iso
-        end = Time(max(g_obsdates), format='mjd').iso
+        if len(g_obsdates) > 0:
+            g_dt = g_obsdates[1:]-g_obsdates[0:-1]
+            [g_dt_all.append(val) for val in g_dt]
+            start = Time(min(g_obsdates), format='mjd').iso
+            end = Time(max(g_obsdates), format='mjd').iso
 
         choose = np.logical_and(fields == fieldid, filt=='r')
         r_obsdates = mjd[choose].values
-        r_dt = r_obsdates[1:]-r_obsdates[0:-1]
-        [r_dt_all.append(val) for val in r_dt]
-        start = Time(min(r_obsdates), format='mjd').iso
-        end = Time(max(r_obsdates), format='mjd').iso
+        if len(r_obsdates) > 0:
+            r_dt = r_obsdates[1:]-r_obsdates[0:-1]
+            [r_dt_all.append(val) for val in r_dt]
+            start = Time(min(r_obsdates), format='mjd').iso
+            end = Time(max(r_obsdates), format='mjd').iso
 
     g_dt_all = np.array(g_dt_all)
     r_dt_all = np.array(r_dt_all)
@@ -147,13 +149,13 @@ nights = df['night']
 fieldids = np.unique(fields)
 unights = np.unique(nights)
 
-# coverage = []
-# 
-# for night in unights:
-#     print(night)
-#     area = get_footprint(fields,nights,night)
-#     print(area)
-#     coverage.append(area)
+coverage = []
+ 
+#for night in unights:
+#    print(night)
+#    area = get_footprint(fields,nights,night)
+#    print(area)
+#    coverage.append(area)
 
 # np.savetxt("fieldlist.txt", fieldids, fmt='%s')
 
