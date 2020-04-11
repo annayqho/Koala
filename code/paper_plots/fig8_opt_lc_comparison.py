@@ -13,7 +13,7 @@ from astropy.cosmology import Planck15
 
 def iptf15ul(ax,c):
     z = 0.066
-    dat = ascii.read("../../data/iptf15ul/iptf15ul_corr.txt")
+    dat = ascii.read("../../data/fbot_lc/iptf15ul_corr.txt")
     mjd = dat['col2']
     filt = dat['col3']
     dm = Planck15.distmod(z=z).value
@@ -28,7 +28,7 @@ def iptf15ul(ax,c):
 
 def at2018cow(ax,c):
     z = 0.0141
-    dat = pd.read_fwf("../../data/at2018cow_photometry_table.dat")
+    dat = pd.read_fwf("../../data/fbot_lc/at2018cow_photometry_table.dat")
     mjd = dat['MJD']
     filt = dat['Filt']
     mag = dat['ABMag']
@@ -56,7 +56,7 @@ def at2018cow(ax,c):
 
 def des(ax,c):
     z = 0.76
-    dat = pd.read_table("../../data/DES16X1eho_i.dat")
+    dat = pd.read_table("../../data/fbot_lc/DES16X1eho_i.dat")
     xall = (dat['# t'][1:-1].values.astype(float))/(1+z)
     yall= dat['M'][1:-1].values.astype(float)
     kcorr = 2.5*np.log10(1+z)
@@ -66,7 +66,7 @@ def des(ax,c):
 
 def iptf16asu(ax,c):
     z = 0.187
-    dat = pd.read_fwf("../../data/iptf16asu.txt")
+    dat = pd.read_fwf("../../data/fbot_lc/iptf16asu.txt")
     filt = dat['filt']
     # choose = filt == 'r'
     # dt = dat['dt'][choose] / (1+z)
@@ -83,7 +83,7 @@ def iptf16asu(ax,c):
 
 def koala(ax):
     z = 0.2714
-    dat = ascii.read("../../data/ZTF18abvkwla_lct.csv")
+    dat = ascii.read("../../data/koala_lc/ZTF18abvkwla_lct.csv")
     filts = np.array([val[2:3] for val in dat['filter']])
 
     # Plot the r-band light curve (rest-frame g)
@@ -113,7 +113,7 @@ def koala(ax):
 
 def sn2011kl(ax, c):
     z = 0.677
-    dat = ascii.read("../../data/2011kl.txt")
+    dat = ascii.read("../../data/fbot_lc/2011kl.txt")
     xall = dat['col1']
     yall = dat['col2']
     yerrall = dat['col3']
@@ -124,7 +124,7 @@ def snls05d2bk(ax, c):
     z = 0.699
     mw_ext = 0.029
 
-    dat = pd.read_fwf("../../data/SNLS05D2bk.txt")
+    dat = pd.read_fwf("../../data/fbot_lc/SNLS05D2bk.txt")
     jd = dat['JD']
     filt = dat['F']
     mag = dat['mag']
