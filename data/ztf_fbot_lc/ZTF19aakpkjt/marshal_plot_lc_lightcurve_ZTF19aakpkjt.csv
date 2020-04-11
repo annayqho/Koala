@@ -1,0 +1,12 @@
+date,jdobs,filter,mag,emag,limmag,instrument,programid,refsys,issub,isdiffpos,rb
+2019 Jan 26,2458509.6491,g,99.0,99.0,19.89,P48+ZTF,1,None,True,True,None
+2019 Jan 26,2458509.6500,g,99.0,99.0,19.69,P48+ZTF,3,None,True,True,None
+2019 Jan 27,2458510.6600,g,99.0,99.0,20.01,P48+ZTF,3,None,True,True,None
+2019 Jan 28,2458511.6435,g,99.0,99.0,20.14,P48+ZTF,3,None,True,True,None
+2019 Jan 31,2458514.6511,g,99.0,99.0,20.43,P48+ZTF,1,None,True,True,None
+2019 Feb 08,2458522.6453,g,99.0,99.0,20.12,P48+ZTF,3,None,True,True,None
+2019 Feb 09,2458523.6664,r,99.0,99.0,20.13,P48+ZTF,3,None,True,True,None
+2019 Feb 20,2458534.6292,g,99.0,99.0,18.86,P48+ZTF,1,None,True,True,None
+2019 Feb 20,2458534.6310,g,99.0,99.0,18.91,P48+ZTF,3,None,True,True,None
+2019 Feb 25,2458539.6320,g,99.0,99.0,20.10,P48+ZTF,1,None,True,True,None
+2019 Feb 25,2458539.6330,g,19.72,0.20,20.11,P48+ZTF,3,None,True,True,None

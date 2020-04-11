@@ -1,0 +1,17 @@
+date,jdobs,filter,mag,emag,limmag,instrument,programid,refsys,issub,isdiffpos,rb
+2013 Aug 08,2456512.9259,r,21.41,0.19,21.85,P48+ZTF,1,None,True,True,0.462
+2013 Sep 29,2456564.9106,r,20.97,0.17,20.98,P48+ZTF,1,None,True,True,0.291
+2018 Aug 20,2458350.9502,g,99.0,99.0,21.03,P48+ZTF,3,None,True,True,None
+2018 Aug 21,2458351.9476,g,99.0,99.0,20.98,P48+ZTF,1,None,True,True,None
+2018 Aug 21,2458351.9485,g,99.0,99.0,20.91,P48+ZTF,3,None,True,True,None
+2018 Aug 22,2458352.9314,g,99.0,99.0,20.84,P48+ZTF,3,None,True,True,None
+2018 Aug 25,2458355.8791,r,17.77,0.10,18.15,P48+ZTF,3,None,True,False,None
+2018 Aug 25,2458355.9963,r,99.0,99.0,20.23,P48+ZTF,3,None,True,True,None
+2018 Aug 26,2458356.9321,r,99.0,99.0,19.70,P48+ZTF,3,None,True,True,None
+2018 Aug 26,2458356.9964,r,99.0,99.0,19.87,P48+ZTF,3,None,True,True,None
+2018 Aug 27,2458357.9234,r,99.0,99.0,19.79,P48+ZTF,3,None,True,True,None
+2018 Aug 27,2458357.9325,r,99.0,99.0,19.84,P48+ZTF,1,None,True,True,None
+2018 Aug 27,2458357.9848,r,99.0,99.0,19.71,P48+ZTF,3,None,True,True,None
+2018 Aug 27,2458358.0032,r,99.0,99.0,19.69,P48+ZTF,1,None,True,True,None
+2018 Aug 28,2458358.9284,r,99.0,99.0,19.45,P48+ZTF,3,None,True,True,None
+2018 Aug 28,2458358.9932,g,17.06,0.06,18.94,P48+ZTF,3,None,True,True,None

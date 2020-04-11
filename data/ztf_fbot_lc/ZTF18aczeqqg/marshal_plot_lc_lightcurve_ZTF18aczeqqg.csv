@@ -1,0 +1,9 @@
+date,jdobs,filter,absmag,mag,emag,limmag,instrument,programid,refsys,issub,isdiffpos,rb
+2018 Nov 25,2458447.9937,r,99.0,99.0,99.0,19.25,P48+ZTF,1,None,True,True,None
+2018 Nov 28,2458450.9889,g,-15.57,20.01,0.22,19.81,P48+ZTF,1,None,True,True,0.746667027473
+2018 Dec 10,2458462.9892,g,99.0,99.0,99.0,16.76,P48+ZTF,1,None,True,True,None
+2018 Dec 13,2458466.0126,r,-15.26,20.32,0.27,20.14,P48+ZTF,1,None,True,True,None
+2018 Dec 16,2458469.0361,r,99.0,99.0,99.0,20.39,P48+ZTF,1,None,True,True,None
+2018 Dec 16,2458469.0481,g,99.0,99.0,99.0,20.54,P48+ZTF,1,None,True,True,None
+2018 Dec 20,2458473.0334,g,-15.34,20.24,0.19,20.58,P48+ZTF,1,None,True,True,None
+2018 Dec 20,2458473.0334,g,-15.34,20.24,0.19,20.58,P48+ZTF,1,None,True,True,0.69333332777
