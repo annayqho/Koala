@@ -13,6 +13,7 @@ rcol = '#d95f02'
 gcol = '#1b9e77'
 t0 = 58373.407523+2400000.5
 
+
 # Full light curve
 def full(ax):
     dat = ascii.read("../../data/koala_lc.txt")
@@ -59,12 +60,11 @@ def full(ax):
     ax.set_ylim(-50,170)
 
     ax.legend(fontsize=13, loc='lower left', ncol=1)
-
      
 
 # Magnitude space
 def mag(ax):
-    dat = ascii.read("../../data/ZTF18abvkwla_lct.csv")
+    dat = ascii.read("../../data/koala_lc/ZTF18abvkwla_lct.csv")
     filts = np.array([val[2:3] for val in dat['filter']])
 
     # Plot the g-band light curve
