@@ -17,7 +17,6 @@ class Position:
         self.b = self.coord.galactic.b.deg
 
 
-
 def get_lc(s, name):
     """ Retrieve LC for object """
     det_alerts = get_dets(s, name)
