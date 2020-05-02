@@ -95,8 +95,8 @@ def plot_points(ax, d, nu, t, f, marker, name=None):
 
 def koala(ax, col, legend):
     # This is the X-band light curve
-    dt = np.array([81,310,352,396])
-    f = np.array([8.3E39,1.5E39,1.1E39,8.16E38])-2.65E38
+    dt = np.array([81,310,352,396,596])
+    f = np.array([8.3E39,1.5E39,1.1E39,8.16E38,4.1E38])-2.65E38
     ax.errorbar(dt/(1.2714), f, 0.0006*f, c='black', fmt='*', ms=10)
     ax.plot(dt/(1.2714), f, c='black', lw=2)
     ax.text(
@@ -179,8 +179,7 @@ def maxi(ax):
 
 
 def tde(ax, col, legend):
-    """  Plot the 225/230 GHz light curve from the SMA
-    
+    """  
     Plot the 4.9 GHz light curve from the VLA
     """
     z = 0.354
@@ -694,5 +693,5 @@ if __name__=="__main__":
 
 
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("lum_evolution.png", dpi=500)
+    plt.show()
+    #plt.savefig("lum_evolution.png", dpi=500)

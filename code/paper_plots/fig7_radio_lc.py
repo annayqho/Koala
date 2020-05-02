@@ -61,9 +61,9 @@ if __name__=="__main__":
     fig,ax = plt.subplots(1,1,figsize=(6,4))
 
     # X-band
-    plot_band(ax, np.array([81, 310, 352, 396]), 
-            np.array([0.364, 0.061, 0.045, 0.031]), 
-            np.array([0.006, 0.003, 0.003, 0.003]), 'k', 's', "VLA: 10 GHz")
+    plot_band(ax, np.array([81, 310, 352, 396,600]), 
+            np.array([0.364, 0.061, 0.045, 0.031, 0.017]), 
+            np.array([0.006, 0.003, 0.003, 0.003, 0.003]), 'k', 's', "VLA: 10 GHz")
 
     # C-band
     plot_band(ax, np.array([343,397]), np.array([0.089,0.033]), 
@@ -99,5 +99,5 @@ if __name__=="__main__":
     ax.xaxis.set_minor_formatter(NullFormatter())
 
     fig.tight_layout()
-    plt.savefig("radio_lc.png", dpi=300)
-    #plt.show()
+    #plt.savefig("radio_lc.png", dpi=300)
+    plt.show()
