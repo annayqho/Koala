@@ -202,5 +202,5 @@ if __name__=="__main__":
 
     #plt.show()
     plt.savefig(
-        "optical_lc_comparison.png", dpi=500, 
+        "optical_lc_comparison.eps", dpi=300, 
         bbox_inches='tight', pad_inches=0.1)

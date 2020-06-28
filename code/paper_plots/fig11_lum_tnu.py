@@ -89,34 +89,40 @@ def density_curves(ax, x, ne):
 
 def lumtnu(ax):
     # Koala
+    dcm = Planck15.luminosity_distance(z=0.2714).cgs.value
     tnu = np.array([(81/1.2714)*(10/5), (343)*(1.5/5)])/1.2714
-    lpeak = [(8.88E39 / 1.2714)/10E9, 3.3E39 / 1.5E9]
-    ax.scatter(tnu[0], lpeak[0], marker='*', c='red', s=300, label="FBOT")
+    nu = np.array([10, 5])*1E9
+    lpeak = np.array([0.364, 0.089])*1E-3*1E-23*4*np.pi*dcm**2
+    col = 'darkblue'
+    ax.scatter(tnu, lpeak, marker='D', c=col, s=100)
+    ax.plot(tnu, lpeak, color=col, ls='-')
     ax.text(
             tnu[0]/1.2, lpeak[0], "$\Delta t$=64\,d", fontsize=10,
             verticalalignment='center',
             horizontalalignment='right')
+    ax.text(
+            tnu[1]*1.2, lpeak[1], "$\Delta t$=343\,d", fontsize=10,
+            verticalalignment='center',
+            horizontalalignment='left')
     ax.text(tnu[0], lpeak[0]*1.2, "ZTF18abvkwla", fontsize=medsize,
-            horizontalalignment='center', color='red')
+            horizontalalignment='center', color='darkblue')
 
     # CSS 161010
-    tnu = np.array([69*(5.6/5), 99*4.4/5, 357*0.63/5])/1.033
-    nu = np.array([5.6, 4.4, 0.63])*1E9
+    tnu = np.array([69*(5.6/5), 357*0.63/5])/1.033
+    nu = np.array([5.6, 0.63])*1E9
     dcm = Planck15.luminosity_distance(z=0.033).cgs.value
-    lpeak = np.array([8.8E-3, 12.2E-3, 1.2E-3])*1E-23*4*np.pi*dcm**2
-    ax.scatter(tnu, lpeak, marker='*', c='red', s=300, label="_none")
-    ax.text(tnu[1], lpeak[1]*1.2, "CSS161010", fontsize=medsize,
-            horizontalalignment='center', color='red',
+    lpeak = np.array([8.8E-3, 1.2E-3])*1E-23*4*np.pi*dcm**2
+    ax.scatter(
+            tnu, lpeak, marker='h', c='Goldenrod', s=100, 
+            label="_none")
+    ax.text(tnu[0], lpeak[0]*1.2, "CSS161010", fontsize=medsize,
+            horizontalalignment='right', color='Goldenrod',
             verticalalignment='bottom')
-    ax.plot(tnu, lpeak, color='red', ls='-')
+    ax.plot(tnu, lpeak, color='Goldenrod', ls='-')
     ax.text(
-            tnu[0]*1.2, lpeak[0], "$\Delta t$=69\,d", fontsize=10,
+            tnu[0]/1.2, lpeak[0], "$\Delta t$=69\,d", fontsize=10,
             verticalalignment='center',
-            horizontalalignment='left')
-    ax.text(
-            tnu[1]*1.2, lpeak[1], "$\Delta t$=99\,d", fontsize=10,
-            verticalalignment='center',
-            horizontalalignment='left')
+            horizontalalignment='right')
     ax.text(
             tnu[-1], lpeak[-1]/1.2, "$\Delta t$=357\,d", fontsize=10,
             verticalalignment='top',
@@ -222,11 +228,11 @@ def lumtnu(ax):
     y1 = 4.4E29
     ax.scatter(
             x1, y1, marker='*', s=300, 
-            facecolors='red', edgecolors='red')
+            facecolors='Crimson', edgecolors='Crimson')
     ax.text(
             22*100/7, 5.5E29, "AT2018cow", fontsize=bigsize, 
             verticalalignment='bottom',
-            horizontalalignment='left', color='red')
+            horizontalalignment='left', color='Crimson')
     ax.text(
             x1, y1/1.2, "$\Delta t$=22\,d", fontsize=10, 
             verticalalignment='top',
@@ -236,7 +242,7 @@ def lumtnu(ax):
     y2 = 4.3E28
     ax.scatter(
             x2, y2, marker='*', s=100, 
-            facecolors='red', edgecolors='red')
+            facecolors='Crimson', edgecolors='red')
     ax.text(
             x2*1.1, y2*1, "$\Delta t$=91\,d", fontsize=10,
             verticalalignment='bottom',
@@ -257,7 +263,7 @@ def lumtnu(ax):
 fig,ax = plt.subplots(1,1, figsize=(6,6))
 lumtnu(ax)
 y = mdot_curves(ax, 550, 2.5E29, 100)
-y = mdot_curves(ax, 58, 4E29, 1)
+#y = mdot_curves(ax, 58, 4E29, 1)
 y = mdot_curves(ax, 5.9, 6.4E29, 0.01)
 #y = mdot_curves(ax, 1800, 1E-4)
 ax.set_ylabel(
@@ -283,8 +289,9 @@ ax2.tick_params(axis='both', labelsize=bigsize)
 ax2.set_xlim(2,3000)
 
 
-plt.tight_layout()
+#plt.tight_layout()
 
 
+     
 #plt.show()
-plt.savefig("lum_tnu.png", dpi=500)
+plt.savefig("lum_tnu_fordefense.eps", dpi=300)

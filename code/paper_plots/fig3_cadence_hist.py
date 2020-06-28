@@ -51,7 +51,7 @@ def cadence_hist(mjd, fields, filt):
     plt.legend(fontsize=14, loc='upper right')
     plt.tight_layout()
     #plt.show()
-    plt.savefig("cadence_hist.png", dpi=500)
+    plt.savefig("cadence_hist.eps", dpi=300)
 
 
 def calc_efficiency(dt):

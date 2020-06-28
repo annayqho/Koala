@@ -194,4 +194,4 @@ if __name__=="__main__":
     mag(ax)
     plt.tight_layout()
     #plt.show()
-    plt.savefig("lc.png", dpi=300)
+    plt.savefig("lc.eps", dpi=500)

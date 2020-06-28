@@ -693,5 +693,5 @@ if __name__=="__main__":
 
 
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("lum_evolution.png", dpi=500)
+    #plt.show()
+    plt.savefig("lum_evolution.eps", dpi=300)

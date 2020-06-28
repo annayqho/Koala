@@ -99,5 +99,5 @@ if __name__=="__main__":
     ax.xaxis.set_minor_formatter(NullFormatter())
 
     fig.tight_layout()
-    #plt.savefig("radio_lc.png", dpi=300)
-    plt.show()
+    plt.savefig("radio_lc.eps", dpi=500)
+    #plt.show()
